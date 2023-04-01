@@ -119,7 +119,7 @@ public class TerraAuto7 extends AutoFramework {
         addCustomCode(() -> {
             ArrayList<Double> values = new ArrayList<>();
             whileNotExit(() -> values.size() > 3, () -> {
-                drive.moveWithoutVS(1.0,0.1*(150-odometry.getX()), 0.015*odometry.getHeading());
+//                drive.moveWithoutVS(1.0,0.1*(150-odometry.getX()), 0.015*odometry.getHeading());
                 distanceSensors.ready();
                 double distance = distanceSensors.getRightDistance();
                 if(distance < 50){ values.add(distance); }

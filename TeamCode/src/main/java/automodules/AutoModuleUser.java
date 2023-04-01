@@ -266,18 +266,18 @@ public interface AutoModuleUser extends RobotUser{
         @Override
         public void define() {
             addCustomCode(() -> {
-                drive.noStrafeLock = true;
-                ArrayList<Double> xs = new ArrayList<>(); ArrayList<Double> ys = new ArrayList<>();
-                whileNotExit(() -> xs.size() > 3, () -> {
-                    distanceSensors.ready();
-                    xs.add(distanceSensors.getRightDistance() - cyclePointStart.getX());
-                    ys.add(-distanceSensors.getFrontDistance() - cyclePointStart.getY());
-                });
-                Point point = new Point(Iterator.forAllAverage(xs), Iterator.forAllAverage(ys));
-                odometry.setHeadingUsingOffset(0.0);
-                odometry.setPointUsingOffset(point);
-                fault.warn("ODOMETRY RESET FAILED at point: " + point + " with odometry pose: " + odometry.getPose(), Expectation.EXPECTED, Magnitude.CRITICAL, Precision.range(odometry.getPose().getAngle(), 4) && Double.isFinite(odometry.getPose().getY()) && Double.isFinite(odometry.getPose().getX()), true);
-                pause(0.05);
+//                drive.noStrafeLock = true;
+//                ArrayList<Double> xs = new ArrayList<>(); ArrayList<Double> ys = new ArrayList<>();
+//                whileNotExit(() -> xs.size() > 3, () -> {
+//                    distanceSensors.ready();
+//                    xs.add(distanceSensors.getRightDistance() - cyclePointStart.getX());
+//                    ys.add(-distanceSensors.getFrontDistance() - cyclePointStart.getY());
+//                });
+//                Point point = new Point(Iterator.forAllAverage(xs), Iterator.forAllAverage(ys));
+//                odometry.setHeadingUsingOffset(0.0);
+//                odometry.setPointUsingOffset(point);
+//                fault.warn("ODOMETRY RESET FAILED at point: " + point + " with odometry pose: " + odometry.getPose(), Expectation.EXPECTED, Magnitude.CRITICAL, Precision.range(odometry.getPose().getAngle(), 4) && Double.isFinite(odometry.getPose().getY()) && Double.isFinite(odometry.getPose().getX()), true);
+//                pause(0.05);
             });
             addWaypoint(1.0, -13, -22, 0);
             addSegment(0.8, 0.7, mecanumNonstopSetPoint, 0.5, 1.0, 0);
@@ -338,7 +338,7 @@ public interface AutoModuleUser extends RobotUser{
         @Override
         public void define() {
             addCustomCode(() -> {
-                drive.noStrafeLock = false;
+//                drive.noStrafeLock = false;
                 ArrayList<Double> xs = new ArrayList<>(); ArrayList<Double> ys = new ArrayList<>();
                 whileNotExit(() -> xs.size() > 3, () -> {
                     distanceSensors.ready();

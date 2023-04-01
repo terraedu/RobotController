@@ -20,7 +20,7 @@ public class StageTest extends TeleUnitTest {
         bot.rfsHandler.addToQueue(new Stage(
                 RobotPart.exitTime(1)
         ));
-        bot.rfsHandler.addToQueue(drive.moveTime(0.3, 0,0, 1.0));
+//        bot.rfsHandler.addToQueue(drive.moveTime(0.3, 0,0, 1.0));
     }
 
     /**
