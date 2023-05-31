@@ -1,10 +1,5 @@
 package robot;
 
-import robotparts.sensors.odometry.ThreeOdometry;
-import robotparts.sensors.odometry.TwoOdometry;
-import robotparts.sensors.odometry.Odometry;
-import teleutil.TeleTrack;
-import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
 import robotparts.hardware.Intake;
 import robotparts.hardware.Lift;
@@ -12,10 +7,11 @@ import robotparts.hardware.Outtake;
 import robotparts.sensors.Cameras;
 import robotparts.sensors.ColorSensors;
 import robotparts.sensors.GyroSensors;
-import robotparts.unused.DistanceSensors;
-import robotparts.unused.Leds;
+import robotparts.sensors.odometry.ThreeOdometry;
 import robotparts.unused.CustomTestPart;
+import robotparts.unused.DistanceSensors;
 import robotparts.unused.TouchSensors;
+import unittests.tele.framework.movement.AutoModuleTest;
 
 public interface RobotUser {
     /**
@@ -36,7 +32,7 @@ public interface RobotUser {
     Cameras camera = new Cameras();
 
 //    Odometry odometry = new TwoOdometry();
-    ThreeOdometry odometry = new ThreeOdometry(); // TOD 5 EXTEND THIS CONCEPT TO ALL ROBOT PARTS
+    ThreeOdometry odometry = new ThreeOdometry(); // TOD 5 EXTEND THIS CONCEPT TO ALL ROBOT PART
     /**
      * UNUSED
      */

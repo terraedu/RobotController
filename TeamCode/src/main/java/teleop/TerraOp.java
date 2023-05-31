@@ -30,5 +30,6 @@ public class TerraOp extends Tele {
             drive.move(0.5*gph1.ry, 0.5*gph1.rx, 0.5*gph1.lx);
         }
         log.show(driveMode.get());
+        log.show(gyro.getHeading());
     }
 }

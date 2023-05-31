@@ -1,5 +1,7 @@
 package robotparts.electronics.input;
 
+import static global.General.bot;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -7,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 import autoutil.Profiler;
+import robot.BackgroundTask;
 import robotparts.Electronic;
 
 /**
@@ -27,6 +30,7 @@ public class IGyro extends Electronic {
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         this.gyro.initialize(parameters);
+        bot.addBackgroundTask(new BackgroundTask(this::update));
     }
 
     public void update(){
@@ -39,16 +43,13 @@ public class IGyro extends Electronic {
         }
         heading += deltaHeading;
         lastHeading = currentHeading;
-
-//        pitch = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle;
-//        pitchProfiler.update();
     }
 
     public void setHeading(double heading){ update(); startHeading = this.heading-heading; }
 
     public void reset(){ update(); startHeading = heading; startPitch = pitch; }
 
-    public double getHeading(){ return heading - startHeading; }
+    public double getHeading(){ return -(heading - startHeading); }
     public double getPitch(){ return pitch - startPitch; }
     public double getPitchDerivative(){ return pitchProfiler.getDerivative(); }
 

@@ -14,7 +14,7 @@ public class Configs implements RobotUser{
     /**
      * Used for PowerPlay robot
      */
-    RobotConfig PowerPlay = new RobotConfig(drive);
+    RobotConfig PowerPlay = new RobotConfig(drive, gyro);
 
     /**
      * Current Config
