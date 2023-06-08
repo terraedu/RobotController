@@ -160,7 +160,7 @@ do these methods work?
         double startHeading = gyro.getHeading();
         double targetHeading = startHeading + degrees;
         controller.setTarget(targetHeading);
-        whileActive(controller::notAtTarget, () -> {
+        whileActive(controller::isNotAtTarget, () -> {
             controller.update();
             drive.move(0, 0, controller.getOutput());
         });

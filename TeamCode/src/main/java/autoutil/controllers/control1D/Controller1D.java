@@ -1,14 +1,14 @@
 package autoutil.controllers.control1D;
 
+import static java.lang.Math.abs;
+
+import autoutil.Profiler;
 import autoutil.generators.Generator;
 import autoutil.generators.PoseGenerator;
-import autoutil.Profiler;
 import geometry.framework.Point;
 import geometry.position.Pose;
 import util.codeseg.ReturnCodeSeg;
 import util.template.Precision;
-
-import static java.lang.Math.abs;
 
 public abstract class Controller1D {
 
@@ -72,6 +72,7 @@ public abstract class Controller1D {
     public void setProcessError(ReturnCodeSeg<Double> processError){ this.processError = processError; }
     public boolean maxDerivativeTarget(double maxDerivative){ return (abs(processVariableProfiler.getDerivative()) < maxDerivative); }
     public boolean isAtTarget(){ return isAtTarget; }
+    public boolean isNotAtTarget(){ return !isAtTarget; }
     public void reset(){ targetValue = 0; errorProfiler.reset(); processVariableProfiler.reset(); isAtTarget = false; precision.reset(); }
     public double[] getErrorState(){ return new double[]{getError(), errorProfiler.getIntegral(), errorProfiler.getDerivative()}; }
     public double[] getProcessVariableState(){ return new double[]{currentValue, processVariableProfiler.getIntegral(), processVariableProfiler.getDerivative()}; }
