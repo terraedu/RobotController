@@ -44,10 +44,11 @@ public class TestAuto extends Auto {
             drive.move(speed,0,0);
             speed += 0.1;
         }
-        while(time.seconds()<=2) {
+        while(time.seconds()<=4) {
             drive.move(speed,0,0);
             speed -= 0.1;
         }
+        drive.halt();
 //        FinalDouble turnPower = new FinalDouble(0.0);
 //        double start = gyro.getHeading();
 //        whileActive(() -> Math.abs(gyro.getHeading()-start)<0.25, () ->{
