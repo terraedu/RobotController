@@ -1,4 +1,4 @@
-package robotparts.hardware;
+package robotparts.unused;
 
 import automodules.AutoModule;
 import automodules.stage.Exit;

@@ -8,27 +8,23 @@ import util.Timer;
 
 @Autonomous(name="TestAuto")
 public class TestAuto extends Auto {
-    private static final double MAX_FORWARD_VELOCITY = 150;   //cm per sec
 
-    public static Controller1D controller;
-
-
-
-
+//    private static final double MAX_FORWARD_VELOCITY = 150;   //cm per sec
+//    public static Controller1D controller;
 
 
     @Override
     public void initAuto() {
 
-        controller = new RP(0.008, 0.06);
+//        controller = new RP(0.008, 0.06);
 //        controller = new DRP(0.008,0.06);
 //        controller = new PAR(0.008,0.5,0.06);
 //        controller = new PID(PID.PIDParameterType.DEFAULT_ALL, .008,0.005,0.0005, 10.0, 5.0);
 
 
-        controller.setProcessVariable(gyro::getHeading);
-        controller.setAccuracy(0.5);
-        controller.setMinimumTime(0.2);
+//        controller.setProcessVariable(gyro::getHeading);
+//        controller.setAccuracy(0.5);
+//        controller.setMinimumTime(0.2);
     }
 
     @Override
@@ -37,18 +33,18 @@ public class TestAuto extends Auto {
 //        moveGyroTurnRP(-90);
 //        moveGyroTurnRP(-180);
 //        moveGyroTurnRP(180);
-        int speed = 0;
-        Timer time = new Timer();
-        time.reset();
-        while(time.seconds()<=2) {
-            drive.move(speed,0,0);
-            speed += 0.1;
-        }
-        while(time.seconds()<=4) {
-            drive.move(speed,0,0);
-            speed -= 0.1;
-        }
-        drive.halt();
+//        int speed = 0;
+//        Timer time = new Timer();
+//        time.reset();
+//        while(time.seconds()<=2) {
+//            drive.move(speed,0,0);
+//            speed += 0.1;
+//        }
+//        while(time.seconds()<=4) {
+//            drive.move(speed,0,0);
+//            speed -= 0.1;
+//        }
+//        drive.halt();
 //        FinalDouble turnPower = new FinalDouble(0.0);
 //        double start = gyro.getHeading();
 //        whileActive(() -> Math.abs(gyro.getHeading()-start)<0.25, () ->{
@@ -80,30 +76,30 @@ public class TestAuto extends Auto {
         }, 60);
 */
     }
-    public void moveTimeForward(double f, double time) {
-        moveTime(f,0,0,time);
-    }
-    public void moveDistanceForward(double power, double distance) {
-        moveTimeForward(power,distance/MAX_FORWARD_VELOCITY);
-    }
-    public void moveTimeTurn(double t, double time) {
-        moveTime(0,0,t,time);
-    }
-    public void moveTimeStrafe(double s, double time) {
-        moveTime(0,s,0,time);
-    }
-    public void moveTime(double f, double s, double t, double time) {
-        drive.move(f,s,t);
-        pause(time);
-        drive.halt();
-    }
-    public void moveGyroTurn(double power, double degrees) {
-        drive.move(0,0,Math.abs(power)*Math.signum(degrees));
-        double startHeading = gyro.getHeading();
-        double targetHeading = startHeading + degrees;
-        whileActive(()->Math.abs(gyro.getHeading()-targetHeading)>5,()->{});
-        drive.halt();
-    }
+//    public void moveTimeForward(double f, double time) {
+//        moveTime(f,0,0,time);
+//    }
+//    public void moveDistanceForward(double power, double distance) {
+//        moveTimeForward(power,distance/MAX_FORWARD_VELOCITY);
+//    }
+//    public void moveTimeTurn(double t, double time) {
+//        moveTime(0,0,t,time);
+//    }
+//    public void moveTimeStrafe(double s, double time) {
+//        moveTime(0,s,0,time);
+//    }
+//    public void moveTime(double f, double s, double t, double time) {
+//        drive.move(f,s,t);
+//        pause(time);
+//        drive.halt();
+//    }
+//    public void moveGyroTurn(double power, double degrees) {
+//        drive.move(0,0,Math.abs(power)*Math.signum(degrees));
+//        double startHeading = gyro.getHeading();
+//        double targetHeading = startHeading + degrees;
+//        whileActive(()->Math.abs(gyro.getHeading()-targetHeading)>5,()->{});
+//        drive.halt();
+//    }
 //    public void moveGyroTurnRP(double degrees) {
 //        double startHeading = gyro.getHeading();
 //        double targetHeading = startHeading + degrees;
@@ -157,16 +153,16 @@ do these methods work?
         drive.halt();
     }
 */
-    public void moveGyroTurn(double degrees){
-        double startHeading = gyro.getHeading();
-        double targetHeading = startHeading + degrees;
-        controller.setTarget(targetHeading);
-        whileActive(controller::isNotAtTarget, () -> {
-            controller.update();
-            drive.move(0, 0, controller.getOutput());
-        });
-        drive.halt();
-        controller.reset();
-    }
+//    public void moveGyroTurn(double degrees){
+//        double startHeading = gyro.getHeading();
+//        double targetHeading = startHeading + degrees;
+//        controller.setTarget(targetHeading);
+//        whileActive(controller::isNotAtTarget, () -> {
+//            controller.update();
+//            drive.move(0, 0, controller.getOutput());
+//        });
+//        drive.halt();
+//        controller.reset();
+//    }
 
 }

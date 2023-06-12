@@ -1,9 +1,9 @@
 package robot;
 
 import robotparts.hardware.Drive;
-import robotparts.hardware.Intake;
-import robotparts.hardware.Lift;
-import robotparts.hardware.Outtake;
+import robotparts.unused.Intake;
+import robotparts.unused.Lift;
+import robotparts.unused.Outtake;
 import robotparts.sensors.Cameras;
 import robotparts.sensors.ColorSensors;
 import robotparts.sensors.GyroSensors;

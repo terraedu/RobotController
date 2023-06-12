@@ -13,23 +13,23 @@ public class TerraOp extends Tele {
 
     @Override
     public void initTele() {
-        Modes.driveMode.set(Drive.MEDIUM);
-        gph1.link(Button.DPAD_UP, () -> Modes.driveMode.set(Drive.FAST));
-        gph1.link(Button.DPAD_LEFT, () -> Modes.driveMode.set(Drive.MEDIUM));
-        gph1.link(Button.DPAD_RIGHT, () -> Modes.driveMode.set(Drive.MEDIUM));
-        gph1.link(Button.DPAD_DOWN, () -> Modes.driveMode.set(Drive.SLOW));
+//        Modes.driveMode.set(Drive.MEDIUM);
+//        gph1.link(Button.DPAD_UP, () -> Modes.driveMode.set(Drive.FAST));
+//        gph1.link(Button.DPAD_LEFT, () -> Modes.driveMode.set(Drive.MEDIUM));
+//        gph1.link(Button.DPAD_RIGHT, () -> Modes.driveMode.set(Drive.MEDIUM));
+//        gph1.link(Button.DPAD_DOWN, () -> Modes.driveMode.set(Drive.SLOW));
     }
 
     @Override
     public void loopTele() {
-        if(driveMode.modeIs(Drive.FAST)){
-            drive.move(gph1.ry, gph1.rx, gph1.lx);
-        } else if (driveMode.modeIs(Drive.SLOW)){
-            drive.move(0.25*gph1.ry, 0.25*gph1.rx, 0.25*gph1.lx);
-        } else if (driveMode.modeIs(Drive.MEDIUM)) {
-            drive.move(0.5*gph1.ry, 0.5*gph1.rx, 0.5*gph1.lx);
-        }
-        log.show(driveMode.get());
-        log.show(gyro.getHeading());
+//        if(driveMode.modeIs(Drive.FAST)){
+//            drive.move(gph1.ry, gph1.rx, gph1.lx);
+//        } else if (driveMode.modeIs(Drive.SLOW)){
+//            drive.move(0.25*gph1.ry, 0.25*gph1.rx, 0.25*gph1.lx);
+//        } else if (driveMode.modeIs(Drive.MEDIUM)) {
+//            drive.move(0.5*gph1.ry, 0.5*gph1.rx, 0.5*gph1.lx);
+//        }
+//        log.show(driveMode.get());
+//        log.show(gyro.getHeading());
     }
 }

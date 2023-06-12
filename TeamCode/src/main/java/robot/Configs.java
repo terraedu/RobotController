@@ -12,15 +12,17 @@ public class Configs implements RobotUser{
     RobotConfig TestConfig3 = new RobotConfig(drive, camera);
 
     /**
-     * Used for PowerPlay robot
+     * Used for Camp robot
      */
-    RobotConfig PowerPlay = new RobotConfig(drive, gyro);
+//    RobotConfig CampConfig = new RobotConfig(drive, gyro);
+
+    RobotConfig CampConfig = new RobotConfig(drive);
 
     /**
      * Current Config
      */
     public void setCurrentConfig(){
-        setConfig(PowerPlay);
+        setConfig(CampConfig);
     }
 
 }

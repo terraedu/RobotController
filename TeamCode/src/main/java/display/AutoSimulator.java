@@ -7,11 +7,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import automodules.AutoModuleUser;
-import auton.TerraAutoNormal;
-import auton.TerraAutoSafe;
 import autoutil.AutoFramework;
-import elements.Field;
-import elements.GameItems;
 import elements.Robot;
 import geometry.framework.CoordinatePlane;
 import geometry.framework.Point;

@@ -1,4 +1,4 @@
-package auton;
+package auton.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 

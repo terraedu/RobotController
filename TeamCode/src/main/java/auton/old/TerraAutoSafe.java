@@ -1,4 +1,4 @@
-package auton;
+package auton.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -7,19 +7,14 @@ import java.util.ArrayList;
 import automodules.AutoModule;
 import autoutil.AutoFramework;
 import autoutil.reactors.Reactor;
-import elements.Case;
 import elements.Field;
 import elements.FieldPlacement;
 import elements.FieldSide;
 import elements.GameItems;
-import elements.Robot;
 import geometry.framework.Point;
 import geometry.position.Pose;
 import robotparts.RobotPart;
-import util.ExceptionCatcher;
-import util.Timer;
 import util.template.Iterator;
-import util.template.Mode;
 
 import static global.General.bot;
 import static global.General.fieldPlacement;

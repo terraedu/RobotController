@@ -1,9 +1,7 @@
 package unittests.tele.framework.movement;
 
 import robotparts.electronics.positional.PMotor;
-import robotparts.hardware.Lift;
 import teleutil.button.Button;
-import teleutil.button.OnPressEventHandler;
 import unittests.tele.TeleUnitTest;
 
 import static global.General.bot;
