@@ -2,21 +2,25 @@ package robot;
 
 import static robot.RobotConfig.setConfig;
 
+// robot -> Configs
 public class Configs implements RobotUser{
-
     /**
-     * Used to test only the test part
+     * CONFIGS: This class is called the configuration file. This class tells the program of the robot what
+     * hardware is on the robot
+     *
+     * For example, if the robot has a mecanum drive train, use the 'drive' robot part and put it in the current config
+     *
+     * RobotConfig NewConfig = new RobotConfig(drive);
+     *
+     * Then in setCurrentConfig()
+     *
+     * setConfig(NewConfig);
      */
-    RobotConfig TestConfig = new RobotConfig(customTestPart);
-    RobotConfig TestConfig2 = new RobotConfig(testPart2);
-    RobotConfig TestConfig3 = new RobotConfig(drive, camera);
 
-    /**
-     * Used for Camp robot
-     */
-//    RobotConfig CampConfig = new RobotConfig(drive, gyro);
 
-    RobotConfig CampConfig = new RobotConfig(drive);
+    // TASK 1: Remove the gyro sensor from the config
+    RobotConfig CampConfig = new RobotConfig(drive, gyro);
+
 
     /**
      * Current Config

@@ -1,6 +1,7 @@
 package auton.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import java.util.ArrayList;
 
@@ -188,10 +189,11 @@ public class TerraAutoSafe extends AutoFramework {
         autoPlane.reflectX();
     }
 
-
+    @Disabled
     @Autonomous(name = "C. RIGHT SAFE", group = "auto", preselectTeleOp = "TerraOp")
     public static class RIGHT extends TerraAutoSafe {{ fieldSide = FieldSide.BLUE; fieldPlacement = FieldPlacement.LOWER; startPose = new Pose(20.5, Field.width/2.0 - Field.tileWidth - GameItems.Cone.height - 16,90); }}
 
+    @Disabled
     @Autonomous(name = "D. LEFT SAFE", group = "auto", preselectTeleOp = "TerraOp")
     public static class LEFT extends TerraAutoSafe {{ fieldSide = FieldSide.BLUE; fieldPlacement = FieldPlacement.UPPER; startPose = new Pose(20.5, Field.width/2.0 + Field.tileWidth + GameItems.Cone.height + 16,90); }}
 

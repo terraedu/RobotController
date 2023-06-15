@@ -1,6 +1,7 @@
 package auton.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import automodules.AutoModule;
 import autoutil.AutoFramework;
@@ -233,9 +234,11 @@ public class TerraAutoNormal extends AutoFramework {
      */
 
     // - 4.8s + 3.0
+    @Disabled
     @Autonomous(name = "A. RIGHT NORMAL", group = "auto", preselectTeleOp = "TerraOp")
     public static class RIGHT extends TerraAutoNormal {{ fieldSide = FieldSide.BLUE; fieldPlacement = FieldPlacement.LOWER; startPose = new Pose(20.5, Field.width/2.0 - Field.tileWidth - GameItems.Cone.height - 16,90); }}
 
+    @Disabled
     @Autonomous(name = "B. LEFT NORMAL", group = "auto", preselectTeleOp = "TerraOp")
     public static class LEFT extends TerraAutoNormal {{ fieldSide = FieldSide.BLUE; fieldPlacement = FieldPlacement.UPPER; startPose = new Pose(20.5, Field.width/2.0 + Field.tileWidth + GameItems.Cone.height + 16,90); }}
 
