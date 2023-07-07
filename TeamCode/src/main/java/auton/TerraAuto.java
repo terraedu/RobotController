@@ -1,5 +1,7 @@
 package auton;
 
+import static global.General.gph1;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 // auton -> TerraAuto
@@ -21,20 +23,22 @@ public class TerraAuto extends Auto {
         // 3. Stop the robot using the drive.halt method
 
         // < Code goes here >
-
+        drive.move(f, s, t);
+        pause(time);
+        drive.halt();
     }
 
     public void moveForwardTime(double f, double time){
         // TASK 8 Call the above method moveTime in this method
         // Call the method with inputs f and time so put 0 for the inputs s and t
-
+        moveTime(f, 0, 0, time);
         // < Code goes here >
     }
 
     public void moveStrafeTime(double s, double time){
         // TASK 8 Call the above method moveTime in this method
         // Call the method with inputs s and time so put 0 for the inputs f and t
-
+moveTime(0, s, 0, time);
         // < Code goes here >
 
     }
@@ -43,6 +47,9 @@ public class TerraAuto extends Auto {
     // Then inside the method call moveTime with inputs t and time so put 0 for f and s
 
     // < Code goes here >
+    public void moveTurnTime(double t, double time){
+        moveTime(0, 0, t, time);
+    }
 
 
 
@@ -55,6 +62,9 @@ public class TerraAuto extends Auto {
         // 4. Strafe to the right (local robot view) for 0.7 seconds at 0.7 speed
 
         // < Code goes here >
+        moveForwardTime(0.5, 1);
+        moveTurnTime(0.4, 1.5);
+        moveStrafeTime(0.7, 0.7);
 
     }
 

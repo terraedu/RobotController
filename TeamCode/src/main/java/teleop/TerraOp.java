@@ -30,8 +30,10 @@ public class TerraOp extends Tele {
         // gph1.link(Button.A, () -> drive.rb.setPower(1), () -> drive.rb.setPower(0));
         // There are 4 buttons A, B, X, Y that should be linked to 4 motors rb, lb, rf, lf
 
-        // < linking code goes here>
-
+        //gph1.link(Button.A, () -> drive.rb.setPower(1), () -> drive.rb.setPower(0));
+        //gph1.link(Button.B, () -> drive.lb.setPower(1), () -> drive.lb.setPower(0));
+        //gph1.link(Button.X, () -> drive.rf.setPower(1), () -> drive.rf.setPower(0));
+        //gph1.link(Button.Y, () -> drive.lf.setPower(1), () -> drive.lf.setPower(0));
     }
 
     @Override
@@ -49,6 +51,7 @@ public class TerraOp extends Tele {
         // left joystick x turns clockwise and counterclockwise
 
         // < drive.move code goes here >
+        drive.move(gph1.ry, gph1.rx, gph1.lx);
 
     }
 
