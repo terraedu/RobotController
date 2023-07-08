@@ -23,15 +23,11 @@ public class Drive extends RobotPart {
     // TASK 2: Create 4 uninitialized public CMotor objects named (rb, lb, rf, lf)
     // Note that rb stands for right back and lf is left front
 
-private CMotor rb, lb, rf, lf;
+    // < motors definitions go here >
 
 
     @Override
     public void init() {
-        rb = create("rb", ElectronicType.CMOTOR_REVERSE);
-        lb = create("lb", ElectronicType.CMOTOR_REVERSE);
-        rf = create("rf", ElectronicType.CMOTOR_REVERSE);
-        lf = create("lf", ElectronicType.CMOTOR_REVERSE);
 
         // TASK 3: Use the method create(String name, ElectronicType type) to initialize the motors
         // For example to initialize the CMotor (rb)
@@ -60,10 +56,6 @@ private CMotor rb, lb, rf, lf;
         // Do this for all motors
 
         // < motor movement code goes here>
-        rb.setPower(f-t+s);
-        lb.setPower(f+t-s);
-        rf.setPower(f-t-s);
-        lf.setPower(f+t+s);
 
 
     }
