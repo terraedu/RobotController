@@ -19,7 +19,12 @@ public class Configs implements RobotUser{
 
 
     // TASK 1: Remove the gyro sensor from the config
-    RobotConfig CampConfig = new RobotConfig(drive, gyro);
+
+    // Now add the arm object you created to the config
+
+    // Now add the gyro sensor
+    RobotConfig CampConfig = new RobotConfig(drive, arm,gyro);
+
 
 
     /**

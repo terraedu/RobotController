@@ -19,6 +19,7 @@ import math.polynomial.Linear;
 import robot.RobotUser;
 import robotparts.RobotPart;
 import robotparts.electronics.output.OLed;
+import robotparts.hardware.Arm;
 import teleop.TerraOp;
 import teleutil.TeleTrack;
 import teleutil.independent.Independent;
@@ -44,7 +45,58 @@ import static global.Modes.OuttakeStatus.DRIVING;
 import static global.Modes.OuttakeStatus.PLACING;
 
 
+
 public interface AutoModuleUser extends RobotUser{
+
+    // TASK 26: Create the PickUp Automodule
+    // Create a new AutoModule Object, and it should have two stages
+    // 1. First close the claw for 0.5 seconds
+    // 2. Then move the arm up at 0.8 power 90 degrees
+    AutoModule Pickup = new AutoModule(
+            arm.stageClose(0.2),
+            arm.stageArm(0.8,90)
+    );
+
+
+    // TASK 27: Make the PutDown automodule (figure out what it should do) [Hint target should be 0 not -90, why?]
+    // Then go to TerraOp
+    AutoModule PutDown = new AutoModule(
+           arm.stageArm(0.8,0),
+           arm.stageOpen(0.8)
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //
 //    CodeSeg stack = () -> {bot.addAutoModule(AutoModuleUser.ForwardStackTele(lift.stackedMode)); lift.stackedMode++;};
