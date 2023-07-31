@@ -127,14 +127,19 @@ public class TerraAuto extends Auto {
 
         moveForwardTime(0.5,1);
         moveTurnGyro(0.5,60);
+
         moveForwardTime(0.5,1);
         moveTurnGyroRP(120);
+
         moveForwardTime(0.5,1);
         moveTurnGyro(0.5,60);
+
         moveForwardTime(0.5,1);
         moveTurnGyroRP(240);
+
         moveForwardTime(0.5,1);
         moveTurnGyro(0.5,60);
+
         moveForwardTime(0.5,1);
         moveTurnGyroRP(360);
 
