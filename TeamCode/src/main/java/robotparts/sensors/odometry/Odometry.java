@@ -18,12 +18,12 @@ import util.ExceptionCatcher;
 import util.codeseg.ExceptionCodeSeg;
 import util.template.Iterator;
 
-import static robot.RobotFramework.odometryThread;
+//import static robot.RobotFramework.odometryThread;
 
 public abstract class Odometry extends RobotPart {
     protected final ArrayList<IEncoder> encoders = new ArrayList<>();
     protected final Pose currentPose = new Pose();
-    private final ExceptionCodeSeg<RuntimeException> odometryUpdateCode = this::internalUpdate;
+//    private final ExceptionCodeSeg<RuntimeException> odometryUpdateCode = this::internalUpdate;
     private boolean usingGyro = false;
 
     @Override
@@ -33,7 +33,7 @@ public abstract class Odometry extends RobotPart {
         setConstantObjects();
 //        resetObjects();
         reset();
-        odometryThread.setExecutionCode(odometryUpdateCode);
+//        odometryThread.setExecutionCode(odometryUpdateCode);
     }
 
     protected final void addEncoders(IEncoder... encoders){ this.encoders.addAll(Arrays.asList(encoders)); }
@@ -58,19 +58,19 @@ public abstract class Odometry extends RobotPart {
     public double getHeading(){ return currentPose.getAngle(); }
 
     public void setCurrentPose(Pose pose){
-        synchronized (currentPose){
+//        synchronized (currentPose){
             if (usingGyro) {
-                synchronized (gyro) {
+//                synchronized (gyro) {
                     gyro.setHeading(pose.getAngle());
-                }
+//                }
             }
             currentPose.setX(pose.getX());
             currentPose.setY(pose.getY());
             currentPose.setAngle(pose.getAngle());
-            synchronized (encoders) {
+//            synchronized (encoders) {
                 Iterator.forAll(encoders, IEncoder::updateNormal);
-            }
-        }
+//            }
+//        }
     }
 
     protected final void setCurrentPose(Point current){ synchronized (currentPose){ currentPose.setX(current.getX()); currentPose.setY(current.getY()); } }

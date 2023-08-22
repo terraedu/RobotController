@@ -71,6 +71,7 @@ public abstract class RobotPart extends StageBuilder implements RobotUser {
      */
     private volatile User currentUser = User.NONE;
 
+    private boolean created = false;
     /**
      * Method to "instantiate" the robot part
      * This automatically adds itself to the robotparts list
@@ -83,6 +84,20 @@ public abstract class RobotPart extends StageBuilder implements RobotUser {
      * Init method (to be overriden)
      */
     public abstract void init();
+
+
+    public final void create(){
+
+        created = false;
+        init();
+        created = true;
+
+    }
+
+    public boolean hasBeenCreated(){
+
+        return created;
+    }
 
     /**
      * Reset method (can be overriden)

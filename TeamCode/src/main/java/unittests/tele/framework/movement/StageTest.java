@@ -17,10 +17,10 @@ public class StageTest extends TeleUnitTest {
          * The robot should go backward (1s) then forward (1s) then backward (1s)
          * NOTE: The robotfunction waits for 1 second and then moves the robot forward at 0.3 power for 1 second
          */
-        bot.rfsHandler.addToQueue(new Stage(
+        bot.robotFunctions.addToQueue(new Stage(
                 RobotPart.exitTime(1)
         ));
-        bot.rfsHandler.addToQueue(drive.moveTime(0.3, 0,0, 1.0));
+        bot.robotFunctions.addToQueue(drive.moveTime(0.3, 0,0, 1.0));
     }
 
     /**

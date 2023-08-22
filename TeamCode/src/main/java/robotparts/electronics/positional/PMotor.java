@@ -17,7 +17,6 @@ import util.template.Precision;
 
 import static global.General.bot;
 import static global.General.fault;
-import static global.General.log;
 import static global.General.voltageScale;
 import static java.lang.Math.*;
 
@@ -196,7 +195,7 @@ public class PMotor extends Electronic {
      */
     @Override
     public boolean exitTarget(){
-        return (!motor.isBusy() || detector.isStalling()) && bot.rfsHandler.getTimer().seconds() > exitTimeDelay;
+        return (!motor.isBusy() || detector.isStalling()) && bot.robotFunctions.getTimer().seconds() > exitTimeDelay;
     }
 
     /**

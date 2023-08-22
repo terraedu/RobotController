@@ -3,7 +3,6 @@ package autoutil.generators;
 import automodules.AutoModule;
 import automodules.stage.Exit;
 import automodules.stage.Initial;
-import automodules.stage.Main;
 import automodules.stage.Stage;
 import autoutil.reactors.Reactor;
 import geometry.position.Pose;
@@ -26,7 +25,7 @@ public class AutoModuleGenerator extends Generator{
         bot.addAutoModule(automodule);
     }
     public boolean isDoneWithAutoModule(){
-        return bot.rfsHandler.getRfsQueue().isEmpty();
+        return bot.robotFunctions.getRfsQueue().isEmpty();
     }
 
     @Override

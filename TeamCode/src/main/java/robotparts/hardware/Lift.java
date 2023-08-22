@@ -98,14 +98,14 @@ public class Lift extends RobotPart {
         final Double[] val = {0.0};
         return new Stage(drive.usePart(), this.usePart(), new Initial(() -> val[0] = t.run()),
                 new Main(() -> {drive.move(fp.run(), 0,0); move(p.run());}),
-                new Exit(() -> { synchronized (val){ return val[0] == 0 || bot.rfsHandler.getTimer().seconds() > val[0]; }}), this.stop(), drive.stop(), new Stop(endCode), this.returnPart(), drive.returnPart());
+                new Exit(() -> { synchronized (val){ return val[0] == 0 || bot.robotFunctions.getTimer().seconds() > val[0]; }}), this.stop(), drive.stop(), new Stop(endCode), this.returnPart(), drive.returnPart());
     }
 
     public Stage moveTimeBackOverride(double fp, double p, double t){
         final Double[] val = {0.0};
         return new Stage(drive.usePart(), this.usePart(), new Initial(() -> val[0] = t),
                 new Main(() -> {drive.move(fp, 0,0); motorLeft.setPowerRaw(p); motorRight.setPowerRaw(p);}),
-                new Exit(() -> { synchronized (val){ return bot.rfsHandler.getTimer().seconds() > val[0]; }}), stop(), drive.stop(), this.returnPart(), drive.returnPart());
+                new Exit(() -> { synchronized (val){ return bot.robotFunctions.getTimer().seconds() > val[0]; }}), stop(), drive.stop(), this.returnPart(), drive.returnPart());
     }
 
     public Stage stageLift(double power, double target) {

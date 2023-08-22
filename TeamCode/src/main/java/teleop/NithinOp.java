@@ -133,9 +133,9 @@ public class NithinOp extends Tele {
         drive.newMove(gph1.ly, gph1.lx);
         lift.move(gph2.ry);
 
-        log.show("DriveMode", driveMode.get());
-        log.show("StackedMode", lift.stackedMode == 0 ? "N/A" : 6-lift.stackedMode);
-
+//        log.show("DriveMode", driveMode.get());
+//        log.show("StackedMode", lift.stackedMode == 0 ? "N/A" : 6-lift.stackedMode);
+            log.show("", odometry.getPose());
 
 
 

@@ -8,9 +8,7 @@ import automodules.AutoModule;
 import elements.FieldPlacement;
 import elements.FieldSide;
 import geometry.framework.CoordinatePlane;
-import geometry.position.Pose;
 import global.Constants;
-import global.General;
 import math.polynomial.Linear;
 import robotparts.RobotPart;
 import robotparts.electronics.input.IEncoder;
@@ -23,7 +21,6 @@ import util.template.Iterator;
 import util.template.Precision;
 
 import static global.General.*;
-import static robot.RobotUser.gyro;
 import static robot.RobotUser.odometry;
 
 public class RobotFramework {
@@ -39,12 +36,14 @@ public class RobotFramework {
     /**
      * The terrathread robotFunctionsThread is used for running robotfunction related tasks,
      * it is usually not necessary to access this directly
-     */
-    public static TerraThread robotFunctionsThread;
+     *DEPRECATED
+    */
+    //public static TerraThread robotFunctionsThread;
     /**
      * The odometry thread is used to update odometry
+     * DEPRECATED
      */
-    public static TerraThread odometryThread;
+//    public static TerraThread odometryThread;
     /**
      * Background thread
      */
@@ -54,9 +53,9 @@ public class RobotFramework {
      */
     public static TerraThread independentThread;
     /**
-     * rfsHandler is used for running rfs code. Stages can be added to the queue
+     * robotFunctions is used for running robotFunctions code. Stages can be added to the queue
      */
-    public RobotFunctions rfsHandler;
+    public RobotFunctions robotFunctions;
 
     /**
      * Background functions handler
@@ -84,15 +83,15 @@ public class RobotFramework {
         TerraThread.resetAllThreads();
         configs.setCurrentConfig();
         localPlane = new CoordinatePlane();
-        rfsHandler = new RobotFunctions();
+        robotFunctions = new RobotFunctions();
         backHandler = new BackgroundFunctions();
         indHandler = new IndependentFunctions();
         machine = new Machine();
-        robotFunctionsThread = new TerraThread("RobotFunctionsThread", Constants.ROBOT_FUNCTIONS_REFRESH_RATE);
-        odometryThread = new TerraThread("OdometryThread", Constants.ODOMETRY_THREAD_REFRESH_RATE);
+        //robotFunctionsThread = new TerraThread("RobotFunctionsThread", Constants.ROBOT_FUNCTIONS_REFRESH_RATE);
+//        odometryThread = new TerraThread("OdometryThread", Constants.ODOMETRY_THREAD_REFRESH_RATE);
         backgroundThread = new TerraThread("BackgroundThread", Constants.BACKGROUND_THREAD_REFRESH_RATE);
         independentThread = new TerraThread("IndependentThread", Constants.INDEPENDENT_THREAD_REFRESH_RATE);
-        rfsHandler.init();
+        robotFunctions.init();
         backHandler.init();
         indHandler.init();
     }
@@ -105,7 +104,7 @@ public class RobotFramework {
     public void init(){
         setUser(mainUser);
         IEncoder.setEncoderReadingAuto();
-        Iterator.forAll(allRobotParts, RobotPart::init);
+        Iterator.forAll(allRobotParts, RobotPart::create);
         TerraThread.startAllThreads();
         gameTime.reset();
     }
@@ -114,11 +113,21 @@ public class RobotFramework {
      * Start, starts the robotfunctions by "resuming" (resume and start are the same thing)
      */
     public void start() {
-        rfsHandler.resume();
+        robotFunctions.resume();
+    }
+
+    public void updateOdo(){
+
+        if (odometry.hasBeenCreated()){
+            odometry.update();
+        }
+
     }
 
     public void update(){
         checkAccess(mainUser);
+        updateRobotFunctions();
+        updateOdo();
         TerraThread.checkAllThreadsForExceptions();
         machine.update();
     }
@@ -143,7 +152,7 @@ public class RobotFramework {
      * @param autoModule
      */
     public void addAutoModule(AutoModule autoModule){
-        rfsHandler.addAutoModule(autoModule);
+        robotFunctions.addAutoModule(autoModule);
     }
 
     public void addAutoModuleWithCancel(AutoModule autoModule){
@@ -171,10 +180,10 @@ public class RobotFramework {
     /**
      * Cancel methods
      */
-    public void cancelAutoModules(){ rfsHandler.emptyQueue(); setUserMainAndHalt();  }
+    public void cancelAutoModules(){ robotFunctions.emptyQueue(); setUserMainAndHalt();  }
     public void cancelBackgroundTasks(){  backHandler.emptyTaskList(); setUserMainAndHalt(); }
     public void cancelIndependents(){ indHandler.stopCurrentIndependent(); setUserMainAndHalt(); }
-    public void cancelMovements(){ rfsHandler.emptyQueue(); indHandler.stopCurrentIndependent(); machine.cancel(); setUserMainAndHalt(); }
+    public void cancelMovements(){ robotFunctions.emptyQueue(); indHandler.stopCurrentIndependent(); machine.cancel(); setUserMainAndHalt(); }
     public void cancelAll(){ cancelMovements(); cancelBackgroundTasks();  }
 
     public boolean isMachineNotRunning(){ return !machine.isRunning(); }
@@ -202,12 +211,18 @@ public class RobotFramework {
     /**
      * Resume the automodules
      */
-    public void resumeAutoModules(){ rfsHandler.resume(); }
+    public void resumeAutoModules(){ robotFunctions.resume(); }
 
     /**
      * Pause the automodules
      */
-    public void pauseAutoModules() { rfsHandler.pauseNow(); }
+    public void pauseAutoModules() { robotFunctions.pauseNow(); }
+
+    public void updateRobotFunctions(){
+
+        robotFunctions.update();
+
+    }
 
     /**
      * Add an independent to run

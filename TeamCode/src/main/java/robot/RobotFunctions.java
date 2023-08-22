@@ -13,7 +13,7 @@ import automodules.stage.Stage;
 import util.template.Iterator;
 
 import static global.General.*;
-import static robot.RobotFramework.robotFunctionsThread;
+//import static robot.RobotFramework.robotFunctionsThread;
 
 public class RobotFunctions {
 
@@ -30,7 +30,7 @@ public class RobotFunctions {
     /**
      * Define the updateCode codeseg to contain the code that will run in the Thread
      */
-    public ExceptionCodeSeg<RuntimeException> updateCode = () -> {
+    public void update() throws RuntimeException{
         /**
          * Check if the robot has access to move for robotfunctions user or ROFU
          */
@@ -38,7 +38,7 @@ public class RobotFunctions {
         /**
          * If the robotfunctions queue is not empty
          */
-        synchronized (rfsQueue) {
+//        synchronized (rfsQueue) {
             if (!rfsQueue.isEmpty()) {
                 /**
                  * Get the oldest stage
@@ -50,9 +50,9 @@ public class RobotFunctions {
                  */
                 if (Objects.requireNonNull(s).hasNotStartedYet()) {
                     s.start();
-                    synchronized (timer) {
+//                    synchronized (timer) {
                         timer.reset();
-                    }
+//                    }
                 }
                 s.loop();
                 /**
@@ -62,12 +62,13 @@ public class RobotFunctions {
                 if (s.shouldStop() && !s.isPause()) {
                     s.runOnStop();
                     rfsQueue.poll();
-                } else if (s.isPause()) {
-                    robotFunctionsThread.setStatus(Status.IDLE);
                 }
-            } else {
-                robotFunctionsThread.setStatus(Status.IDLE);
-            }
+//                else if (s.isPause()) {
+//                    robotFunctionsThread.setStatus(Status.IDLE);
+//                }
+//            } else {
+//                robotFunctionsThread.setStatus(Status.IDLE);
+//            }
         }
     };
 
@@ -79,7 +80,7 @@ public class RobotFunctions {
     public void resume() {
         if (!rfsQueue.isEmpty() && rfsQueue.peek().isPause()) {
             rfsQueue.poll();
-            robotFunctionsThread.setStatus(Status.ACTIVE);
+//            robotFunctionsThread.setStatus(Status.ACTIVE);
         }
     }
 
@@ -89,7 +90,7 @@ public class RobotFunctions {
      */
     public void init(){
         addToQueue(new Stage(true));
-        robotFunctionsThread.setExecutionCode(updateCode);
+//        robotFunctionsThread.setExecutionCode(updateCode);
     }
 
     /**
@@ -99,10 +100,10 @@ public class RobotFunctions {
      */
     public final void addAutoModule(AutoModule autoModule){
         autoModule.runStartCode();
-        synchronized (rfsQueue) {
-            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
+//        synchronized (rfsQueue) {
+//            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
             rfsQueue.addAll(autoModule.getStages());
-        }
+//        }
     }
 
     /**
@@ -111,10 +112,10 @@ public class RobotFunctions {
      * @link addAutoModule
      */
     public final void addToQueue(Stage s) {
-        synchronized (rfsQueue) {
-            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
+//        synchronized (rfsQueue) {
+//            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
             rfsQueue.add(s);
-        }
+//        }
     }
 
     /**
@@ -136,13 +137,13 @@ public class RobotFunctions {
      * Empty the queue and reset the timer
      */
     public final void emptyQueue(){
-        synchronized (rfsQueue) {
+//        synchronized (rfsQueue) {
             if (!rfsQueue.isEmpty()) {
                 Stage s = rfsQueue.peek();
                 rfsQueue.clear();
                 assert s != null;
                 s.runOnStop();
-            }
+//            }
         }
     }
 

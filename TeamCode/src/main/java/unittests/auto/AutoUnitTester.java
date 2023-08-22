@@ -23,7 +23,7 @@ import util.condition.Status;
 
 //@Disabled
 @SuppressWarnings("ALL")
-@Disabled
+
 @Autonomous(name = "AutoUnitTester", group = "UnitTests")
 public class AutoUnitTester extends Auto implements UnitTester {
     /**
@@ -52,7 +52,7 @@ public class AutoUnitTester extends Auto implements UnitTester {
 
 //        add(new VoltageScaleCalib());
 //        add(new VuforiaTest());
-        add(new OdometryCalib2());
+//        add(new OdometryCalib2());
 //        add(new RestPowerCalib());
 //        add(new ArmRestPowerCalib());
 
@@ -69,7 +69,7 @@ public class AutoUnitTester extends Auto implements UnitTester {
 //        add(new DRPTest());
 //
 //
-//        add(new OdometryTest.ForwardTest());
+        add(new OdometryTest.ForwardTest());
 //        add(new OdometryTest.StrafeTest());
 //        add(new OdometryTest.TurnTest());
 

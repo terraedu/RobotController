@@ -12,12 +12,12 @@ import util.codeseg.ExceptionCodeSeg;
 import util.template.Precision;
 
 import static global.General.hardwareMap;
-import static robot.RobotFramework.odometryThread;
+//import static robot.RobotFramework.odometryThread;
 
 public class NewOdometry extends RobotPart {
 
     public double x, y, h, xo, yo, startX, startY, startY2, lastX, lastY, lastY2;
-    public final ExceptionCodeSeg<RuntimeException> odometryUpdateCode = this::update;
+//    public final ExceptionCodeSeg<RuntimeException> odometryUpdateCode = this::update;
     public DcMotor yOdo;
     public DcMotor xOdo;
     public DcMotor y2Odo;
@@ -31,10 +31,11 @@ public class NewOdometry extends RobotPart {
         yOdo = hardwareMap.get(DcMotor.class, "fl");
         y2Odo = hardwareMap.get(DcMotor.class, "br");
         reset();
-        odometryThread.setExecutionCode(odometryUpdateCode);
+//        odometryThread.setExecutionCode(odometryUpdateCode);
     }
 
-    public void update(){
+    public void update() throws RuntimeException{
+
         double currentX = getEncX();
         double currentY = getEncY();
 //        double currentY2 = getEncY2();

@@ -22,17 +22,17 @@ public class RobotFunctionsTest extends TeleUnitTest {
          * Move the robot forward (1s) , then backward (1s)
          * NOTE: This uses custom stage components
          */
-        bot.rfsHandler.addToQueue(new Stage(
+        bot.robotFunctions.addToQueue(new Stage(
                 new Initial(() -> drive.switchUser(User.ROFU)),
                 new Main(() -> drive.move(0.3, 0, 0)),
-                new Exit(() -> bot.rfsHandler.getTimer().seconds() > 1),
+                new Exit(() -> bot.robotFunctions.getTimer().seconds() > 1),
                 new Stop(() -> drive.move(0,0, 0)),
                 new Stop(() -> drive.switchUser(mainUser))
         ));
-        bot.rfsHandler.addToQueue(new Stage(
+        bot.robotFunctions.addToQueue(new Stage(
                 new Initial(() -> drive.switchUser(User.ROFU)),
                 new Main(() -> drive.move(-0.3, 0, 0)),
-                new Exit(() -> bot.rfsHandler.getTimer().seconds() > 1),
+                new Exit(() -> bot.robotFunctions.getTimer().seconds() > 1),
                 new Stop(() -> drive.move(0,0, 0)),
                 new Stop(() -> drive.switchUser(mainUser))
         ));

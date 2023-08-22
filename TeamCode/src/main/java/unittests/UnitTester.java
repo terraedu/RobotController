@@ -90,6 +90,12 @@ public interface UnitTester {
         selector.addItem(new Item<>(test.getClass().getSimpleName(), test));
     }
 
+    default void clearAll(){
+
+        selector.clearItems();
+
+    }
+
     /**
      * Checks for duplicate tests in the selector
      * @param test

@@ -1,7 +1,5 @@
 package automodules;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
 
 import automodules.stage.Exit;
@@ -9,7 +7,6 @@ import automodules.stage.Initial;
 import automodules.stage.Main;
 import automodules.stage.Stage;
 import automodules.stage.Stop;
-import robot.BackgroundTask;
 import robotparts.RobotPart;
 import robotparts.electronics.positional.PMotor;
 import robotparts.electronics.positional.PServo;
@@ -17,7 +14,6 @@ import util.Timer;
 import util.codeseg.CodeSeg;
 import util.codeseg.ParameterCodeSeg;
 import util.codeseg.ReturnCodeSeg;
-import util.template.Iterator;
 
 import static global.General.bot;
 
@@ -27,7 +23,7 @@ public class StageBuilder {
      * @param s
      * @return exit
      */
-    public static Exit exitTime(double s){return new Exit(() -> bot.rfsHandler.getTimer().seconds() > s);}
+    public static Exit exitTime(double s){return new Exit(() -> bot.robotFunctions.getTimer().seconds() > s);}
 
     /**
      * Exit always
@@ -90,13 +86,13 @@ public class StageBuilder {
     protected void move(double fp, double sp, double tp){}
     protected Main main(double fp, double sp, double tp){ return new Main(() -> move(fp, sp, tp)); }
     protected Stage moveTime(double fp, double sp, double tp, double t){ return new Stage(usePart(), main(fp, sp, tp), exitTime(t), stop(), returnPart()); }
-    protected Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t){ return new Stage(usePart(), main(fp, sp, tp), new Exit(() -> bot.rfsHandler.getTimer().seconds() > t.run()), stop(), returnPart()); }
+    protected Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t){ return new Stage(usePart(), main(fp, sp, tp), new Exit(() -> bot.robotFunctions.getTimer().seconds() > t.run()), stop(), returnPart()); }
     protected AutoModule MoveTime(double fp, double sp, double tp, double t){ return new AutoModule(moveTime(fp, sp, tp, t)); }
 
     protected void move(double p){}
     protected Main main(double p){ return new Main(() -> move(p)); }
     protected Stage moveTime(double p, double t){ return new Stage(usePart(), main(p), exitTime(t), stop(), returnPart()); }
-    protected Stage moveTime(double p, ReturnCodeSeg<Double> t){ final Double[] val = {0.0}; return new Stage(usePart(), new Initial(() -> val[0] = t.run()), main(p), new Exit(() -> { synchronized (val){ return bot.rfsHandler.getTimer().seconds() > val[0]; }}), stop(), returnPart()); }
+    protected Stage moveTime(double p, ReturnCodeSeg<Double> t){ final Double[] val = {0.0}; return new Stage(usePart(), new Initial(() -> val[0] = t.run()), main(p), new Exit(() -> { synchronized (val){ return bot.robotFunctions.getTimer().seconds() > val[0]; }}), stop(), returnPart()); }
     protected Stage moveNow(double p){ return new Stage(usePart(), main(p), exitAlways(), stop(), returnPart()); }
     protected AutoModule MoveTime(double p, double t){ return new AutoModule(moveTime(p, t)); }
 
@@ -109,7 +105,7 @@ public class StageBuilder {
     protected final Stage customTimeAfter(CodeSeg m, double t){
         Boolean[] exit = {false};
         return new Stage(usePart(), new Initial(() -> {exit[0] = false;}), new Main(()-> {
-            if(bot.rfsHandler.getTimer().seconds() > (t != 0 ? t : 0.05)){
+            if(bot.robotFunctions.getTimer().seconds() > (t != 0 ? t : 0.05)){
                 exit[0] = true;
                 m.run();
             }
@@ -125,7 +121,7 @@ public class StageBuilder {
 //        }),  t < 0.05 ? RobotPart.exitAlways() : new Exit(() -> exit[0]) , returnPart()); }
     protected final Stage customContinuousTime(ReturnCodeSeg<PServo> servo1, ReturnCodeSeg<PServo> servo2, String target, double t){ return new Stage(usePart(), new Initial(() -> {servo1.run().setContinuousTarget(target); servo2.run().setContinuousTarget(target);}), new Main(() -> {servo1.run().moveContinuous(t); servo2.run().moveContinuous(t);}), RobotPart.exitTime(t), returnPart());}
 
-    protected final Stage customContinuousTime(ReturnCodeSeg<PServo> servo1, ReturnCodeSeg<PServo> servo2, String target, double t, CodeSeg code, double t2){ return new Stage(usePart(), new Initial(() -> {servo1.run().setContinuousTarget(target); servo2.run().setContinuousTarget(target);}), new Main(() -> {servo1.run().moveContinuous(t); servo2.run().moveContinuous(t); if(bot.rfsHandler.getTimer().seconds() > t2){code.run();}}), RobotPart.exitTime(t), returnPart());}
+    protected final Stage customContinuousTime(ReturnCodeSeg<PServo> servo1, ReturnCodeSeg<PServo> servo2, String target, double t, CodeSeg code, double t2){ return new Stage(usePart(), new Initial(() -> {servo1.run().setContinuousTarget(target); servo2.run().setContinuousTarget(target);}), new Main(() -> {servo1.run().moveContinuous(t); servo2.run().moveContinuous(t); if(bot.robotFunctions.getTimer().seconds() > t2){code.run();}}), RobotPart.exitTime(t), returnPart());}
 
 
     protected void setTarget(double target){}
