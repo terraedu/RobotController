@@ -66,7 +66,7 @@ public class AprilTagOp extends LinearOpMode {
                 sleep(20);
             }
         }
-
+//
         // Save more CPU resources when camera is no longer needed.
         visionPortal.close();
 
