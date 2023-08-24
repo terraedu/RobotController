@@ -2,7 +2,7 @@ package autoutil.vision;
 
 import org.firstinspires.ftc.vision.apriltag.*;
 
-public class AprilTagTest {
+public class AprilTag {
     public static void main(String[] args) {
 //        AprilTagProcessor myAprilTagProcessor;
 //        // Create the AprilTag processor and assign it to a variable.

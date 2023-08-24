@@ -1,3 +1,4 @@
+//MADE A METHOD IN April Tag CLASS IN VISION
 package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -22,6 +23,7 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp(name = "AprilTagOp", group = "Concept")
+@Deprecated
 public class AprilTagOp extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
