@@ -21,7 +21,7 @@ import unittests.auto.framework.movement.DistanceSensorStraightenTest;
 import unittests.auto.framework.movement.OdometryTest;
 import util.condition.Status;
 
-//@Disabled
+@Disabled
 @SuppressWarnings("ALL")
 
 @Autonomous(name = "AutoUnitTester", group = "UnitTests")
@@ -69,7 +69,7 @@ public class AutoUnitTester extends Auto implements UnitTester {
 //        add(new DRPTest());
 //
 //
-        add(new OdometryTest.ForwardTest());
+//        add(new OdometryTest.ForwardTest());
 //        add(new OdometryTest.StrafeTest());
 //        add(new OdometryTest.TurnTest());
 

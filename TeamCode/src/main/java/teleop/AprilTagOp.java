@@ -1,6 +1,8 @@
 //MADE A METHOD IN April Tag CLASS IN VISION
 package teleop;
 
+import static org.firstinspires.ftc.vision.apriltag.AprilTagProcessor.PoseSolver.APRILTAG_BUILTIN;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -27,7 +30,7 @@ import java.util.List;
 public class AprilTagOp extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-
+    private static final int DESIRED_TAG_ID = -1;
     /**
      * {@link #aprilTag} is the variable to store our instance of the AprilTag processor.
      */
@@ -79,14 +82,19 @@ public class AprilTagOp extends LinearOpMode {
      */
     private void initAprilTag() {
 
+        
+
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
+
                 .setDrawTagID(true)       // Default: true, for all detections.
+
                 //.setDrawTagOutline(true)  // Default: true, when tag size was provided (thus eligible for pose estimation).
                 .setDrawAxes(true)        // Default: false.
                 .setDrawCubeProjection(true)        // Default: false.
-                .setDrawTagOutline(true)                //.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
-                //.setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
+                .setDrawTagOutline(true)
+                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
                 //TODO if angle unit degrees doesn't work, import the other one(not import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit)
                 .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
 
@@ -128,6 +136,7 @@ public class AprilTagOp extends LinearOpMode {
 
         // Build the Vision Portal, using the above settings.
         visionPortal = builder.build();
+
 
         // Disable or re-enable the aprilTag processor at any time.
         //visionPortal.setProcessorEnabled(aprilTag, true);

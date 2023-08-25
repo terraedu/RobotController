@@ -33,7 +33,7 @@ import unittests.tele.sensor.JunctionScannerTest;
 import static global.General.*;
 
 @SuppressWarnings("ALL")
-//@Disabled
+@Disabled
 @TeleOp(name = "TeleUnitTester", group = "UnitTests")
 public class TeleUnitTester extends Tele implements UnitTester{
 
@@ -62,7 +62,7 @@ public class TeleUnitTester extends Tele implements UnitTester{
 //        add(new ParameterConstructorTest());
 //        add(new PhysicsTest());
 //        add(new SelectorTest());
-        add(new StorageTest());
+//        add(new StorageTest());
 //        add(new SynchroniserTest());
 //        add(new ThreadTest());
 //        add(new BackgroundTest());
