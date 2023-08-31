@@ -97,7 +97,7 @@ public class TerraAutoRam extends AutoFramework {
         });
         addConcurrentAutoModuleWithCancel(Forward, 1.2);
         addTimedSetpoint(1.0, 0.4, 1.0, 0, 120, 0);
-        addSegment(0.5, nStopNewSP, 0, 73, 0);
+            addSegment(0.5, nStopNewSP, 0, 73, 0);
         customCase(() -> {
             addTimedSetpoint(1.0, 0.5,2.0,-58, 73, 0);
         }, () -> {
