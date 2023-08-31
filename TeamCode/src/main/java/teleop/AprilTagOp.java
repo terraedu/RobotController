@@ -3,6 +3,8 @@ package teleop;
 
 import static org.firstinspires.ftc.vision.apriltag.AprilTagProcessor.PoseSolver.APRILTAG_BUILTIN;
 
+import android.util.Size;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -89,7 +91,7 @@ public class AprilTagOp extends LinearOpMode {
 
                 .setDrawTagID(true)       // Default: true, for all detections.
 
-                //.setDrawTagOutline(true)  // Default: true, when tag size was provided (thus eligible for pose estimation).
+//                .setDrawTagOutline(true)  // Default: true, when tag size was provided (thus eligible for pose estimation).
                 .setDrawAxes(true)        // Default: false.
                 .setDrawCubeProjection(true)        // Default: false.
                 .setDrawTagOutline(true)
@@ -118,18 +120,18 @@ public class AprilTagOp extends LinearOpMode {
         }
 
         // Choose a camera resolution. Not all cameras support all resolutions.
-        //builder.setCameraResolution(new Size(640, 480));
+        builder.setCameraResolution(new Size(640, 480));
 
         // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
-        //builder.enableCameraMonitoring(true);
+        builder.enableCameraMonitoring(true);
 
         // Set the stream format; MJPEG uses less bandwidth than default YUY2.
-        //builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+        builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
 
         // Choose whether or not LiveView stops if no processors are enabled.
         // If set "true", monitor shows solid orange screen if no processors enabled.
         // If set "false", monitor shows camera view without annotations.
-        //builder.setAutoStopLiveView(false);
+        builder.setAutoStopLiveView(false);
 
         // Set and enable the processor.
         builder.addProcessor(aprilTag);
@@ -139,7 +141,7 @@ public class AprilTagOp extends LinearOpMode {
 
 
         // Disable or re-enable the aprilTag processor at any time.
-        //visionPortal.setProcessorEnabled(aprilTag, true);
+        visionPortal.setProcessorEnabled(aprilTag, true);
 
     }   // end method initAprilTag()
 
