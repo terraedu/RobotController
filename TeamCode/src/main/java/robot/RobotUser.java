@@ -6,7 +6,7 @@ import robotparts.hardware.Drive;
 import robotparts.unused.Intake;
 import robotparts.hardware.Lift;
 import robotparts.hardware.Outtake;
-import robotparts.sensors.Cameras;
+//import robotparts.sensors.Cameras;
 import robotparts.sensors.ColorSensors;
 import robotparts.sensors.GyroSensors;
 import robotparts.unused.DistanceSensors;
@@ -29,7 +29,7 @@ public interface RobotUser {
 //    Leds leds = new Leds();
     DistanceSensors distanceSensors = new DistanceSensors();
     GyroSensors gyro = new GyroSensors();
-    Cameras camera = new Cameras();
+//    Cameras camera = new Cameras();
 
 //    Odometry odometry = new TwoOdometry();
 //    ThreeOdometry odometry = new ThreeOdometry(); // TOD 5 EXTEND THIS CONCEPT TO ALL ROBOT PARTS

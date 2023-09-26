@@ -33,7 +33,7 @@ import robot.RobotUser;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.continuous.CServo;
-import robotparts.electronics.input.ICamera;
+//import robotparts.electronics.input.ICamera;
 import robotparts.electronics.input.IColor;
 import robotparts.electronics.input.IDistance;
 import robotparts.electronics.input.IEncoder;
@@ -155,9 +155,9 @@ public abstract class RobotPart extends StageBuilder implements RobotUser {
             case PSERVO_REVERSE:
                 return new PServo(hardwareMap.get(Servo.class, name), Servo.Direction.REVERSE);
             case ICAMERA_EXTERNAL:
-                return new ICamera(hardwareMap.get(WebcamName.class, name), ICamera.CameraType.EXTERNAL, OpenCvCameraRotation.UPRIGHT);
+//                return new ICamera(hardwareMap.get(WebcamName.class, name), ICamera.CameraType.EXTERNAL, OpenCvCameraRotation.UPRIGHT);
             case ICAMERA_INTERNAL:
-                return new ICamera(ICamera.CameraType.INTERNAL, OpenCvCameraRotation.UPRIGHT);
+//                return new ICamera(ICamera.CameraType.INTERNAL, OpenCvCameraRotation.UPRIGHT);
             case ICOLOR:
                 return new IColor(hardwareMap.get(ColorRangeSensor.class, name));
             case IDISTANCE:

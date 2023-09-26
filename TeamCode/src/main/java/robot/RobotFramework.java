@@ -21,6 +21,7 @@ import util.template.Iterator;
 import util.template.Precision;
 
 import static global.General.*;
+import static robot.RobotUser.drive;
 import static robot.RobotUser.odometry;
 
 public class RobotFramework {
@@ -126,7 +127,9 @@ public class RobotFramework {
 
     public void update(){
         checkAccess(mainUser);
-        updateRobotFunctions();
+   //     updateRobotFunctions();
+
+//        log.show(allRobotParts.size());
         updateOdo();
         TerraThread.checkAllThreadsForExceptions();
         machine.update();

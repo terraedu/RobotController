@@ -28,7 +28,7 @@ import unittests.tele.framework.ThreadTest;
 import unittests.tele.framework.movement.OdometryTest;
 import unittests.tele.other.GeometryTest;
 import unittests.tele.sensor.DistanceTest;
-import unittests.tele.sensor.JunctionScannerTest;
+//import unittests.tele.sensor.JunctionScannerTest;
 
 import static global.General.*;
 

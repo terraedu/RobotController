@@ -123,7 +123,7 @@ public class AprilTagOp extends LinearOpMode {
         builder.setCameraResolution(new Size(640, 480));
 
         // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
-        builder.enableCameraMonitoring(true);
+//        builder.enableCameraMonitoring(true);
 
         // Set the stream format; MJPEG uses less bandwidth than default YUY2.
         builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);

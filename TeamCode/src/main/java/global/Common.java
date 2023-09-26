@@ -7,7 +7,7 @@ import elements.FieldPlacement;
 import elements.FieldSide;
 import robot.RobotFramework;
 import robot.TerraBot;
-import robotparts.sensors.Cameras;
+//import robotparts.sensors.Cameras;
 import teleutil.GamepadHandler;
 import debugging.Fault;
 import debugging.Logger;
@@ -52,7 +52,7 @@ public interface Common{
         /**
          * Set the view ID
          */
-        cameraMonitorViewId = Cameras.getCameraMonitorViewId();
+//        cameraMonitorViewId = Cameras.getCameraMonitorViewId();
         /**
          * Set the voltage scale
          */
