@@ -14,7 +14,7 @@ public class TerraAutoNormal extends AutoFramework {
 
     private double x, s;
 
-    public static void normalInit(AutoFramework auto){
+public static void normalInit(AutoFramework auto){
         auto.setConfig(NonstopConfig);
         bot.saveLocationOnField();
         lift.maintain();

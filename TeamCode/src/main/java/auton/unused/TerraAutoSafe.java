@@ -11,7 +11,7 @@ import static global.Modes.Height.HIGH;
 import static global.Modes.Height.LOW;
 import static global.Modes.Height.MIDDLE;
 
-public class TerraAutoSafe extends AutoFramework {
+public class  TerraAutoSafe extends AutoFramework {
 
     private double x, s;
 
