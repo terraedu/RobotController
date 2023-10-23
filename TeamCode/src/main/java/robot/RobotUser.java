@@ -1,5 +1,6 @@
 package robot;
 
+import robotparts.Electronic;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
@@ -38,7 +39,7 @@ public interface RobotUser {
      * UNUSED
      */
 
-    Intake intake = new Intake();
+    Electronic intake = new Intake();
     TouchSensors touchSensors = new TouchSensors();
 
     ColorSensors color = new ColorSensors();

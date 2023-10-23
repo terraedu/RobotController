@@ -44,11 +44,11 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        motorRight = create("lil", ElectronicType.PMOTOR_FORWARD);
-        motorLeft = create("lir", ElectronicType.PMOTOR_REVERSE);
+        motorRight = create("lil", ElectronicType.PMOTOR_REVERSE);
+        motorLeft = create("lir", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 0.66, 5);
-        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 0.66, 5);
+        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 0, 5);
+        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 0, 5);
         motorRight.usePositionHolder(0.18, 0.1);
         motorLeft.usePositionHolder(0.18, 0.1);
         heightMode.set(Modes.Height.HIGH);
@@ -68,8 +68,8 @@ public class Lift extends RobotPart {
 
     @Override
     public void move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
-        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
+        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
     }
 
     public void adjustHolderTarget(double delta){

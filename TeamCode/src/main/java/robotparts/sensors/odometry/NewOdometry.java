@@ -52,9 +52,9 @@ public class NewOdometry extends RobotPart {
 
 //        h += deltaHeading;
 
-   //     gyro.update();
+//        gyro.update();
 
-     //   h = gyro.getHeading();
+//        h = gyro.getHeading();
 
 //        precision.throttle(() -> h = gyro.getHeading(), 100);
 
@@ -62,7 +62,7 @@ public class NewOdometry extends RobotPart {
 
 
 //        gyro.update();
-//        setHeading(gyro.getHeading());
+//     //   setHeading(gyro.getHeading());
 
 
         Vector localDelta = new Vector(deltaX, deltaY);
@@ -112,16 +112,16 @@ public class NewOdometry extends RobotPart {
 
 
     public void reset(Pose pose){
-       // gyro.reset();
+//        gyro.reset();
         precision.reset();
         x = pose.getX(); y = pose.getY(); h = pose.getAngle(); xo = pose.getX(); yo = pose.getY();
-       // gyro.reset();
+//        gyro.reset();
         startX = xOdo.getCurrentPosition();
         startY = -yOdo.getCurrentPosition();
         startY2 = -y2Odo.getCurrentPosition();
         lastX = 0;
         lastY = 0;
         lastY2 = 0;
-       // gyro.setHeading(pose.getAngle());
+//        gyro.setHeading(pose.getAngle());
     }
 }

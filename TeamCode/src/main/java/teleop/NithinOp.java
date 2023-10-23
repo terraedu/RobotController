@@ -41,7 +41,8 @@ public class NithinOp extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-
+        gph1.link(RIGHT_TRIGGER, () -> lift.adjustHolderTarget(2.5));
+        gph1.link(LEFT_TRIGGER, () -> lift.adjustHolderTarget(-2.5));
 
 
         /**
@@ -59,12 +60,16 @@ public class NithinOp extends Tele {
     @Override
     public void startTele() {
         lift.reset();
+
     }
 
     @Override
     public void loopTele() {
+        gph1.link(BUTTON_B)
 
-        drive.newMove(gph1.ly, gph1.lx);
+        drive.newMove(gph1.ly, gph1.rx);
+        lift.move(gph2.ry);
+
 
 
 //        log.show("DriveMode", driveMode.get());

@@ -12,6 +12,7 @@ import global.Constants;
 import math.polynomial.Linear;
 import robotparts.RobotPart;
 import robotparts.electronics.input.IEncoder;
+import robotparts.sensors.odometry.Odometry;
 import teleutil.independent.Independent;
 import teleutil.independent.IndependentFunctions;
 import teleutil.independent.Machine;
@@ -126,11 +127,14 @@ public class RobotFramework {
     }
 
     public void update(){
+
         checkAccess(mainUser);
+
    //     updateRobotFunctions();
 
 //        log.show(allRobotParts.size());
         updateOdo();
+
         TerraThread.checkAllThreadsForExceptions();
         machine.update();
     }
