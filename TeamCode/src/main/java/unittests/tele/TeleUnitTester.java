@@ -50,7 +50,7 @@ public class TeleUnitTester extends Tele implements UnitTester{
          */
         clearAll();
 //        Works as of 4.23.0
-//        add(new AccessTest());
+        add(new AccessTest());
 //        add(new AutoModuleInitialTest());
 //        add(new CommonTest());
 //        add(new DecisionTest());
@@ -67,7 +67,7 @@ public class TeleUnitTester extends Tele implements UnitTester{
 //        add(new ThreadTest());
 //        add(new BackgroundTest());
 
-        add(new OdometryTest());
+//        add(new OdometryTest());
 
 
         /**

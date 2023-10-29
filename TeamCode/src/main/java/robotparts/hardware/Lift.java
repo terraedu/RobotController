@@ -28,8 +28,8 @@ public class Lift extends RobotPart {
     public PMotor motorRight;
     public PMotor motorLeft;
 
-    public static final double maxPosition = 61;
-    public final double defaultCutoffPosition = 6;
+    public static final double maxPosition = 60;
+    public final double defaultCutoffPosition = 1;
     public volatile double currentCutoffPosition = defaultCutoffPosition;
     public int stackedMode = 0;
     public boolean circuitMode = false;
@@ -47,10 +47,10 @@ public class Lift extends RobotPart {
         motorRight = create("lil", ElectronicType.PMOTOR_REVERSE);
         motorLeft = create("lir", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 0, 5);
-        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 0, 5);
-        motorRight.usePositionHolder(0.18, 0.1);
-        motorLeft.usePositionHolder(0.18, 0.1);
+        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 1, 30);
+        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.51, 1, 30);
+        motorRight.usePositionHolder(0.13,0.1);
+        motorLeft.usePositionHolder(0.13, 0.1);
         heightMode.set(Modes.Height.HIGH);
         circuitMode = false;
         stacked = false;
@@ -68,8 +68,8 @@ public class Lift extends RobotPart {
 
     @Override
     public void move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
-        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0);
+        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0);
     }
 
     public void adjustHolderTarget(double delta){

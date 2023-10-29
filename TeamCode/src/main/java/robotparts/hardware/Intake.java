@@ -2,20 +2,21 @@ package robotparts.hardware;
 
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
+import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.positional.PMotor;
 
 public class Intake extends RobotPart {
 
-    public PMotor intake;
+    public CMotor intake;
 
 
     @Override
     public void init() {
-        intake = create("intake", ElectronicType.PMOTOR_FORWARD);
+        intake = create("intake", ElectronicType.CMOTOR_REVERSE);
 
     }
     @Override
     public void move(double p) {
-        intake.setPowerRaw(1);
+        intake.setPower(p);
     }
 }

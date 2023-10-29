@@ -1,10 +1,11 @@
 package robot;
 
 import robotparts.Electronic;
+import robotparts.hardware.Intake;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
-import robotparts.unused.Intake;
+
 import robotparts.hardware.Lift;
 import robotparts.hardware.Outtake;
 //import robotparts.sensors.Cameras;
@@ -26,6 +27,7 @@ public interface RobotUser {
      */
     Drive drive = new Drive();
     Lift lift = new Lift();
+    Intake intake = new Intake();
     Outtake outtake = new Outtake();
 //    Leds leds = new Leds();
     DistanceSensors distanceSensors = new DistanceSensors();
@@ -39,7 +41,7 @@ public interface RobotUser {
      * UNUSED
      */
 
-    Electronic intake = new Intake();
+
     TouchSensors touchSensors = new TouchSensors();
 
     ColorSensors color = new ColorSensors();

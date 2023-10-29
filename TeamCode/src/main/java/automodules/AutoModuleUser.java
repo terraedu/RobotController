@@ -39,16 +39,16 @@ public interface AutoModuleUser extends RobotUser{
 
     // 0.6
     AutoModule ForwardTeleMiddle = new AutoModule(
-            RobotPart.pause(0.05),
-            drive.moveTime(1.0, 0.0, 0.0, 0.1),
-            outtake.stageReadyStartAfter(0.1),
+//            RobotPart.pause(0.05),
+//            drive.moveTime(1.0, 0.0, 0.0, 0.1),
+//            outtake.stageReadyStartAfter(0.1),
 //            outtake.stageStart(0.0),
-            lift.stageLift(1.0,0).attach(outtake.stageStartContinuousWithFlip(0.9, 0.0))
+            lift.stageLift(0.5,0)
     ).setStartCode(() -> {
-            lift.cap = false;
-            outtakeStatus.set(DRIVING);
-            outtake.openClaw();
-            outtake.moveEnd();
+//            lift.cap = false;
+//            outtakeStatus.set(DRIVING);
+//            outtake.openClaw();
+//            outtake.moveEnd();
     });
 
     AutoModule ForwardTeleLow = new AutoModule(
@@ -102,20 +102,19 @@ public interface AutoModuleUser extends RobotUser{
     });
 
     AutoModule BackwardGrabMiddleTele = new AutoModule(
-            outtake.stageClose(0.22),
-            lift.checkAndLift(),
-            outtake.stageFlip(0.0),
-            outtake.stageReadyStartCond(0.0),
-            lift.stageLift(1.0, heightMode.getValue(MIDDLE)+2).attach(
-                    outtake.stageReadyEndAfter(0.48)
+//            outtake.stageClose(0.22),
+//            lift.checkAndLift(),
+//            outtake.stageFlip(0.0),
+//            outtake.stageReadyStartCond(0.0),
+            lift.stageLift(0.5, heightMode.getValue(MIDDLE)+2)
 //                    outtake.stageReadyEndContinuousWithFlip(0.7, 0.1)
 //                    outtake.stageReadyEndContinuousWithFlip(0.8, 0.08)
 //                    outtake.stageReadyEnd(0.0)
-            )
+
     ).setStartCode(() -> {
-            lift.setGround(false);
-            outtakeStatus.set(PLACING);
-            heightMode.set(MIDDLE);
+//            lift.setGround(false);
+//            outtakeStatus.set(PLACING);
+//            heightMode.set(MIDDLE);
     });
 
     AutoModule BackwardGrabLowTele = new AutoModule(

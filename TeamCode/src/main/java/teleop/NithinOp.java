@@ -38,12 +38,14 @@ import static teleutil.TeleTrack.*;
 @TeleOp(name = "NithinOp", group = "TeleOp")
 public class NithinOp extends Tele {
 
-    @Override
+//    @Override
     public void initTele() {
         voltageScale = 1;
         gph1.link(RIGHT_TRIGGER, () -> lift.adjustHolderTarget(2.5));
         gph1.link(LEFT_TRIGGER, () -> lift.adjustHolderTarget(-2.5));
+//        gph1.linkWithCancel(Button.Y, () -> intake.move(1));
 
+        gph1.linkWithCancel(Button.Y, heightMode.isMode(MIDDLE), ForwardTeleMiddle, BackwardGrabMiddleTele);
 
         /**
          * Gamepad 1 Normal
@@ -65,14 +67,14 @@ public class NithinOp extends Tele {
 
     @Override
     public void loopTele() {
-        gph1.link(BUTTON_B)
-
-        drive.newMove(gph1.ly, gph1.rx);
+//        intake.move(1);
+        drive.newMove(gph1.ry, gph1.rx, gph1.lx);
         lift.move(gph2.ry);
 
 
 
-//        log.show("DriveMode", driveMode.get());
+
+//        log.show("DriveMode", Button.is());
 //        log.show("StackedMode", lift.stackedMode == 0 ? "N/A" : 6-lift.stackedMode);
            // log.show("", odometry.getPose());
 
@@ -108,8 +110,8 @@ public class NithinOp extends Tele {
 //        log.show("heading", gyro.getHeading());
 
 //        junctionScannerAll.message();
-//        log.show("Right", lift.motorRight.getPosition());
-//        log.show("Left", lift.motorLeft.getPosition());
+        log.show("Right", lift.motorRight.getPosition());
+        log.show("Left", lift.motorLeft.getPosition());
 //        log.show("TargetRight", lift.motorRight.getPositionHolder().getTarget());
 //        log.show("TargetLeft", lift.motorLeft.getPositionHolder().getTarget());
 //        log.show("Pose", odometry.getPose());
