@@ -80,7 +80,7 @@ public class B_LEFT_PY_P extends AutoFramework {
             addTimedSetpoint(1.0,1,.2,-85,45,90);
             addTimedSetpoint(1.0,1,1,-85,5,0);
             addTimedSetpoint(1.0,1,1,-115,5,0);
-        });
+        });//
     }
     @Override
     public void postProcess() {
