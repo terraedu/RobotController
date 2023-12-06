@@ -32,11 +32,13 @@ move = create("move", ElectronicType.PMOTOR_FORWARD);
         heightMode.set(LOW);
     }
     public Stage stageLiftArm(double power){
+        heightMode.ChangeMode(HIGH);
         return moveTarget(()->move,power, 0.7);
 
 
     }
     public Stage stageResetArm(double power){
+        heightMode.ChangeMode(LOW);
         return moveTarget(()->move,power,-0.7);
 
     }

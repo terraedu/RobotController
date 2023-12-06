@@ -1,5 +1,6 @@
 package robotparts.hardware;
 
+import automodules.stage.Stage;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.positional.PServo;
@@ -18,5 +19,8 @@ claw.addPosition("closed",0);
     }
     public void closeClaw(){
         claw.setPosition("closed");
+    }
+    public Stage stageOpenClaw(){
+        
     }
 }

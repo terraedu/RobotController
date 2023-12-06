@@ -22,6 +22,9 @@ public interface AutoModuleUser extends RobotUser{
     /**
      * Forward
      */
+  AutoModule CloseClawAndLift =new AutoModule(
+
+    )
     AutoModule ManualClose = new AutoModule(
             outtake.stageClose(1)
     ).setStartCode(() -> {
