@@ -1,10 +1,7 @@
 package robotparts.hardware;
 
-import static global.Modes.Arm.DOWN;
-import static global.Modes.Arm.UP;
 import static global.Modes.Height.HIGH;
 import static global.Modes.Height.LOW;
-import static global.Modes.armMode;
 import static global.Modes.heightMode;
 
 import automodules.stage.Stage;
