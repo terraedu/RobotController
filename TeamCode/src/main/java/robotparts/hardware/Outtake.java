@@ -11,7 +11,7 @@ import static global.Modes.outtakeStatus;
 public class Outtake extends RobotPart {
 
     public PServo armr, arml, claw;
-//    public PServo forklift;
+    //    public PServo forklift;
 
 //    public boolean cycleMachine = false;
 //    public boolean pauseMachine = false;

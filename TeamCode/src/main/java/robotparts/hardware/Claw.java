@@ -7,15 +7,19 @@ import robotparts.electronics.positional.PServo;
 
 public class Claw extends RobotPart {
   public PServo pivot;
-   public PServo claw;
+  public PServo droneLauncher;
+
+  public PServo claw;
     @Override
     public void init() {
         claw = create("claw", ElectronicType.PSERVO_REVERSE);
-claw.addPosition("open",0.1);
-claw.addPosition("closed",0);
-pivot = create("pivot",ElectronicType.PSERVO_FORWARD);
-pivot.addPosition("grab",0);
-pivot.addPosition("backdrop",0.7);
+        claw.addPosition("open",0.1);
+        claw.addPosition("closed",0);
+        pivot = create("pivot",ElectronicType.PSERVO_FORWARD);
+        pivot.addPosition("grab",0);
+        pivot.addPosition("backdrop",0.7);
+        droneLauncher = create("droneLauncher",ElectronicType.PSERVO_FORWARD);
+        droneLauncher.addPosition("launch",0.7);
     }
     public void openClaw(){
         claw.setPosition("open");
@@ -41,6 +45,9 @@ return super.customTime(this::openClaw,t);
     }
     public void pivotBackdrop(){
         pivot.setPosition("backdrop");
+    }
+    public void droneLaunch(){
+        droneLauncher.setPosition("launch");
     }
 }
 
