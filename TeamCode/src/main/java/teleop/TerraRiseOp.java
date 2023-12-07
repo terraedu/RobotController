@@ -1,6 +1,7 @@
 package teleop;
 
 import static global.General.gph1;
+import static global.General.gph2;
 import static global.General.log;
 import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
@@ -42,6 +43,6 @@ public class TerraRiseOp extends Tele {
         }else{
           multiplier = 0.5;
         }
-        drive.move(multiplier*gph1.ry,multiplier*gph1.rx,multiplier*gph1.lx);
+        drive.move(multiplier*gph2.ry,multiplier*gph2.rx,multiplier*gph2.lx);
     }
 }
