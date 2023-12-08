@@ -25,8 +25,8 @@ import static global.Modes.outtakeStatus;
 
 public class Lift extends RobotPart {
 
-    public PMotor motorRight;
-    public PMotor motorLeft;
+    public PMotor pivot;
+    public PMotor lift;
 
     public static final double maxPosition = 61;
     public final double defaultCutoffPosition = 6;
@@ -44,13 +44,13 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        motorRight = create("lil", ElectronicType.PMOTOR_FORWARD);
-        motorLeft = create("lir", ElectronicType.PMOTOR_REVERSE);
+        pivot = create("pivot", ElectronicType.PMOTOR_FORWARD);
+        lift = create("extend", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
-        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
-        motorRight.usePositionHolder(0.1, 0.1);
-        motorLeft.usePositionHolder(0.1, 0.1);
+        pivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
+        lift.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
+        pivot.usePositionHolder(0.1, 0.1);
+        lift.usePositionHolder(0.1, 0.1);
         heightMode.set(Modes.Height.HIGH);
         circuitMode = false;
         stacked = false;
@@ -68,21 +68,21 @@ public class Lift extends RobotPart {
 
     @Override
     public void move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
-        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
+        lift.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
+        pivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
     }
-
-    public void adjustHolderTarget(double delta){
-        if(outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
-            globalOffset += delta;
-        }
-        currentCutoffPosition = -10;
-        motorRight.holdPositionExact();
-        motorLeft.holdPositionExact();
-        double target = Precision.clip(motorRight.getPositionHolder().getTarget()+delta, 0, maxPosition);
-        motorRight.setPositionHolderTarget(target);
-        motorLeft.setPositionHolderTarget(target);
-    }
+//
+//    public void adjustHolderTarget(double delta){
+//        if(outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
+//            globalOffset += delta;
+//        }
+//        currentCutoffPosition = -10;
+//        motorRight.holdPositionExact();
+//        motorLeft.holdPositionExact();
+//        double target = Precision.clip(motorRight.getPositionHolder().getTarget()+delta, 0, maxPosition);
+//        motorRight.setPositionHolderTarget(target);
+//        motorLeft.setPositionHolderTarget(target);
+//    }
 
     @Override
     public Stage moveTime(double p, double t) {
@@ -101,26 +101,22 @@ public class Lift extends RobotPart {
                 new Exit(() -> { synchronized (val){ return val[0] == 0 || bot.rfsHandler.getTimer().seconds() > val[0]; }}), this.stop(), drive.stop(), new Stop(endCode), this.returnPart(), drive.returnPart());
     }
 
-    public Stage moveTimeBackOverride(double fp, double p, double t){
-        final Double[] val = {0.0};
-        return new Stage(drive.usePart(), this.usePart(), new Initial(() -> val[0] = t),
-                new Main(() -> {drive.move(fp, 0,0); motorLeft.setPowerRaw(p); motorRight.setPowerRaw(p);}),
-                new Exit(() -> { synchronized (val){ return bot.rfsHandler.getTimer().seconds() > val[0]; }}), stop(), drive.stop(), this.returnPart(), drive.returnPart());
-    }
+//    public Stage moveTimeBackOverride(double fp, double p, double t){
+//        final Double[] val = {0.0};
+//        return new Stage(drive.usePart(), this.usePart(), new Initial(() -> val[0] = t),
+//                new Main(() -> {drive.move(fp, 0,0); motorLeft.setPowerRaw(p); motorRight.setPowerRaw(p);}),
+//                new Exit(() -> { synchronized (val){ return bot.rfsHandler.getTimer().seconds() > val[0]; }}), stop(), drive.stop(), this.returnPart(), drive.returnPart());
+//    }
 
     public Stage stageLift(double power, double target) {
-        return moveTarget(() -> motorRight, () -> motorLeft, power, power, () -> {
-        if(target == heightMode.getValue(LOW)+2 || target == heightMode.getValue(MIDDLE)+2 || target == heightMode.getValue(HIGH)+2){
-            return target+globalOffset;
-        }else{
+        return moveTarget(() -> lift, power, () -> {
             return target;
-        }
     }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
 
     @Override
     public void maintain() { super.maintain(); }
 
-    public void reset(){ motorRight.softReset(); motorLeft.softReset(); }
+    public void reset(){ lift.softReset(); pivot.softReset(); }
 
     public Stage resetLift(){ return new Stage(usePart(), new Main(this::reset), exitTime(0.1), stop(), returnPart()); }
 
@@ -135,12 +131,12 @@ public class Lift extends RobotPart {
 //                });
 //    }
 
-    public Stage checkAndLift(){
-        return lift.moveTimeBack(
-                () -> {if(lift.stacked){ return -0.2; }else { return 0.0; }},
-                () -> 1.0,
-                () -> {if(lift.stacked ){ return 0.35;}else if(lift.cap){return 0.35;}else{return 0.0;}},
-                () -> {lift.stacked = false; lift.cap = false; });
-    }
+//    public Stage checkAndLift(){
+//        return lift.moveTimeBack(
+//                () -> {if(lift.stacked){ return -0.2; }else { return 0.0; }},
+//                () -> 1.0,
+//                () -> {if(lift.stacked ){ return 0.35;}else if(lift.cap){return 0.35;}else{return 0.0;}},
+//                () -> {lift.stacked = false; lift.cap = false; });
+//    }
 }
 

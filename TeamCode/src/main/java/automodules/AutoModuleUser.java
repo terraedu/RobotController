@@ -7,6 +7,7 @@ import teleutil.independent.Independent;
 import teleutil.independent.Machine;
 
 import static global.Modes.*;
+import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
 import static global.Modes.Height.GROUND;
@@ -22,6 +23,27 @@ public interface AutoModuleUser extends RobotUser{
     /**
      * Forward
      */
+  AutoModule CloseClawAndLift =new AutoModule(
+    claw.stagePivotBackdrop(0.5),
+    claw.stageCloseClaw(0.5),
+      arm.stageLiftArm(0.8)
+    ).setStartCode(()->{
+        heightMode.set(HIGH);
+        driveMode.set(MEDIUM);
+        outtakeStatus.set(PLACING);
+    });
+  AutoModule openClawAndReset = new AutoModule(
+   claw.stagePivotGrab(0.5),
+   claw.stageOpenClaw(0.5),
+   arm.stageResetArm(0.8)
+
+  ).setStartCode(()->{
+      heightMode.set(LOW);
+      driveMode.set(FAST);
+      outtakeStatus.set(DRIVING);
+
+
+  });
     AutoModule ManualClose = new AutoModule(
             outtake.stageClose(1)
     ).setStartCode(() -> {

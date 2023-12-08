@@ -21,10 +21,11 @@ public interface Modes {
     Mode outtakeStatus = new Mode(OuttakeStatus.class);
 
     enum Height implements Mode.ModeType {HIGH, MIDDLE, LOW, GROUND}
+
     Mode heightMode = new Mode(Height.class)
-            .set(Height.HIGH, -10)
-            .set(Height.MIDDLE, -15)
-            .set(Height.LOW, -8)
+            .set(Height.HIGH, 5)
+            .set(Height.MIDDLE, -3)
+            .set(Height.LOW, 3)
             .set(Height.GROUND, 0);
 
     // TOD5 MULTI DIMENSIONAL MODE

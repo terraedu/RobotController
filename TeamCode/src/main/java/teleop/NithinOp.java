@@ -35,7 +35,7 @@ import static global.Modes.Height.*;
 import static teleutil.button.Button.*;
 import static teleutil.TeleTrack.*;
 
-@TeleOp(name = "NithinOp", group = "TeleOp")
+//@TeleOp(name = "NithinOp", group = "TeleOp")
 public class NithinOp extends Tele {
 
     @Override
