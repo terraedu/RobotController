@@ -26,9 +26,7 @@ public class TerraRiseOp extends Tele {
     @Override
     public void initTele() {
         //gph1 is outtake controller gph2 is the driving controller
-        heightMode.set(LOW);
-        outtakeStatus.set(DRIVING);
-        driveMode.set(FAST);
+
         gph1.link(RIGHT_TRIGGER ,claw::closeClaw);
         gph1.link(LEFT_TRIGGER,claw::openClaw);
         gph1.link(A,arm::liftArm);
@@ -41,20 +39,17 @@ public class TerraRiseOp extends Tele {
         gph2.link(DPAD_RIGHT,()->driveMode.set(SLOW));
 
 
+        heightMode.set(LOW);
+        outtakeStatus.set(DRIVING);
+        driveMode.set(FAST);
+
 
     }
 
     @Override
     public void loopTele() {
-        double multiplier;
-        if(driveMode.modeIs(FAST)){
-            multiplier = 1;
 
-        }else if(driveMode.modeIs(MEDIUM)){
-            multiplier = 0.75;
-        }else{
-          multiplier = 0.5;
-        }
-        drive.move(multiplier*gph2.ry,multiplier*gph2.rx,multiplier*gph2.lx);
+
+
     }
 }
