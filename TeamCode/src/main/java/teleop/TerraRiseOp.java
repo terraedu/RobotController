@@ -27,28 +27,18 @@ public class TerraRiseOp extends Tele {
     public void initTele() {
         //gph1 is outtake controller gph2 is the driving controller
 
-        gph1.link(RIGHT_TRIGGER ,claw::closeClaw);
-        gph1.link(LEFT_TRIGGER,claw::openClaw);
-        gph1.link(A,arm::liftArm);
-        gph1.link(X,arm::resetArm);
-        gph1.link(DPAD_UP,claw::openClaw);
-        gph1.link(DPAD_DOWN, claw::closeClaw);
-        gph2.link(X,claw::droneLaunch);
-        gph2.link(DPAD_UP,()->driveMode.set(FAST));
-        gph2.link(DPAD_LEFT,()->driveMode.set(MEDIUM));
-        gph2.link(DPAD_RIGHT,()->driveMode.set(SLOW));
-
 
         heightMode.set(LOW);
         outtakeStatus.set(DRIVING);
         driveMode.set(FAST);
 
+        outtake.moveStart();
 
     }
 
     @Override
     public void loopTele() {
-
+        drive.move(gph1.ry, gph1.rx, gph2.lx);
 
 
     }
