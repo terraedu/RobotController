@@ -19,10 +19,12 @@ import autoutil.generators.PauseGenerator;
 import autoutil.reactors.Reactor;
 import autoutil.vision.CaseScanner;
 import autoutil.vision.CaseScannerBar;
+import autoutil.vision.CaseScannerRect;
 import autoutil.vision.Scanner;
 import elements.Case;
 import elements.FieldPlacement;
 import elements.FieldSide;
+import elements.TeamProp;
 import geometry.framework.CoordinatePlane;
 import geometry.position.Pose;
 import robotparts.RobotPart;
@@ -62,9 +64,10 @@ public abstract class AutoFramework extends Auto implements AutoUser {
 
     protected boolean scanning = false;
     protected boolean haltCameraAfterInit = true;
-    protected CaseScanner caseScanner;
+    protected CaseScannerRect caseScanner;
     protected Scanner scannerAfterInit;
     protected Case caseDetected = Case.FIRST;
+    protected TeamProp propCaseDetected = TeamProp.FIRST;
 
     private int segmentIndex = 1;
     private int pauseIndex, autoModuleIndex, customSegmentIndex, breakpointIndex = 0;
@@ -113,7 +116,7 @@ public abstract class AutoFramework extends Auto implements AutoUser {
     public void customFlipped(CodeSeg one, CodeSeg two){ if(!isFlipped()){ one.run();}else{two.run();}}
     public void customPlacement(CodeSeg one, CodeSeg two){ addDecision(new DecisionList(() -> fieldPlacement).addOption(FieldPlacement.LOWER, one).addOption(FieldPlacement.UPPER, two)); }
     public void customSidePlacement(CodeSeg one, CodeSeg two, CodeSeg three, CodeSeg four){customSide(() -> customPlacement(one, two), () -> customPlacement(three, four));}
-    public void customCase(CodeSeg first, CodeSeg second, CodeSeg third){ addDecision(new DecisionList(() -> caseDetected).addOption(Case.FIRST, first).addOption(Case.SECOND, second).addOption(Case.THIRD, third)); }
+    public void customCase(CodeSeg first, CodeSeg second, CodeSeg third){ addDecision(new DecisionList(() -> caseDetected).addOption(TeamProp.FIRST, first).addOption(TeamProp.SECOND, second).addOption(TeamProp.THIRD, third)); }
     public void customNumber(int num, ParameterCodeSeg<Integer> one){ for (int i = 0; i < num; i++) { one.run(i); } }
     public void customIf(boolean value, CodeSeg ifTrue, CodeSeg ifFalse){ if(value){ifTrue.run();}else{ifFalse.run();} }
 
@@ -122,10 +125,12 @@ public abstract class AutoFramework extends Auto implements AutoUser {
         scannerAfterInit = scanner;
     }
 
-    public void scan(boolean view){
+    public void scan(boolean view, String color, String side){
         scanning = true;
-        caseScanner = new CaseScannerBar();
+        caseScanner = new CaseScannerRect();
         camera.setScanner(caseScanner);
+        caseScanner.setSide(color);
+        caseScanner.setColor(side);
         camera.start(view);
     }
 
@@ -133,7 +138,7 @@ public abstract class AutoFramework extends Auto implements AutoUser {
     public final void initAuto() {
         initialize();
         if(scanning){
-            while (!isStarted() && !isStopRequested()){ caseDetected = caseScanner.getCase(); caseScanner.log(); log.showTelemetry(); }
+            while (!isStarted() && !isStopRequested()){ propCaseDetected = caseScanner.getCase(); caseScanner.log(); log.showTelemetry(); }
             if(haltCameraAfterInit) { camera.halt(); }else{ camera.setScanner(scannerAfterInit); }
         }
         setup();
