@@ -1,6 +1,7 @@
 package automodules;
 
 import automodules.stage.Stop;
+import auton.Auto;
 import robot.RobotUser;
 import robotparts.RobotPart;
 import teleutil.independent.Independent;
@@ -23,7 +24,68 @@ public interface AutoModuleUser extends RobotUser{
     /**
      * Forward
      */
-  AutoModule CloseClawAndLift =new AutoModule(
+
+    AutoModule armMove = new AutoModule(
+            RobotPart.pause(0.05),
+            lift.stageArm(1.0, heightMode.getValue(MIDDLE))).setStartCode(() -> {
+                heightMode.set(MIDDLE);
+            }
+    );
+
+    AutoModule liftMove = new AutoModule(
+            RobotPart.pause(0.05),
+            lift.stageLift(1.0, heightMode.getValue(HIGH))).setStartCode(() -> {
+                heightMode.set(HIGH);
+            }
+    );
+
+    AutoModule extend = new AutoModule(
+            RobotPart.pause(0.05),
+            lift.stageArm(1.0, 3).attach(outtake.stageGrabPivot(0.5)),
+            lift.stageLift(1.0, 7)
+    );
+
+    AutoModule grabAndDrive = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageCloseClaw(0.5),
+            lift.stageLift(1.0, 0).attach(lift.stageArm(1.0, 0)),
+            outtake.stageDrivePivot(0.5)
+    );
+
+    AutoModule randomReset = new AutoModule(
+            RobotPart.pause(0.05),
+            lift.stageArm(1.0, heightMode.getValue(GROUND))).setStartCode(() -> {
+                heightMode.set(GROUND);
+            }
+    );
+
+
+    AutoModule closeClawMid = new AutoModule(
+        RobotPart.pause(0.05),
+        outtake.stageCloseClaw(0.5),
+        lift.stageLift(1.0, heightMode.getValue(MIDDLE))).setStartCode(() -> {
+
+        heightMode.set(MIDDLE);
+    });
+
+    AutoModule closeClaw = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageCloseClaw(0.5)
+    );
+
+    AutoModule openClaw = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageOpenClaw(0.5)
+    );
+
+    AutoModule reset = new AutoModule(
+        RobotPart.pause(0.05),
+        outtake.stageOpenClaw(0.5),
+        lift.stageLift(1.0, heightMode.getValue(GROUND))).setStartCode(() -> {
+            heightMode.set(GROUND);
+            }
+    );
+    AutoModule CloseClawAndLift =new AutoModule(
     claw.stagePivotBackdrop(0.5),
     claw.stageCloseClaw(0.5),
       arm.stageLiftArm(0.8)

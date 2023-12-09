@@ -45,12 +45,12 @@ public class Lift extends RobotPart {
     @Override
     public void init() {
         pivot = create("arm", ElectronicType.PMOTOR_FORWARD);
-        lift = create("lift", ElectronicType.PMOTOR_FORWARD);
+        lift = create("lift", ElectronicType.PMOTOR_REVERSE);
         // 0.25
         pivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         lift.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         pivot.usePositionHolder(0.1, 0.1);
-        lift.usePositionHolder(0.1, 0.1);
+        lift.usePositionHolder(1.6, 0.1);
         heightMode.set(Modes.Height.HIGH);
         circuitMode = false;
         stacked = false;
@@ -69,8 +69,12 @@ public class Lift extends RobotPart {
 
     @Override
     public void move(double p) {
-        lift.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
-        pivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
+        lift.moveWithPositionHolder(0.3 * p, currentCutoffPosition, 0.1);
+//        pivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
+    }
+
+    public void armMove(double p) {
+        pivot.moveWithPositionHolder(p * 0.7, currentCutoffPosition, 0);
     }
     public double getPivotMotorPos(){
         return pivot.getPosition();
@@ -118,6 +122,11 @@ public class Lift extends RobotPart {
 
     public Stage stageLift(double power, double target) {
         return moveTarget(() -> lift, power, () -> {
+            return target;
+        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
+
+    public Stage stageArm(double power, double target) {
+        return moveTarget(() -> pivot, power, () -> {
             return target;
         }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
 

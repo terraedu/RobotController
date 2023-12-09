@@ -23,8 +23,8 @@ public interface Modes {
     enum Height implements Mode.ModeType {HIGH, MIDDLE, LOW, GROUND}
 
     Mode heightMode = new Mode(Height.class)
-            .set(Height.HIGH, 5)
-            .set(Height.MIDDLE, -3)
+            .set(Height.HIGH, 8)
+            .set(Height.MIDDLE, 6)
             .set(Height.LOW, 3)
             .set(Height.GROUND, 0);
 

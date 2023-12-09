@@ -19,6 +19,8 @@ import static teleutil.button.Button.X;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import automodules.AutoModule;
+import automodules.AutoModuleUser;
 import teleutil.button.Button;
 
 @TeleOp(name = "RiseOp", group = "TeleOp")
@@ -32,13 +34,30 @@ public class TerraRiseOp extends Tele {
         driveMode.set(FAST);
 
         outtake.moveStart();
-        outtake.closeClaw();
-
+        gph1.link(Button.A, openClaw);
+        gph1.link(Button.B, closeClaw);
+        gph1.link(Button.DPAD_DOWN, () -> driveMode.set(SLOW));
+        gph1.link(Button.DPAD_UP, () -> driveMode.set(FAST));
+        gph2.link(Button.LEFT_TRIGGER, extend);
+        gph2.link(Button.RIGHT_TRIGGER, grabAndDrive);
+        gph2.link(Button.A, armMove);
+        gph2.link(Button.B, liftMove);
+        //        outtake.closeClaw();
+//        outtake.placePivot();
     }
 
     @Override
     public void loopTele() {
-        drive.move(gph1.ry, gph1.rx, gph2.lx);
+        if (driveMode.modeIs(SLOW)) {
+            drive.move(gph1.ry * 0.25, gph1.rx * 0.25, gph1.lx * 0.25);
+        } else if (driveMode.modeIs(FAST)) {
+            drive.move(gph1.ry, gph1.rx, gph1.lx);
+        }
+//        lift.armMove(gph2.ry);
+//        lift.move(gph2.ly);
         log.show(lift.getPivotMotorPos());
+        log.show(lift.lift.getPosition());
+        log.show(outtake.pivot.getPosition());
+//        log.show(driveMode.getValue());
     }
 }

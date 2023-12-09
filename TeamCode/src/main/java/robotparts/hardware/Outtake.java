@@ -26,7 +26,8 @@ public class Outtake extends RobotPart {
         pivot.changePosition("start", 0); //.21 difference
         claw.changePosition("start", 0);
 
-        claw.addPosition("close", 0.3);
+        claw.addPosition("close", 0.2);
+        pivot.addPosition("place", 1);
 //        arml.addPosition("s", 0.09);
 //        armr.addPosition("s", 0.3);
 //
@@ -61,7 +62,9 @@ public class Outtake extends RobotPart {
     public void openClawHalf(){ claw.setPosition("openhalf"); }
 //    public void openClawCap() { claw.setPosition("cap"); }
     public void closeClaw(){ claw.setPosition("close"); }
-
+    public void openClaw(){ claw.setPosition("start");}
+    public void placePivot() { pivot.setPosition("place");}
+    public void grabPivot() { pivot.setPosition("start");}
 
 //    public void readyStart(){ pivot.setPosition("startHalf"); claw.setPosition("startHalf"); }
 //    public void readyEnd(){ armr.setPosition("endHalf"); arml.setPosition("endHalf"); }
@@ -81,6 +84,10 @@ public class Outtake extends RobotPart {
     public Stage stageOpenAfter(double t){ return super.customTimeAfter(this::openClawHalf, t); }
 
     public Stage stageMiddle(double t){ return super.customTime(this::moveMiddle, t);}
+    public Stage stageCloseClaw(double t) {return super.customTime(this::closeClaw, t);}
+    public Stage stageOpenClaw(double t) { return super.customTime(this::openClaw, t);}
+    public Stage stageGrabPivot(double t) { return super.customTime(this::grabPivot, t);}
+    public Stage stageDrivePivot(double t) { return super.customTime(this::placePivot, t);}
 //    public Stage stageReadyEnd(double t){ return super.customTime(this::readyEnd, t); }
 //    public Stage stageReadyEndAfter(double t){ return super.customTimeAfter(this::readyEnd, t); }
 //    public Stage stageStartAfter(double t){ return super.customTimeAfter(this::moveStart, t); }
