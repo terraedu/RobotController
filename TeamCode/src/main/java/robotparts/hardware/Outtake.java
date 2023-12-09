@@ -20,11 +20,13 @@ public class Outtake extends RobotPart {
     @Override
     public void init() {
         pivot = create("pivot", ElectronicType.PSERVO_REVERSE);
-        claw = create("claw", ElectronicType.PSERVO_FORWARD);
+        claw = create("claw", ElectronicType.PSERVO_REVERSE);
 
 
         pivot.changePosition("start", 0); //.21 difference
         claw.changePosition("start", 0);
+
+        claw.addPosition("close", 0.3);
 //        arml.addPosition("s", 0.09);
 //        armr.addPosition("s", 0.3);
 //

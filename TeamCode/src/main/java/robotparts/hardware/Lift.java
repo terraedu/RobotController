@@ -44,8 +44,8 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        pivot = create("pivot", ElectronicType.PMOTOR_FORWARD);
-        lift = create("extend", ElectronicType.PMOTOR_FORWARD);
+        pivot = create("arm", ElectronicType.PMOTOR_FORWARD);
+        lift = create("lift", ElectronicType.PMOTOR_FORWARD);
         // 0.25
         pivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         lift.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);

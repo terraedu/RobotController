@@ -33,6 +33,7 @@ public class TerraRiseOp extends Tele {
         driveMode.set(FAST);
 
         outtake.moveStart();
+        outtake.closeClaw();
 
     }
 
