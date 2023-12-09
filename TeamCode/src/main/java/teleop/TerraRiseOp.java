@@ -27,7 +27,6 @@ public class TerraRiseOp extends Tele {
     public void initTele() {
         //gph1 is outtake controller gph2 is the driving controller
 
-
         heightMode.set(LOW);
         outtakeStatus.set(DRIVING);
         driveMode.set(FAST);
@@ -40,7 +39,6 @@ public class TerraRiseOp extends Tele {
     @Override
     public void loopTele() {
         drive.move(gph1.ry, gph1.rx, gph2.lx);
-
-
+        log.show(lift.getPivotMotorPos());
     }
 }

@@ -62,6 +62,7 @@ public class Lift extends RobotPart {
         adjust = 0;
         stackedMode = 0;
         globalOffset = 0;
+        resetArm();
     }
 
     public void setGround(boolean ground){ this.ground = ground; }
@@ -71,7 +72,10 @@ public class Lift extends RobotPart {
         lift.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
         pivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
     }
-//
+    public double getPivotMotorPos(){
+        return pivot.getPosition();
+    }
+    //
 //    public void adjustHolderTarget(double delta){
 //        if(outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
 //            globalOffset += delta;
@@ -83,6 +87,10 @@ public class Lift extends RobotPart {
 //        motorRight.setPositionHolderTarget(target);
 //        motorLeft.setPositionHolderTarget(target);
 //    }
+    public void resetArm(){
+        lift.move(0);
+        pivot.move(0);
+    }
 
     @Override
     public Stage moveTime(double p, double t) {
@@ -111,7 +119,7 @@ public class Lift extends RobotPart {
     public Stage stageLift(double power, double target) {
         return moveTarget(() -> lift, power, () -> {
             return target;
-    }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
+        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
 
     @Override
     public void maintain() { super.maintain(); }
