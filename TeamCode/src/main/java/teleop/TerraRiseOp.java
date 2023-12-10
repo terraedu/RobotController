@@ -46,6 +46,7 @@ public class TerraRiseOp extends Tele {
         gph2.link(Button.X, down);
         gph2.link(Button.DPAD_DOWN, grabPivot);
         gph2.link(Button.DPAD_UP, drivePivot);
+        gph2.link(Button.Y, release);
         //        outtake.closeClaw();
 //        outtake.placePivot();
     }
@@ -62,6 +63,7 @@ public class TerraRiseOp extends Tele {
         log.show(lift.getPivotMotorPos());
         log.show(lift.lift.getPosition());
         log.show(outtake.pivot.getPosition());
+        log.show(outtake.launch.getPosition());
 //        log.show(driveMode.getValue());
     }
 }

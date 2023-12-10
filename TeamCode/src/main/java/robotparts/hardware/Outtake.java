@@ -8,9 +8,11 @@ import robotparts.electronics.positional.PServo;
 import static global.Modes.OuttakeStatus.DRIVING;
 import static global.Modes.outtakeStatus;
 
+import java.util.EventListener;
+
 public class Outtake extends RobotPart {
 
-    public PServo pivot, claw;
+    public PServo pivot, claw, launch;
     //    public PServo forklift;
 
 //    public boolean cycleMachine = false;
@@ -21,13 +23,16 @@ public class Outtake extends RobotPart {
     public void init() {
         pivot = create("pivot", ElectronicType.PSERVO_REVERSE);
         claw = create("claw", ElectronicType.PSERVO_REVERSE);
+        launch = create("launch", ElectronicType.PSERVO_REVERSE);
 
 
         pivot.changePosition("start", 0); //.21 difference
         claw.changePosition("start", 0);
+        launch.changePosition("start", 0);
 
         claw.addPosition("close", 0.2);
         pivot.addPosition("place", 1);
+        launch.addPosition("release", 0.7);
 //        arml.addPosition("s", 0.09);
 //        armr.addPosition("s", 0.3);
 //
@@ -56,7 +61,7 @@ public class Outtake extends RobotPart {
 
 //    public void arm(double pos){ armr.setPosition(pos); arml.setPosition(pos); }
 
-    public void moveStart(){ pivot.setPosition("start"); claw.setPosition("start"); }
+    public void moveStart(){ pivot.setPosition("start"); claw.setPosition("start"); launch.setPosition("start");}
     public void moveEnd(){ pivot.setPosition("end"); claw.setPosition("end"); }
     public void openClawFull(){ claw.setPosition("openfull"); }
     public void openClawHalf(){ claw.setPosition("openhalf"); }
@@ -65,6 +70,7 @@ public class Outtake extends RobotPart {
     public void openClaw(){ claw.setPosition("start");}
     public void placePivot() { pivot.setPosition("place");}
     public void grabPivot() { pivot.setPosition("start");}
+    public void release() { launch.setPosition("release");}
 
 //    public void readyStart(){ pivot.setPosition("startHalf"); claw.setPosition("startHalf"); }
 //    public void readyEnd(){ armr.setPosition("endHalf"); arml.setPosition("endHalf"); }
@@ -88,6 +94,7 @@ public class Outtake extends RobotPart {
     public Stage stageOpenClaw(double t) { return super.customTime(this::openClaw, t);}
     public Stage stageGrabPivot(double t) { return super.customTime(this::grabPivot, t);}
     public Stage stageDrivePivot(double t) { return super.customTime(this::placePivot, t);}
+    public Stage stageRelease(double t) { return super.customTime(this::release, t);}
 //    public Stage stageReadyEnd(double t){ return super.customTime(this::readyEnd, t); }
 //    public Stage stageReadyEndAfter(double t){ return super.customTimeAfter(this::readyEnd, t); }
 //    public Stage stageStartAfter(double t){ return super.customTimeAfter(this::moveStart, t); }

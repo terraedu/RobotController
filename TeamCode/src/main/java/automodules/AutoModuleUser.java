@@ -63,7 +63,12 @@ public interface AutoModuleUser extends RobotUser{
             RobotPart.pause(0.05),
             outtake.stageOpenClaw(0.5),
             lift.stageLift(1.0, 0),
-            lift.stageArm(0.1, 3)
+            lift.stageArm(0.2, 3)
+    );
+
+    AutoModule release = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageRelease(0.3)
     );
 
 //    AutoModule extendPlace = new AutoModule(
