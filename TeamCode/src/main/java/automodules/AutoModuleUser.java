@@ -27,21 +27,28 @@ public interface AutoModuleUser extends RobotUser{
 
     AutoModule armMove = new AutoModule(
             RobotPart.pause(0.05),
-            lift.stageArm(1.0, heightMode.getValue(MIDDLE))).setStartCode(() -> {
+            lift.stageArm(0.1, heightMode.getValue(MIDDLE))).setStartCode(() -> {
                 heightMode.set(MIDDLE);
             }
     );
 
     AutoModule liftMove = new AutoModule(
             RobotPart.pause(0.05),
-            lift.stageLift(1.0, heightMode.getValue(HIGH))).setStartCode(() -> {
-                heightMode.set(HIGH);
+            lift.stageLift(1.0, heightMode.getValue(MIDDLE))).setStartCode(() -> {
+                heightMode.set(MIDDLE);
             }
     );
 
-    AutoModule extend = new AutoModule(
+    AutoModule place = new AutoModule(
             RobotPart.pause(0.05),
-            lift.stageArm(1.0, 3).attach(outtake.stageGrabPivot(0.5)),
+            outtake.stageOpenClaw(0.5)
+    );
+
+    AutoModule extendGrab = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageOpenClaw(0.5),
+            lift.stageArm(1.0, 1).attach(outtake.stageGrabPivot(0.5)),
+//            lift.stageArm(1.0, 0),
             lift.stageLift(1.0, 7)
     );
 
@@ -51,6 +58,17 @@ public interface AutoModuleUser extends RobotUser{
             lift.stageLift(1.0, 0).attach(lift.stageArm(1.0, 0)),
             outtake.stageDrivePivot(0.5)
     );
+
+    AutoModule down = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageOpenClaw(0.5),
+            lift.stageLift(1.0, 0),
+            lift.stageArm(0.1, 3)
+    );
+
+//    AutoModule extendPlace = new AutoModule(
+//            RobotPart.pause()
+//    );
 
     AutoModule randomReset = new AutoModule(
             RobotPart.pause(0.05),
@@ -76,6 +94,16 @@ public interface AutoModuleUser extends RobotUser{
     AutoModule openClaw = new AutoModule(
             RobotPart.pause(0.05),
             outtake.stageOpenClaw(0.5)
+    );
+
+    AutoModule drivePivot = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageDrivePivot(0.5)
+    );
+
+    AutoModule grabPivot = new AutoModule(
+            RobotPart.pause(0.05),
+            outtake.stageGrabPivot(0.5)
     );
 
     AutoModule reset = new AutoModule(

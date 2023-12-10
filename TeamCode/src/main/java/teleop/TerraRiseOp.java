@@ -14,6 +14,7 @@ import static teleutil.button.Button.DPAD_LEFT;
 import static teleutil.button.Button.DPAD_RIGHT;
 import static teleutil.button.Button.DPAD_UP;
 import static teleutil.button.Button.LEFT_TRIGGER;
+import static teleutil.button.Button.RIGHT_BUMPER;
 import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.X;
 
@@ -34,14 +35,17 @@ public class TerraRiseOp extends Tele {
         driveMode.set(FAST);
 
         outtake.moveStart();
-        gph1.link(Button.A, openClaw);
-        gph1.link(Button.B, closeClaw);
+        gph2.link(Button.LEFT_BUMPER, openClaw);
+        gph2.link(Button.RIGHT_BUMPER , closeClaw);
         gph1.link(Button.DPAD_DOWN, () -> driveMode.set(SLOW));
         gph1.link(Button.DPAD_UP, () -> driveMode.set(FAST));
-        gph2.link(Button.LEFT_TRIGGER, extend);
+        gph2.link(Button.LEFT_TRIGGER, extendGrab);
         gph2.link(Button.RIGHT_TRIGGER, grabAndDrive);
         gph2.link(Button.A, armMove);
         gph2.link(Button.B, liftMove);
+        gph2.link(Button.X, down);
+        gph2.link(Button.DPAD_DOWN, grabPivot);
+        gph2.link(Button.DPAD_UP, drivePivot);
         //        outtake.closeClaw();
 //        outtake.placePivot();
     }

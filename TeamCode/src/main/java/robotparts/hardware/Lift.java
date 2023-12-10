@@ -50,7 +50,7 @@ public class Lift extends RobotPart {
         pivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         lift.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         pivot.usePositionHolder(0.1, 0.1);
-        lift.usePositionHolder(1.6, 0.1);
+        lift.usePositionHolder(1, 1);
         heightMode.set(Modes.Height.HIGH);
         circuitMode = false;
         stacked = false;
