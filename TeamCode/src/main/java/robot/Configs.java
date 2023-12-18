@@ -2,6 +2,8 @@ package robot;
 
 import static robot.RobotConfig.setConfig;
 
+import elements.Robot;
+
 public class Configs implements RobotUser{
 
     /**
@@ -26,8 +28,11 @@ public class Configs implements RobotUser{
     /**
      * Current Config
      */
+    RobotConfig NewConfig = new RobotConfig(drive);
+
     public void setCurrentConfig(){
-        setConfig(CenterStage);
+        setConfig(NewConfig);
+
     }
 
 }
