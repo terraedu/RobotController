@@ -28,7 +28,7 @@ public class Configs implements RobotUser{
     /**
      * Current Config
      */
-    RobotConfig NewConfig = new RobotConfig(drive);
+    RobotConfig NewConfig = new RobotConfig(drive,lift, outtake);
 
     public void setCurrentConfig(){
         setConfig(NewConfig);

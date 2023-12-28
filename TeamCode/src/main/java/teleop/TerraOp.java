@@ -16,10 +16,10 @@ import static global.Modes.Height.*;
 import static teleutil.button.Button.*;
 
 public class TerraOp extends Tele {
-
     @Override
     public void initTele() {
-
+        outtake.moveStart();
+        lift.reset();
     }
 
 
