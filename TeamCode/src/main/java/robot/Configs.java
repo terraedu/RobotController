@@ -2,8 +2,6 @@ package robot;
 
 import static robot.RobotConfig.setConfig;
 
-import elements.Robot;
-
 public class Configs implements RobotUser{
 
     /**
@@ -23,16 +21,13 @@ public class Configs implements RobotUser{
     /**
      * Used for CenterStage robot
      */
-    RobotConfig CenterStage = new RobotConfig(drive, gyro, intake, lift, odometry, outtake, camera);
+    RobotConfig CenterStage = new RobotConfig(drive, lift);
 
     /**
      * Current Config
      */
-    RobotConfig NewConfig = new RobotConfig(drive,lift, outtake);
-
     public void setCurrentConfig(){
-        setConfig(NewConfig);
-
+        setConfig(CenterStage);
     }
 
 }

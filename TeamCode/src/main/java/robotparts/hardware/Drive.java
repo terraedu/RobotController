@@ -23,21 +23,8 @@ import static global.Modes.driveMode;
 
 public class Drive extends RobotPart {
 
-    public CMotor rb, lb, rf, lf;{
-    rb = create("rb", ElectronicType.CMOTOR_REVERSE);
-    lb = create("lb", ElectronicType.CMOTOR_FORWARD);
-    rf = create("rf", ElectronicType.CMOTOR_REVERSE);
-    lf = create("lf", ElectronicType.CMOTOR_FORWARD);
+    public CMotor fr, br, fl, bl;
 
-}
-    @Override
-    public void move(double f, double s, double t) {
-    rb.setPower(f-t+s);
-    lb.setPower(f+t-s);
-    rf.setPower(f-t-s);
-    lf.setPower(f+t+s);
-
-    }
     private final Precision precision = new Precision();
     private final Precision precision2 = new Precision();
 
@@ -65,10 +52,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        rf = create("fr", ElectronicType.CMOTOR_REVERSE);
-//        br = create("br", ElectronicType.CMOTOR_REVERSE);
-//        l = create("fl", ElectronicType.CMOTOR_FORWARD);
-//        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
+        fr = create("fr", ElectronicType.CMOTOR_REVERSE);
+        br = create("br", ElectronicType.CMOTOR_REVERSE);
+        fl = create("fl", ElectronicType.CMOTOR_FORWARD);
+        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 //
 //        retract = create("ret", ElectronicType.PSERVO_FORWARD);
@@ -104,27 +91,27 @@ public class Drive extends RobotPart {
 //    public Stage stageRetract(){ return customTime(this::retract, 0.0); }
 //    public Stage stageEngage(){ return customTime(this::engage, 0.0); }
 
-   // @Override
-    //public void move(double f, double s, double t) {
-//        Vector power = new Vector(Precision.clip(s, 1), Precision.clip(f, 1));
-//        power.scaleX(1.2);
-//        power.limitLength(1);
-//        f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
-//        fr.setPower(f - s - t);
-//        br.setPower(f + s - t);
-//        fl.setPower(f + s + t);
-//        bl.setPower(f - s + t);
-   // }
+    @Override
+    public void move(double f, double s, double t) {
+        Vector power = new Vector(Precision.clip(s, 1), Precision.clip(f, 1));
+        power.scaleX(1.2);
+        power.limitLength(1);
+        f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
+        fr.setPower(f - s - t);
+        br.setPower(f + s - t);
+        fl.setPower(f + s + t);
+        bl.setPower(f - s + t);
+    }
 
     public void moveWithoutVS(double f, double s, double t) {
         Vector power = new Vector(Precision.clip(s, 1), Precision.clip(f, 1));
         power.scaleX(1.2);
         power.limitLength(1);
         f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
-//        fr.setPowerRaw(f - s - t);
-//        br.setPowerRaw(f + s - t);
-//        fl.setPowerRaw(f + s + t);
-//        bl.setPowerRaw(f - s + t);
+        fr.setPowerRaw(f - s - t);
+        br.setPowerRaw(f + s - t);
+        fl.setPowerRaw(f + s + t);
+        bl.setPowerRaw(f - s + t);
     }
 
     public void help(double[] power, int i, double cutoff, double accel, double decel){
@@ -137,19 +124,19 @@ public class Drive extends RobotPart {
 //            deltaPower[i] = Math.max(0, deltaPower[i] - decel);
         }
     }
-//    //public void newMove(double f, double s, double t) {
-//     //   if(driveMode.modeIs(SLOW)){
-//         //   fr.setPower(.5*f - .5*s - .25*t);
-//          //  br.setPower(.5*f + .5*s - .25*t);
-//            //fl.setPower(.5*f + .5*s + .25*t);
-//            bl.setPower(.5*f - .5*s + .25*t);
-//    }else if(driveMode.modeIs(FAST)) {
-//            fr.setPower(f - s - t);
-//            br.setPower(f + s - t);
-//            fl.setPower(f + s + t);
-//            bl.setPower(f - s + t);
-//        }
-//        }
+    public void newMove(double f, double s, double t) {
+        if(driveMode.modeIs(SLOW)){
+            fr.setPower(.5*f - .5*s - .25*t);
+            br.setPower(.5*f + .5*s - .25*t);
+            fl.setPower(.5*f + .5*s + .25*t);
+            bl.setPower(.5*f - .5*s + .25*t);
+    }else if(driveMode.modeIs(FAST)) {
+            fr.setPower(f - s - t);
+            br.setPower(f + s - t);
+            fl.setPower(f + s + t);
+            bl.setPower(f - s + t);
+        }
+        }
     public void moveSmooth(double f, double s, double t) {
 
 
@@ -168,18 +155,18 @@ public class Drive extends RobotPart {
             }
 
             if (driveMode.modeIs(SLOW)) {
-//                drive.move(rm.fodd(f * 0.4), noStrafeLock || !Precision.range(s, 0.7) ? rm.fodd(s) * 0.3 : 0.0, rt.fodd(t * 0.6));
-//            } else if (driveMode.modeIs(MEDIUM)) {
-//                if (precision2.isInputTrueForTime(Math.abs(t) > 0.9, 0.6) && Math.abs(t) > 0.9) {
-//                    drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, rt.fodd(t * 0.85));
-//                } else {
-//                    drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, 0.6 * rt.fodd(t * 0.85));
+                drive.move(rm.fodd(f * 0.4), noStrafeLock || !Precision.range(s, 0.7) ? rm.fodd(s) * 0.3 : 0.0, rt.fodd(t * 0.6));
+            } else if (driveMode.modeIs(MEDIUM)) {
+                if (precision2.isInputTrueForTime(Math.abs(t) > 0.9, 0.6) && Math.abs(t) > 0.9) {
+                    drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, rt.fodd(t * 0.85));
+                } else {
+                    drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, 0.6 * rt.fodd(t * 0.85));
+                }
 //                }
-////                }
-////                drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, 0.6 * rt.fodd(t * 0.85));
-//            } else {
-//                drive.move(rm.fodd(f) * (t != 0 ? rx.feven(t) : 1.0), 0.0, rt.fodd(t * 0.8));
-//            }
+//                drive.move(rm.fodd(f * 0.7) * (t != 0 ? rx.feven(t) : 1.0), !Precision.range(s, 0.7) ? rm.fodd(s * 0.7) : 0.0, 0.6 * rt.fodd(t * 0.85));
+            } else {
+                drive.move(rm.fodd(f) * (t != 0 ? rx.feven(t) : 1.0), 0.0, rt.fodd(t * 0.8));
+            }
         }
 
 
@@ -237,23 +224,23 @@ public class Drive extends RobotPart {
 
 
 
-//    @Override
-//    public Stage moveTime(double fp, double sp, double tp, double t) {
-//        return super.moveTime(fp, sp, tp, t);
-//    }
-//
-//    @Override
-//    public Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t) {
-//        return super.moveTime(fp, sp, tp, t);
-//    }
-//
-//    @Override
-//    public AutoModule MoveTime(double fp, double sp, double tp, double t) {
-//        return super.MoveTime(fp, sp, tp, t);
-//    }
-//
-//
-//    public double getAntiTippingPower(){
+    @Override
+    public Stage moveTime(double fp, double sp, double tp, double t) {
+        return super.moveTime(fp, sp, tp, t);
+    }
+
+    @Override
+    public Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t) {
+        return super.moveTime(fp, sp, tp, t);
+    }
+
+    @Override
+    public AutoModule MoveTime(double fp, double sp, double tp, double t) {
+        return super.MoveTime(fp, sp, tp, t);
+    }
+
+
+    public double getAntiTippingPower(){
 //        double pitch = gyro.getPitch();
 //        double pitchDerivative = Math.abs(gyro.getPitchDerivative());
 //        if(pitch > -1.5){
@@ -261,7 +248,7 @@ public class Drive extends RobotPart {
 //        }else{
 //            return pitch*0.15/(pitchDerivative > 0.7 ? Math.pow(Math.abs(pitchDerivative), 0.5) : 1.0);
 //        }
-//        return 0;
+        return 0;
     }
 
 }

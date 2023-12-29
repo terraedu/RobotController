@@ -26,11 +26,12 @@ public interface AutoModuleUser extends RobotUser {
      * Forward
      */
 
+    AutoModule PLACELOW = new AutoModule(
+            lift.stageArm(.2,1)
+    ).setStartCode(() ->{});
     AutoModule Intake = new AutoModule(
 
-            outtake.stageOpen(.2),
-            intake.stageStart(.2),
-            intake.moveTime(-.8, 1)
+            outtake.stageOpen(.2)
 
 
     ).setStartCode(() ->
@@ -48,7 +49,6 @@ public interface AutoModuleUser extends RobotUser {
     {
 
 
-        intake.stageStart(.2);
 
 
     });
