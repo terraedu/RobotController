@@ -43,7 +43,8 @@ public class NithinOp extends Tele {
     @Override
     public void initTele() {
 
-    gph1.link(X, PLACELOW);
+    gph1.link(X, outtake::openClaw1);
+        gph1.link(Y, outtake::closeClaw1);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class NithinOp extends Tele {
 //        log.show("heading", gyro.getHeading());
 
 //        junctionScannerAll.message();
-        log.show("pivot", lift.pivot.getPosition());
+//        log.show("pivot", lift.pivot.getPosition());
 //        log.show("Left", lift.motorLeft.getPosition());
 //        log.show("TargetRight", lift.motorRight.getPositionHolder().getTarget());
 //        log.show("TargetLeft", lift.motorLeft.getPositionHolder().getTarget());

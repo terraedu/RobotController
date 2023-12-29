@@ -21,7 +21,7 @@ public class Configs implements RobotUser{
     /**
      * Used for CenterStage robot
      */
-    RobotConfig CenterStage = new RobotConfig(drive, lift);
+    RobotConfig CenterStage = new RobotConfig(drive, outtake);
 
     /**
      * Current Config
