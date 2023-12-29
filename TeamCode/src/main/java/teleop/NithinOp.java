@@ -6,7 +6,7 @@ import javax.crypto.Mac;
 
 import automodules.AutoModule;
 import automodules.AutoModuleUser;
-import auton.TerraAutoRam;
+
 import autoutil.vision.JunctionScannerAll;
 import elements.FieldPlacement;
 import geometry.framework.Point;
@@ -42,44 +42,13 @@ public class NithinOp extends Tele {
 
     @Override
     public void initTele() {
-        voltageScale = 1;
 
-        gph1.link(LEFT_BUMPER, Intake);
-        gph1.link(LEFT_TRIGGER, PlaceReady);
-
-        gph1.link(X, PlaceLow);
-        gph1.link(A, PlaceMid);
-        gph1.link(Y, () -> intake.moveMiddle());
-        gph1.link(B, ()-> intake.moveTime(1,1));
-
-        gph1.link(RIGHT_TRIGGER, PlaceAll);
-        gph1.link(RIGHT_BUMPER, PlaceOne);
-//
-//        gph1.link(DPAD_DOWN, () -> intake.move(-.9));
-//        gph1.link(DPAD_UP, () -> intake.move(.9));
-//        gph1.link(DPAD_LEFT, () -> intake.move(0));
-//        gph1.link(Y, PlaceHigh);
-
-//        gph1.link(LEFT_TRIGGER, Place);
-//        gph1.link(RIGHT_TRIGGER, PlaceReady);
-
-//        gph2.link(Y, ManualOpenFull);
-//        gph2.link(A, ManualClose);
-//        gph2.link(B, ManualOpenHalf);
-        /**
-         * Start code
-         */
-        outtake.moveStart();
-        outtake.openClawFull();
-        intake.moveStart();
-        driveMode.set(FAST);
-        lift.reset();
-
+    gph1.link(X, PLACELOW);
     }
 
     @Override
     public void startTele() {
-        lift.reset();
+
 
     }
 
@@ -87,7 +56,7 @@ public class NithinOp extends Tele {
     public void loopTele() {
 
         drive.newMove(gph1.ry, gph1.rx, gph1.lx);
-        lift.move(gph2.ry);
+
 //        log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());
 
@@ -144,7 +113,7 @@ public class NithinOp extends Tele {
 //        log.show("heading", gyro.getHeading());
 
 //        junctionScannerAll.message();
-//        log.show("Right", lift.motorRight.getPosition());
+        log.show("pivot", lift.pivot.getPosition());
 //        log.show("Left", lift.motorLeft.getPosition());
 //        log.show("TargetRight", lift.motorRight.getPositionHolder().getTarget());
 //        log.show("TargetLeft", lift.motorLeft.getPositionHolder().getTarget());
