@@ -10,7 +10,7 @@ import static global.Modes.outtakeStatus;
 
 public class Outtake extends RobotPart {
 
-    public PServo pivot, claw1, claw2;
+    public PServo pivot, claw1, claw2,drone;
 //    public PServo forklift;
 
 //    public boolean cycleMachine = false;
@@ -22,8 +22,6 @@ public class Outtake extends RobotPart {
 
         claw1 = create("c1", ElectronicType.PSERVO_FORWARD);
 
-
-
         claw1.addPosition("open", 0);
         claw1.addPosition("close", .1);
 
@@ -31,6 +29,16 @@ public class Outtake extends RobotPart {
 
         claw2.addPosition("open", 0);
         claw2.addPosition("close", .2);
+
+        pivot = create("pivot", ElectronicType.CSERVO_FORWARD);
+
+        pivot.addPosition("start", 0);
+
+        drone = create("drone", ElectronicType.CSERVO_FORWARD);
+
+        drone.addPosition("start",0);
+
+
 
 
 
@@ -42,6 +50,8 @@ public class Outtake extends RobotPart {
 
     public void openClaw2(){ claw2.setPosition("open"); }
     public void closeClaw2(){ claw2.setPosition("close"); }
+
+    public void startPivot(){ pivot.setPosition("start"); }
 
 
 
