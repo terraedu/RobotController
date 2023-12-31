@@ -21,7 +21,7 @@ import static global.Modes.Drive.SLOW;
 import static global.Modes.driveMode;
 //import static global.Modes.driveMode;
 
-public class Drive extends RobotPart {
+public class    Drive extends RobotPart {
 
     public CMotor fr, br, fl, bl;
 
@@ -52,10 +52,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        fr = create("fr", ElectronicType.CMOTOR_REVERSE);
-        br = create("br", ElectronicType.CMOTOR_REVERSE);
-        fl = create("fl", ElectronicType.CMOTOR_FORWARD);
-        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
+        fr = create("fr", ElectronicType.CMOTOR_FORWARD);
+        br = create("br", ElectronicType.CMOTOR_FORWARD);
+        fl = create("fl", ElectronicType.CMOTOR_REVERSE);
+        bl = create("bl", ElectronicType.CMOTOR_REVERSE);
 
 //
 //        retract = create("ret", ElectronicType.PSERVO_FORWARD);

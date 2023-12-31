@@ -18,6 +18,7 @@ public class FireOp extends Tele {
 
 
     gph1.link(A, outtake::startPivot);
+        gph1.link(B, outtake::endPivot);
 
     }
 
@@ -31,7 +32,7 @@ public class FireOp extends Tele {
     @Override
     public void loopTele() {
 
-        drive.newMove(gph1.ry, gph1.rx, gph1.lx);
+        drive.newMove(gph1.ry, -gph1.rx, gph1.lx);
 
 //        log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());
