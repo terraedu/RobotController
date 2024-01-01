@@ -21,7 +21,7 @@ import static global.Modes.Drive.SLOW;
 import static global.Modes.driveMode;
 //import static global.Modes.driveMode;
 
-public class    Drive extends RobotPart {
+public class Drive extends RobotPart {
 
     public CMotor fr, br, fl, bl;
 

@@ -30,7 +30,7 @@ public class Outtake extends RobotPart {
         claw2.addPosition("open", 0);
         claw2.addPosition("close", .2);
 
-        pivotServo = create("pivotServo", ElectronicType.PSERVO_REVERSE);
+        pivotServo = create("pivot", ElectronicType.PSERVO_REVERSE);
 
         pivotServo.addPosition("start", 0);
         pivotServo.addPosition("end", 0.5);

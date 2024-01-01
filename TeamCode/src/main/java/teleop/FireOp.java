@@ -3,6 +3,7 @@ package teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
+import static global.General.log;
 import static teleutil.button.Button.*;
 
 import global.General;
@@ -19,6 +20,8 @@ public class FireOp extends Tele {
 
     gph1.link(A, outtake::startPivot);
         gph1.link(B, outtake::endPivot);
+
+        gph1.link(DPAD_UP, PLACELOW);
 
     }
 
@@ -90,7 +93,7 @@ public class FireOp extends Tele {
 //        log.show("heading", gyro.getHeading());
 
 //        junctionScannerAll.message();
-//        log.show("pivot", lift.pivot.getPosition());
+        log.show("pivot", lift.pivot.getPosition());
 //        log.show("Left", lift.motorLeft.getPosition());
 //        log.show("TargetRight", lift.motorRight.getPositionHolder().getTarget());
 //        log.show("TargetLeft", lift.motorLeft.getPositionHolder().getTarget());

@@ -26,9 +26,9 @@ public interface AutoModuleUser extends RobotUser {
 //     * Forward
 //     */
 //
-//    AutoModule PLACELOW = new AutoModule(
-//            lift.stageArm(.2,1)
-//    ).setStartCode(() ->{});
+    AutoModule PLACELOW = new AutoModule(
+            lift.stageArm(1,49)
+    ).setStartCode(() ->{});
 //    AutoModule Intake = new AutoModule(
 //
 //            outtake.stageOpen(.2)
