@@ -17,7 +17,7 @@ public interface Modes {
 
     enum GamepadMode implements Mode.ModeType { NORMAL, AUTOMATED }
 
-    enum OuttakeStatus implements Mode.ModeType { DRIVING, PLACING}
+    enum OuttakeStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING}
     Mode outtakeStatus = new Mode(OuttakeStatus.class);
 
     enum Height implements Mode.ModeType {HIGH, MIDDLE, LOW, GROUND}

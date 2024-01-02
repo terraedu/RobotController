@@ -23,17 +23,20 @@ public class Outtake extends RobotPart {
         claw1 = create("c1", ElectronicType.PSERVO_FORWARD);
 
         claw1.addPosition("open", 0);
-        claw1.addPosition("close", .1);
+        claw1.addPosition("close", .06);
 
-        claw2 = create("c2", ElectronicType.PSERVO_FORWARD);
+        claw2 = create("c2", ElectronicType.PSERVO_REVERSE);
 
         claw2.addPosition("open", 0);
-        claw2.addPosition("close", .2);
+        claw2.addPosition("close", .06);
 
         pivotServo = create("pivot", ElectronicType.PSERVO_REVERSE);
 
-        pivotServo.addPosition("start", 0);
-        pivotServo.addPosition("end", 0.5);
+        pivotServo.addPosition("down", 0.05);
+
+        pivotServo.addPosition("start", 0.13);
+        pivotServo.addPosition("end", 0.93);
+        pivotServo.addPosition("transfer", .99);
 
         drone = create("drone", ElectronicType.PSERVO_FORWARD);
 
@@ -52,8 +55,18 @@ public class Outtake extends RobotPart {
     public void openClaw2(){ claw2.setPosition("open"); }
     public void closeClaw2(){ claw2.setPosition("close"); }
 
+    public void open(){claw2.setPosition("open"); claw1.setPosition("open");}
+    public void close(){claw2.setPosition("close"); claw1.setPosition("close");}
+
+
     public void startPivot(){ pivotServo.setPosition("start"); }
+    public void downPivot(){ pivotServo.setPosition("down"); }
+    public void transferPivot(){ pivotServo.setPosition("transfer"); }
+
+
     public void endPivot(){ pivotServo.setPosition("end"); }
+
+    public void start(){ pivotServo.setPosition("transfer"); claw2.setPosition("open"); claw1.setPosition("open");}
 
 
 
@@ -64,6 +77,15 @@ public class Outtake extends RobotPart {
 
     public Stage stageOpen2(double t){ return super.customTime(this::openClaw2, t); }
     public Stage stageClose2(double t){ return super.customTime(this::closeClaw2, t); }
+
+    public Stage stageEnd(double t){ return super.customTime(this::endPivot, t); }
+    public Stage stageStart(double t){ return super.customTime(this::startPivot, t); }
+    public Stage stageDown(double t){ return super.customTime(this::downPivot, t); }
+    public Stage stageTransfer(double t){ return super.customTime(this::transferPivot, t); }
+
+
+
+
 
 
 

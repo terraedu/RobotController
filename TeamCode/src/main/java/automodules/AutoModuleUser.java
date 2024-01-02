@@ -17,6 +17,7 @@ import static global.Modes.Height.HIGH;
 import static global.Modes.Height.LOW;
 import static global.Modes.Height.MIDDLE;
 import static global.Modes.OuttakeStatus.DRIVING;
+import static global.Modes.OuttakeStatus.INTAKING;
 import static global.Modes.OuttakeStatus.PLACING;
 
 
@@ -26,9 +27,74 @@ public interface AutoModuleUser extends RobotUser {
 //     * Forward
 //     */
 //
+    AutoModule Reset = new AutoModule(
+            outtake.stageStart(.1)
+).setStartCode(() -> {
+    driveMode.set(INTAKING);
+    driveMode.set(SLOW);
+
+
+
+});
+    AutoModule PLACE = new AutoModule(
+            outtake.stageOpen1(.1).attach(outtake.stageOpen2(.1)),
+        lift.stageArm(1, 35),
+        lift.stageLift(1,0).attach(lift.stageArm(1,0)),
+            outtake.stageTransfer(.1)
+
+
+).setStartCode(() -> {
+        driveMode.set(DRIVING);
+        driveMode.set(FAST);
+
+
+    });
     AutoModule PLACELOW = new AutoModule(
-            lift.stageArm(1,49)
+            lift.stageArm(1,49).attach(outtake.stageEnd(.1))
+    ).setStartCode(() ->{
+        driveMode.set(PLACING);
+        driveMode.set(SLOW);
+
+
+    });
+
+    AutoModule LOW = new AutoModule(
+            lift.stageLift(1,10)
     ).setStartCode(() ->{});
+
+
+    AutoModule MIDDLE = new AutoModule(
+            lift.stageLift(1,25)
+    ).setStartCode(() ->{});
+
+    AutoModule HIGH = new AutoModule(
+            lift.stageLift(1,35)
+    ).setStartCode(() ->{});
+    AutoModule GRAB = new AutoModule(
+            outtake.stageClose2(.1).attach(outtake.stageClose1(.1)),
+            outtake.stageTransfer(.1),
+            lift.stageLift(1,0),
+            lift.stageArm(1,0)
+
+    ).setStartCode(() -> {
+        outtake.stageOpen1(.1).attach(outtake.stageOpen2(.1));
+        driveMode.set(DRIVING);
+        driveMode.set(FAST);
+
+
+    });
+
+    AutoModule ExtendGrab = new AutoModule(
+            lift.stageArm(1, 10).attach(outtake.stageDown(.1)),
+            lift.stageLift(1,15),
+            lift.stageArm(1,0)
+
+    ).setStartCode(()-> {
+        driveMode.set(INTAKING);
+        driveMode.set(SLOW);
+
+
+    });
 //    AutoModule Intake = new AutoModule(
 //
 //            outtake.stageOpen(.2)
