@@ -21,11 +21,11 @@ public class FireOp extends Tele {
     gph1.link(X, PLACELOW);
     gph1.link(A, LOW);
         gph1.link(B, MIDDLE);
-    gph1.link(DPAD_LEFT, outtake::openClaw1);
-        gph1.link(DPAD_RIGHT, outtake::openClaw2);
+    gph1.link(DPAD_LEFT, openClaw1);
+        gph1.link(DPAD_RIGHT, openClaw2);
 
 
-        gph1.link(LEFT_BUMPER, ExtendGrab);
+
         gph1.link(RIGHT_BUMPER, Reset);
     gph1.link(RIGHT_TRIGGER, PLACE);
     gph1.link(LEFT_TRIGGER, GRAB);

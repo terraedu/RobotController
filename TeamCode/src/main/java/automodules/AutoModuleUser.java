@@ -64,7 +64,7 @@ public interface AutoModuleUser extends RobotUser {
 
 
     AutoModule MIDDLE = new AutoModule(
-            lift.stageLift(1,25)
+            lift.stageLift(1,27)
     ).setStartCode(() ->{});
 
     AutoModule HIGH = new AutoModule(
@@ -83,6 +83,14 @@ public interface AutoModuleUser extends RobotUser {
 
 
     });
+
+    AutoModule openClaw1 = new AutoModule(
+            outtake.stageOpen1(.05)
+    );
+
+    AutoModule openClaw2 = new AutoModule(
+            outtake.stageOpen2(.05)
+    );
 
     AutoModule ExtendGrab = new AutoModule(
             lift.stageArm(1, 10).attach(outtake.stageDown(.1)),

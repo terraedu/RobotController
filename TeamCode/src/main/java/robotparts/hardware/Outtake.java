@@ -10,7 +10,7 @@ import static global.Modes.outtakeStatus;
 
 public class Outtake extends RobotPart {
 
-    public PServo pivotServo, claw1, claw2,drone;
+    public PServo pivotServo, claw1, claw2,drone,slide, rotation;
 //    public PServo forklift;
 
 //    public boolean cycleMachine = false;
@@ -41,7 +41,13 @@ public class Outtake extends RobotPart {
         drone = create("drone", ElectronicType.PSERVO_FORWARD);
 
         drone.addPosition("start",0);
-        
+
+
+
+
+
+
+
 
 
 
