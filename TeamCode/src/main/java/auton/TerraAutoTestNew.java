@@ -8,7 +8,7 @@ import autoutil.AutoFramework;
 import elements.TeamProp;
 import robotparts.RobotPart;
 
-@Autonomous(name = "TerraAutoTestNew", group = "auto")
+//@Autonomous(name = "TerraAutoTestNew", group = "auto")
 public class TerraAutoTestNew extends AutoFramework {
 
 
