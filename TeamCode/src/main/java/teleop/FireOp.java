@@ -3,6 +3,7 @@ package teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
+import static global.General.gph2;
 import static global.General.log;
 import static global.Modes.Drive.FAST;
 import static teleutil.button.Button.*;
@@ -18,17 +19,18 @@ public class FireOp extends Tele {
 
         driveMode.set(FAST);
 
-    gph1.link(X, PLACELOW);
-    gph1.link(A, LOW);
-        gph1.link(B, MIDDLE);
-    gph1.link(DPAD_LEFT, openClaw1);
-        gph1.link(DPAD_RIGHT, openClaw2);
+    gph2.link(X, PLACELOW);
+    gph2.link(A, LOW);
+        gph2.link(B, MIDDLE);
+    gph2.link(DPAD_LEFT, openClaw1);
+        gph2.link(DPAD_RIGHT, openClaw2);
+    gph2.link(DPAD_UP, outtake::launch);
 
 
 
-        gph1.link(RIGHT_BUMPER, Reset);
-    gph1.link(RIGHT_TRIGGER, PLACE);
-    gph1.link(LEFT_TRIGGER, GRAB);
+        gph2.link(RIGHT_BUMPER, Reset);
+    gph2.link(RIGHT_TRIGGER, PLACE);
+    gph2.link(LEFT_TRIGGER, GRAB);
 
 
 
@@ -46,7 +48,7 @@ public class FireOp extends Tele {
     @Override
     public void loopTele() {
 
-        drive.newMove(gph1.ry, gph1.rx, gph1.lx);
+        drive.newMove(gph1.lx, gph1.ly, gph1.rx);
 
 //        log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());

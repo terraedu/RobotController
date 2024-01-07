@@ -41,8 +41,7 @@ public class Outtake extends RobotPart {
         drone = create("drone", ElectronicType.PSERVO_FORWARD);
 
         drone.addPosition("start",0);
-
-
+        drone.addPosition("launch",0.3);
 
 
 
@@ -64,15 +63,18 @@ public class Outtake extends RobotPart {
     public void open(){claw2.setPosition("open"); claw1.setPosition("open");}
     public void close(){claw2.setPosition("close"); claw1.setPosition("close");}
 
+    public void launch(){ drone.setPosition("launch"); }
+
 
     public void startPivot(){ pivotServo.setPosition("start"); }
     public void downPivot(){ pivotServo.setPosition("down"); }
     public void transferPivot(){ pivotServo.setPosition("transfer"); }
 
 
+
     public void endPivot(){ pivotServo.setPosition("end"); }
 
-    public void start(){ pivotServo.setPosition("transfer"); claw2.setPosition("open"); claw1.setPosition("open");}
+    public void start(){ pivotServo.setPosition("transfer"); claw2.setPosition("open"); claw1.setPosition("open"); drone.setPosition("start");}
 
 
 
