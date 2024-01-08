@@ -64,7 +64,7 @@ public interface AutoModuleUser extends RobotUser {
 
 
     AutoModule MIDDLE = new AutoModule(
-            lift.stageLift(1,20)
+            lift.stageLift(1,23)
     ).setStartCode(() ->{});
 
     AutoModule HIGH = new AutoModule(
