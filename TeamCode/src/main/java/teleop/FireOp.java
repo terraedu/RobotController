@@ -19,9 +19,10 @@ public class FireOp extends Tele {
 
         driveMode.set(FAST);
 
-    gph2.link(X, PLACELOW);
+    gph2.link(LEFT_BUMPER, PLACELOW);
     gph2.link(A, LOW);
         gph2.link(B, MIDDLE);
+        gph2.link(Y, HIGH);
     gph2.link(DPAD_LEFT, openClaw1);
         gph2.link(DPAD_RIGHT, openClaw2);
     gph2.link(DPAD_UP, outtake::launch);
@@ -48,7 +49,7 @@ public class FireOp extends Tele {
     @Override
     public void loopTele() {
 
-        drive.newMove(gph1.lx, gph1.ly, gph1.rx);
+        drive.newMove(gph1.ly, gph1.lx, gph1.rx);
 
 //        log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());

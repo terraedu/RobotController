@@ -64,11 +64,11 @@ public interface AutoModuleUser extends RobotUser {
 
 
     AutoModule MIDDLE = new AutoModule(
-            lift.stageLift(1,27)
+            lift.stageLift(1,20)
     ).setStartCode(() ->{});
 
     AutoModule HIGH = new AutoModule(
-            lift.stageLift(1,35)
+            lift.stageLift(1,27)
     ).setStartCode(() ->{});
     AutoModule GRAB = new AutoModule(
             outtake.stageClose2(.1).attach(outtake.stageClose1(.1)),
