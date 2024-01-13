@@ -35,8 +35,8 @@ public class NewOdometry extends RobotPart {
     }
 
     public void update(){
-        double currentX = -getEncX();
-        double currentY = -getEncY();
+        double currentX = getEncX();
+        double currentY = getEncY();
 //        double currentY2 = getEncY2();
         double deltaX = currentX - lastX;
         double deltaY = currentY - lastY;

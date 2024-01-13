@@ -51,9 +51,8 @@ public class FireOp extends Tele {
 
         drive.newMove(gph1.ly, gph1.lx, gph1.rx);
 
-//        log.show("pose", odometry.getPose());
+        log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());
-
 
 
 

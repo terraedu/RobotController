@@ -93,7 +93,7 @@ public interface AutoModuleUser extends RobotUser {
     );
 
     AutoModule drone = new AutoModule(
-            outtake.stageDown(0.1),
+            outtake.stageStart(0.1),
             RobotPart.pause(0.1),
             outtake.stageLaunch(.01),
             RobotPart.pause(0.5),
