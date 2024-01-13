@@ -92,10 +92,21 @@ public interface AutoModuleUser extends RobotUser {
             outtake.stageOpen2(.05)
     );
 
+    AutoModule drone = new AutoModule(
+            outtake.stageDown(0.1),
+            RobotPart.pause(0.1),
+            outtake.stageLaunch(.01),
+            RobotPart.pause(0.5),
+            outtake.stageTransfer(0.1)
+
+    );
+
     AutoModule ExtendGrab = new AutoModule(
             lift.stageArm(1, 10).attach(outtake.stageDown(.1)),
             lift.stageLift(1,15),
             lift.stageArm(1,0)
+
+
 
     ).setStartCode(()-> {
         driveMode.set(INTAKING);

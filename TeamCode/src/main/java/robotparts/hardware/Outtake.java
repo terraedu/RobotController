@@ -41,7 +41,7 @@ public class Outtake extends RobotPart {
         drone = create("drone", ElectronicType.PSERVO_FORWARD);
 
         drone.addPosition("start",0);
-        drone.addPosition("launch",0.3);
+        drone.addPosition("launch",0.65);
 
 
 
@@ -85,6 +85,8 @@ public class Outtake extends RobotPart {
 
     public Stage stageOpen2(double t){ return super.customTime(this::openClaw2, t); }
     public Stage stageClose2(double t){ return super.customTime(this::closeClaw2, t); }
+
+    public Stage stageLaunch(double t){return super.customTime(this::launch, t); }
 
     public Stage stageEnd(double t){ return super.customTime(this::endPivot, t); }
     public Stage stageStart(double t){ return super.customTime(this::startPivot, t); }

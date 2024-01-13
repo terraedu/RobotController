@@ -25,7 +25,7 @@ public class FireOp extends Tele {
         gph2.link(Y, HIGH);
     gph2.link(DPAD_LEFT, openClaw1);
         gph2.link(DPAD_RIGHT, openClaw2);
-    gph2.link(DPAD_UP, outtake::launch);
+    gph2.link(DPAD_UP, drone);
 
 
 
