@@ -42,8 +42,8 @@ public class redleft extends AutoFramework {
             addTimedSetpoint(1,1,.5,29,-33,180);
         }, () -> {
             addTimedSetpoint(1,1,1.5,0,-50,0);
-            addTimedSetpoint(1,1,.9,20,-50,180);
-            addTimedSetpoint(1,1,.9,20,-62,165);
+            addTimedSetpoint(1,1,1,30,-50,180);
+            addTimedSetpoint(1,1,1,30,-62,165);
 
             addAutoModule(PlacePurple);
             addTimedSetpoint(1,1,.9,10,-62,165);
