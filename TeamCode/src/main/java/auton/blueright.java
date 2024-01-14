@@ -47,8 +47,8 @@ public class blueright extends AutoFramework {
 
         }, () -> {
             addTimedSetpoint(1,1,1.5,0,-50,0);
-            addTimedSetpoint(1,1,.9,-15,-50,-180);
-            addTimedSetpoint(1,1,.9,-15,-62,-165);
+            addTimedSetpoint(1,1,.9,-25,-50,-180);
+            addTimedSetpoint(1,1,.9,-25,-62,-165);
 
             addAutoModule(PlacePurple);
             addTimedSetpoint(1,1,.9,-10,-62,-165);
