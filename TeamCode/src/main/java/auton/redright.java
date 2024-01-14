@@ -69,8 +69,8 @@ public class redright extends AutoFramework {
 
         }, () -> {
 
-            addTimedSetpoint(1,1,1,-29,-30,0);
-            addTimedSetpoint(1,1,1,-29,-33,180);
+            addTimedSetpoint(1,1,1,-23,-30,0);
+            addTimedSetpoint(1,1,1,-23,-33,180);
 
             addAutoModule(PlacePurple);
             addAutoModule(Retract);
