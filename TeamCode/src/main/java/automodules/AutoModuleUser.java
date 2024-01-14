@@ -39,7 +39,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule PLACE = new AutoModule(
             outtake.stageOpen1(.1).attach(outtake.stageOpen2(.1)),
         lift.stageArm(1, 35),
-        lift.stageLift(1,0).attach(lift.stageArm(1,0)),
+        lift.stageLift(1,-2).attach(lift.stageArm(1,0)),
             outtake.stageTransfer(.1)
 
 
@@ -73,7 +73,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule GRAB = new AutoModule(
             outtake.stageClose2(.1).attach(outtake.stageClose1(.1)),
             outtake.stageTransfer(.1),
-            lift.stageLift(1,0),
+            lift.stageLift(1,-2),
             lift.stageArm(1,0)
 
     ).setStartCode(() -> {

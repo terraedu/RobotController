@@ -32,39 +32,49 @@ public class redleft extends AutoFramework {
     @Override
     public void define() {
         customCase(()-> {
-            addTimedSetpoint(.7,.7,2,15,-40,0);
-            addTimedSetpoint(.7,.5,2,15,-43,-180);
+            addTimedSetpoint(1,1,1,29,-30,0);
+            addTimedSetpoint(1,1,1,29,-35,160);
+
+
+
             addAutoModule(PlacePurple);
             addAutoModule(Retract);
-            addTimedSetpoint(.7,.5,2,15,-43,-180);
+            addTimedSetpoint(1,1,.5,29,-33,180);
+        }, () -> {
+            addTimedSetpoint(1,1,1.5,0,-50,0);
+            addTimedSetpoint(1,1,.9,20,-50,180);
+            addTimedSetpoint(1,1,.9,20,-62,165);
+
+            addAutoModule(PlacePurple);
+            addTimedSetpoint(1,1,.9,10,-62,165);
+
+            addAutoModule(Retract);
+
+            addTimedSetpoint(1,.8,.9,10,-30,180);
+
+
+
 
 
 
         }, () -> {
-            addTimedSetpoint(1,.8,2,0,-50,0);
-            addTimedSetpoint(1,.8,.9,10,-50,180);
-            addTimedSetpoint(1,.8,.9,15,-62,160);
 
-            addAutoModule(PlacePurple);
-            addAutoModule(Retract);
-            addTimedSetpoint(1,.8,.9,0,-30,180);
-
-
-
-
-
-
-        }, () -> {
-
-            addTimedSetpoint(.7,.5,1.5,0,-65,0);
-            addTimedSetpoint(.7,.5,1.5,0,-65,90);
-            addTimedSetpoint(.7,.5,.5,20,-65,90);
-            addTimedSetpoint(.7,.5,.5,-5,-65,90);
+            addTimedSetpoint(1,1,1.5,10,-65,0);
+            addTimedSetpoint(1,1,1.5,10,-65,90);
+            addTimedSetpoint(1,1,.5,-40,-65,90);
+            addTimedSetpoint(1,1,.5,0,-65,100);
 
 
             addAutoModule(PlacePurple);
+
             addAutoModule(Retract);
-            addTimedSetpoint(.7,.5,.5,-5,-65,90);
+            addTimedSetpoint(1,1,.5,0,-65,100);
+
+
+
+
+
+
 
 
 
