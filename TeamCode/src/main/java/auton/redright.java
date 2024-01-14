@@ -43,7 +43,7 @@ public class redright extends AutoFramework {
             addTimedSetpoint(1,1,.5,-40,-17,180);
             addTimedSetpoint(1,1,.5,-40,-17,90);
 
-            addTimedSetpoint(1,1,1,-70,-12,85);
+            addTimedSetpoint(1,1,1,-70,-13,95);
             addPause(20);
 
 
@@ -60,7 +60,7 @@ public class redright extends AutoFramework {
             addTimedSetpoint(1,1,.5,-40,-17,180);
             addTimedSetpoint(1,1,.5,-40,-17,90);
 
-            addTimedSetpoint(1,1,1,-70,-12,85);
+            addTimedSetpoint(1,1,1,-70,-13,95);
             addPause(20);
 
 
@@ -77,7 +77,7 @@ public class redright extends AutoFramework {
             addTimedSetpoint(1,1,.5,-40,-17,180);
             addTimedSetpoint(1,1,.5,-40,-17,90);
 
-            addTimedSetpoint(1,1,1,-70,-7,85);
+            addTimedSetpoint(1,1,1,-70,-12,95);
             addPause(20);
         });
 
