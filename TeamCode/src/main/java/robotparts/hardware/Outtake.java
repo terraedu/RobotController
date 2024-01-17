@@ -12,7 +12,7 @@ import java.util.EventListener;
 
 public class Outtake extends RobotPart {
 
-    public PServo pivot, claw, launch;
+    public PServo pivot,R_CLAW,L_CLAW, launch;
     //    public PServo forklift;
 
 //    public boolean cycleMachine = false;
@@ -22,17 +22,18 @@ public class Outtake extends RobotPart {
     @Override
     public void init() {
         pivot = create("pivot", ElectronicType.PSERVO_REVERSE);
-        claw = create("claw", ElectronicType.PSERVO_REVERSE);
+        R_CLAW = create("Rclaw", ElectronicType.PSERVO_FORWARD);
         launch = create("launch", ElectronicType.PSERVO_REVERSE);
+        L_CLAW = create("Lclaw", ElectronicType.PSERVO_FORWARD);
 
-
-        pivot.changePosition("start", 0); //.21 difference
-        claw.changePosition("start", 0);
+        pivot.changePosition("start", 0.05);
+        L_CLAW.changePosition("start", 0);
         launch.changePosition("start", 0);
-
-        claw.addPosition("close", 0.2);
+        R_CLAW.changePosition("start",0);
+        L_CLAW.addPosition("close", 0.2);
         pivot.addPosition("place", 1);
         launch.addPosition("release", 0.7);
+       R_CLAW.addPosition("close",0.2);
 //        arml.addPosition("s", 0.09);
 //        armr.addPosition("s", 0.3);
 //
@@ -61,16 +62,44 @@ public class Outtake extends RobotPart {
 
 //    public void arm(double pos){ armr.setPosition(pos); arml.setPosition(pos); }
 
-    public void moveStart(){ pivot.setPosition("start"); claw.setPosition("start"); launch.setPosition("start");}
-    public void moveEnd(){ pivot.setPosition("end"); claw.setPosition("end"); }
-    public void openClawFull(){ claw.setPosition("openfull"); }
-    public void openClawHalf(){ claw.setPosition("openhalf"); }
+
+    public void moveStart(){
+        pivot.setPosition("start");
+        L_CLAW.setPosition("start");
+        R_CLAW.setPosition("start");
+        launch.setPosition("start");
+    }
+    public void moveEnd(){
+        pivot.setPosition("end");
+        L_CLAW.setPosition("end");
+        R_CLAW.setPosition("end");
+    }
+    public void openClawFull(){
+        L_CLAW.setPosition("openfull");
+        R_CLAW.setPosition("openfull");
+    }
+    public void openClawHalf(){
+        L_CLAW.setPosition("openhalf");
+        R_CLAW.setPosition("openhalf");
+    }
 //    public void openClawCap() { claw.setPosition("cap"); }
-    public void closeClaw(){ claw.setPosition("close"); }
-    public void openClaw(){ claw.setPosition("start");}
-    public void placePivot() { pivot.setPosition("place");}
-    public void grabPivot() { pivot.setPosition("start");}
-    public void release() { launch.setPosition("release");}
+    public void closeClaw(){
+        L_CLAW.setPosition("close");
+        R_CLAW.setPosition("close");
+    }
+    public void openClaw(){
+        L_CLAW.setPosition("start");
+        R_CLAW.setPosition("start");
+    }
+    public void placePivot() {
+        pivot.setPosition("place");
+    }
+    public void grabPivot() {
+        pivot.setPosition("start");
+    }
+    public void release() {
+        launch.setPosition("release");
+    }
 
 //    public void readyStart(){ pivot.setPosition("startHalf"); claw.setPosition("startHalf"); }
 //    public void readyEnd(){ armr.setPosition("endHalf"); arml.setPosition("endHalf"); }

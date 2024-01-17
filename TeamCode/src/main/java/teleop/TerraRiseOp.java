@@ -36,7 +36,7 @@ public class TerraRiseOp extends Tele {
 
         outtake.moveStart();
         gph2.link(Button.LEFT_BUMPER, openClaw);
-        gph2.link(Button.RIGHT_BUMPER , closeClaw);
+        gph2.link(Button.RIGHT_BUMPER , closeClaw); 
         gph1.link(Button.DPAD_DOWN, () -> driveMode.set(SLOW));
         gph1.link(Button.DPAD_UP, () -> driveMode.set(FAST));
         gph2.link(Button.LEFT_TRIGGER, extendGrab);
