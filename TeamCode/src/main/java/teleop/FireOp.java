@@ -10,7 +10,7 @@ import static teleutil.button.Button.*;
 
 import global.General;
 
-@TeleOp(name = "FireOp", group = "TeleOp")
+@TeleOp(name = "RiseOp", group = "TeleOp")
 public class FireOp extends Tele {
 
     @Override
@@ -49,7 +49,7 @@ public class FireOp extends Tele {
     @Override
     public void loopTele() {
 
-        drive.newMove(gph1.ly, gph1.lx, gph1.rx);
+        drive.newMove(-gph1.ry, gph1.rx, gph1.lx);
 
         log.show("pose", odometry.getPose());
 //        log.show("DriveMode", driveMode.get());
