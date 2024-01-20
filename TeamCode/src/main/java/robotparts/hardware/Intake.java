@@ -64,9 +64,9 @@ public class Intake extends RobotPart {
     }
 
 
-//    public void moveHang(double pow) {
-//        hang.setPower(pow);
-//    }
+    public void moveHang(double pow) {
+        hang.setPower(pow);
+    }
 
     @Override
     public CodeSeg move(double pow) {

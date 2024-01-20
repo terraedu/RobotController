@@ -34,7 +34,7 @@ public class Outtake extends RobotPart {
 
         pivotServo.addPosition("down", 0.05);
 
-        pivotServo.addPosition("start", 0.13);
+        pivotServo.addPosition("start", 0.15);
         pivotServo.addPosition("end", 0.93);
         pivotServo.addPosition("transfer", .99);
 

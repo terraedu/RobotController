@@ -9,6 +9,7 @@ import global.Constants;
 import global.Modes;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
+import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.positional.PMotor;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
@@ -27,6 +28,8 @@ public class Lift extends RobotPart {
 
     public PMotor pivot;
     public PMotor slides;
+    private PMotor hang;
+
 
     public static final double maxPosition = 100;
     public final double defaultCutoffPosition = 1000;
@@ -46,11 +49,16 @@ public class Lift extends RobotPart {
     public void init() {
         pivot = create("arm", ElectronicType.PMOTOR_FORWARD);
         slides = create("lift", ElectronicType.PMOTOR_REVERSE);
+        hang = create("hang", ElectronicType.PMOTOR_FORWARD);
+
         // 0.25
         pivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1.5, 0);
         slides.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
         pivot.usePositionHolder(.8, .1);
+        hang.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
+
         slides.usePositionHolder(1, .4);
+        hang.usePositionHolder(1, .4);
         heightMode.set(Modes.Height.HIGH);
         circuitMode = false;
         stacked = false;
@@ -73,6 +81,20 @@ public class Lift extends RobotPart {
         return null;
     }
 
+    public CodeSeg moveHang(double p) {
+        hang.moveWithPositionHolder(p, currentCutoffPosition, 0.5);
+
+
+        return null;
+    }
+
+    public CodeSeg HangStop(double p) {
+        hang.moveWithPositionHolder(p, currentCutoffPosition, 0);
+
+
+        return null;
+    }
+
     public void adjustHolderTarget(double delta){
         if(outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
             globalOffset += delta;
@@ -92,6 +114,7 @@ public class Lift extends RobotPart {
 
     @Override
     public Stage moveTime(double p, ReturnCodeSeg<Double> t) { return super.moveTime(p, t); }
+
 
     public Stage moveTimeBack(double fp, double p, ReturnCodeSeg<Double> t){ return moveTimeBack(() -> fp, () -> p, t, () -> {}); }
 
@@ -117,6 +140,15 @@ public class Lift extends RobotPart {
             return target;
         }
     }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
+
+//    public Stage stageHang(double power, double target) {
+//        return moveTarget(() -> hang, power, () -> {
+//            if(target == heightMode.getValue(LOW)+2 || target == heightMode.getValue(MIDDLE)+2 || target == heightMode.getValue(HIGH)+2){
+//                return target+globalOffset;
+//            }else{
+//                return target;
+//            }
+//        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
 
     public Stage stageArm(double power, double target) {
         return moveTarget(() -> pivot, power, () -> target).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }

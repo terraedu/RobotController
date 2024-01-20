@@ -1,21 +1,11 @@
 package automodules;
 
-import automodules.stage.Stage;
-import automodules.stage.Stop;
-import auton.Auto;
 import robot.RobotUser;
 import robotparts.RobotPart;
-import teleutil.independent.Independent;
-import teleutil.independent.Machine;
 
 import static global.Modes.*;
 import static global.Modes.Drive.FAST;
-import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
-import static global.Modes.Height.GROUND;
-import static global.Modes.Height.HIGH;
-import static global.Modes.Height.LOW;
-import static global.Modes.Height.MIDDLE;
 import static global.Modes.OuttakeStatus.DRIVING;
 import static global.Modes.OuttakeStatus.INTAKING;
 import static global.Modes.OuttakeStatus.PLACING;
@@ -57,6 +47,9 @@ public interface AutoModuleUser extends RobotUser {
 
 
     });
+    AutoModule Hang = new AutoModule(
+      lift.moveTime(1,1)
+    );
 
     AutoModule LOW = new AutoModule(
             lift.stageLift(1,10)

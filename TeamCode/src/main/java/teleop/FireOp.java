@@ -8,8 +8,6 @@ import static global.General.log;
 import static global.Modes.Drive.FAST;
 import static teleutil.button.Button.*;
 
-import global.General;
-
 @TeleOp(name = "RiseOp", group = "TeleOp")
 public class FireOp extends Tele {
 
@@ -32,6 +30,12 @@ public class FireOp extends Tele {
         gph2.link(RIGHT_BUMPER, Reset);
     gph2.link(RIGHT_TRIGGER, PLACE);
     gph2.link(LEFT_TRIGGER, GRAB);
+
+    gph1.link(DPAD_UP, () -> lift.moveHang(.5));
+        gph1.link(DPAD_DOWN, () -> lift.moveHang(-.5));
+        gph1.link(DPAD_RIGHT, () -> lift.HangStop(0));
+
+
 
 
 
