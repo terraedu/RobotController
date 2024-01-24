@@ -18,6 +18,7 @@ public interface AutoModuleUser extends RobotUser {
 //     */
 //
     AutoModule Reset = new AutoModule(
+            lift.stageLift(1,-2),
             outtake.stageStart(.1)
 ).setStartCode(() -> {
     driveMode.set(INTAKING);
