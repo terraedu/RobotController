@@ -114,7 +114,7 @@ public class FireOp extends Tele {
 //        log.show("Left", lift.motorLeft.getPosition());
 //        log.show("TargetRight", lift.motorRight.getPositionHolder().getTarget());
 //        log.show("TargetLeft", lift.motorLeft.getPositionHolder().getTarget());
-//        log.show("Pose", odometry.getPose());
+        log.show("Pose", odometry.getPose());
 //        log.show("SavedPose", bot.getSavedPose());
 //        log.show("Voltage", bot.getVoltage());
 //        log.show("Pitch", gyro.getPitch());
