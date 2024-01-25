@@ -34,14 +34,14 @@ public class redleft extends AutoFramework {
     @Override
     public void define() {
         customCase(()-> {
-            addTimedSetpoint(0.9,1,1,29,-30,0);
-            addTimedSetpoint(0.9,1,1,29,-35,160);
+            addTimedSetpoint(1,1,1,-29,30,0);
+            addTimedSetpoint(1,1,1,-29,35,160);
 
 
 
-            addAutoModule(PlacePurple);
-            addAutoModule(Retract);
-            addTimedSetpoint(1,1,.5,29,-33,180);
+//            addAutoModule(PlacePurple);
+//            addAutoModule(Retract);
+//            addTimedSetpoint(1,1,.5,-29,33,180);
         }, () -> {
             addTimedSetpoint(1,1,1.5,0,-50,0);
             addTimedSetpoint(1,1,1,30,-50,180);
