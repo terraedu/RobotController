@@ -92,7 +92,7 @@ public class NewOdometry extends RobotPart {
         y = yo + globalOdometryCenterToRobotCenter.getY();
 
 
-    }
+    }//
 
 
     public double getEncX() { return (xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
