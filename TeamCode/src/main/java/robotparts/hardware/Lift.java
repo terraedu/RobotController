@@ -44,7 +44,7 @@ public class Lift extends RobotPart {
     public int adjust = 0;
     public boolean adjusting = false;
     public double globalOffset = 0;
-
+//
     @Override
     public void init() {
         pivot = create("arm", ElectronicType.PMOTOR_FORWARD);
