@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import automodules.AutoModule;
 import autoutil.AutoFramework;
-import elements.TeamProp;
 
 @Autonomous(name = "red left", group = "auto", preselectTeleOp = "TerraOp")
 public class redleft extends AutoFramework {
@@ -16,9 +15,8 @@ public class redleft extends AutoFramework {
 
         this.setConfig(NonstopConfig);
         bot.saveLocationOnField();
-//        AutoFramework auto = this;
-//        auto.scan(true, "red", "left");
-        propCaseDetected = TeamProp.FIRST;
+        AutoFramework auto = this;
+        auto.scan(true, "red", "left");
         outtake.start();
         outtake.close();
     }
@@ -34,8 +32,8 @@ public class redleft extends AutoFramework {
     @Override
     public void define() {
         customCase(()-> {
-            addTimedSetpoint(0.9,1,1,29,-30,0);
-            addTimedSetpoint(0.9,1,1,29,-35,160);
+            addTimedSetpoint(1,1,1,29,-30,0);
+            addTimedSetpoint(1,1,1,29,-35,160);
 
 
 
