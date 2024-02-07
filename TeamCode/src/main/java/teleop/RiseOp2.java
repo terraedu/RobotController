@@ -1,6 +1,9 @@
 package teleop;
+public class RiseOp2 extends Tele{
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-public class RiseOp2 extends TeleOp {
+    @Override
+    public void loopTele() {
+
+    }
 }
