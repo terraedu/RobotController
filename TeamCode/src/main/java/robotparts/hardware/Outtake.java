@@ -83,7 +83,8 @@ public class Outtake extends RobotPart {
         R_CLAW.setPosition("openhalf");
     }
 //    public void openClawCap() { claw.setPosition("cap"); }
-    public void closeClaw(){
+    public void
+    closeClaw(){
         L_CLAW.setPosition("close");
         R_CLAW.setPosition("close");
     }

@@ -1,8 +1,8 @@
 package teleop;
+import stat1global.General.log;
 
 import static global.General.gph1;
 import static global.General.gph2;
-import static global.General.log;
 import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
