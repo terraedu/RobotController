@@ -1,24 +1,17 @@
 package unittests.auto;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-
 import static global.General.fieldPlacement;
 import static global.General.fieldSide;
 import static global.General.log;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import auton.Auto;
 import elements.FieldPlacement;
 import elements.FieldSide;
 import unittests.UnitTester;
-//import unittests.auto.framework.VuforiaTest;
-import unittests.auto.framework.calibration.ArmRestPowerCalib;
-import unittests.auto.framework.calibration.OdometryCalib;
 import unittests.auto.framework.calibration.OdometryCalib2;
-import unittests.auto.framework.calibration.RestPowerCalib;
-import unittests.auto.framework.calibration.VoltageScaleCalib;
-import unittests.auto.framework.movement.DistanceSensorStraightenTest;
-import unittests.auto.framework.movement.OdometryTest;
 import util.condition.Status;
 
 //@Disabled
