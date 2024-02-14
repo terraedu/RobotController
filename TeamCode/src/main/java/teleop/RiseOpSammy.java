@@ -1,24 +1,49 @@
 package teleop;
 
 import static global.General.gph1;
+import static global.General.gph2;
+import static global.Modes.Drive.FAST;
+import static global.Modes.Drive.MEDIUM;
+import static global.Modes.Drive.SLOW;
+import static global.Modes.Height.LOW;
+import static global.Modes.OuttakeStatus.DRIVING;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import teleutil.button.Button;
+
 @TeleOp( name = "RiseOpSammy", group = "TeleOp")
 
-public class RiseOpSammy extends Tele{
+public class RiseOpSammy extends Tele {
 
 
     @Override
 
     public void initTele() {
 
+heightMode.set(LOW);
+outtakeStatus.set(DRIVING);
+driveMode.set(FAST);
+
+
+//gph1 is outtake, gph2 is driving
+        gph2.link(Button.DPAD_DOWN, () -> driveMode.set(SLOW));
+        gph2.link(Button.DPAD_DOWN, () -> driveMode.set(FAST));
+        gph2.link(Button.DPAD_RIGHT, () -> driveMode.set(MEDIUM));
 
     }
+
     @Override
     public void loopTele() {
-drive.move(gph1.ry,gph1.rx,gph1.lx){
 
+        if (driveMode.modeIs(SLOW){
+          drive.move(gph1.ry*0.25,gph1.rx*0.25,gph1.ly*0.25);
+      } else if(driveMode.modeIs(MEDIUM)) {
+          drive.move(gph1.ry*0.5,gph1.rx*0.5, gph1.ly*0.5);
+        } else if {
+        drive.move(gph1.ry, gph1.rx, gph1.lx);
+    }
 
-        }
+    }
+
 }
