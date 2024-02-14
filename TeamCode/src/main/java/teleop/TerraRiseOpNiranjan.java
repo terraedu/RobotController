@@ -21,13 +21,10 @@ public class TerraRiseOpNiranjan extends Tele {
 
     @Override
     public void loopTele() {
-        double multiplier;
-        if (driveMode.modeIs(FAST)){
-            multiplier = 1;
-        if (driveMode.modeIs(MEDIUM)){
-            multiplier = .75;
-        if (driveMode.modeIs(SLOW)){
-            multiplier = .25;;
+        if (driveMode.modeIs(SLOW)) {
+            drive.move(gph1.ry * 0.25, gph1.rx * 0.25, gph1.lx * 0.25);
+        } else if (driveMode.modeIs(FAST)) {
+            drive.move(gph1.ry, gph1.rx, gph1.lx);
         }
         }
         }
