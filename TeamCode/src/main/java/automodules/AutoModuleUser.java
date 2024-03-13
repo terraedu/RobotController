@@ -61,7 +61,7 @@ public interface AutoModuleUser extends RobotUser{
 
     AutoModule down = new AutoModule(
             RobotPart.pause(0.05),
-            outtake.stageOpenClaw(0.5),
+        outtake.stageOpenClaw(0.5),
             lift.stageLift(1.0, 0),
             lift.stageArm(0.2, 3)
     );

@@ -36,11 +36,11 @@ driveMode.set(FAST);
     @Override
     public void loopTele() {
 
-        if (driveMode.modeIs(SLOW){
+        if (driveMode.modeIs(SLOW)){
           drive.move(gph1.ry*0.25,gph1.rx*0.25,gph1.ly*0.25);
       } else if(driveMode.modeIs(MEDIUM)) {
           drive.move(gph1.ry*0.5,gph1.rx*0.5, gph1.ly*0.5);
-        } else if {
+        } else {
         drive.move(gph1.ry, gph1.rx, gph1.lx);
     }
 

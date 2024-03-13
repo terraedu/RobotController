@@ -105,7 +105,7 @@ public class Outtake extends RobotPart {
 //    public void readyStart(){ pivot.setPosition("startHalf"); claw.setPosition("startHalf"); }
 //    public void readyEnd(){ armr.setPosition("endHalf"); arml.setPosition("endHalf"); }
 
-    public void moveMiddle(){ pivot.setPosition("middle"); claw.setPosition("middle"); }
+    public void moveMiddle(){ pivot.setPosition("middle"); }
 
 //    public Stage stageReadyStart(double t){return super.customTime(this::readyStart, t);}
     public Stage stageStart(double t){ return super.customTime(this::moveStart, t); }
