@@ -2,6 +2,7 @@ package robot;
 
 import robotparts.hardware.Arm;
 import robotparts.hardware.Claw;
+import robotparts.hardware.SammyDrive;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
@@ -26,6 +27,7 @@ public interface RobotUser {
      * USED
      */
     Drive drive = new Drive();
+    SammyDrive sammydrive = new SammyDrive();
     Lift lift = new Lift();
     Outtake outtake = new Outtake();
     Claw claw = new Claw();

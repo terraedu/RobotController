@@ -36,9 +36,8 @@ driveMode.set(FAST);
 
     @Override
     public void loopTele() {
-        SammyDrive.SammyMove(gph1.ry, gph1.rx, gph1.lx);
+        sammydrive.move(gph1.ry,gph1.rx, gph1.lx);
     }
 
     }
 
-}

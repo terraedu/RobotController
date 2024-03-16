@@ -11,10 +11,11 @@ public class SammyDrive extends RobotPart {
         fr = create("fr", ElectronicType.CMOTOR_REVERSE);
         br = create("fr", ElectronicType.CMOTOR_REVERSE);
         fl = create("fl", ElectronicType.CMOTOR_FORWARD);
-        bl= create("bl", ElectronicType.CMOTOR_FORWARD);
+        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
     }
-    public void SammyMove(double f, double s, double t){
+    @Override
+    public void move(double f, double s, double t){
         fr.setPower(f-s-t);
         fl.setPower(f+s+t);
         br.setPower(f+s-t);
