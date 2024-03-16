@@ -10,6 +10,7 @@ import static global.Modes.OuttakeStatus.DRIVING;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import robotparts.hardware.SammyDrive;
 import teleutil.button.Button;
 
 @TeleOp( name = "RiseOpSammy", group = "TeleOp")
@@ -35,13 +36,7 @@ driveMode.set(FAST);
 
     @Override
     public void loopTele() {
-
-        if (driveMode.modeIs(SLOW)){
-          drive.move(gph1.ry*0.25,gph1.rx*0.25,gph1.ly*0.25);
-      } else if(driveMode.modeIs(MEDIUM)) {
-          drive.move(gph1.ry*0.5,gph1.rx*0.5, gph1.ly*0.5);
-        } else {
-        drive.move(gph1.ry, gph1.rx, gph1.lx);
+        SammyDrive.SammyMove(gph1.ry, gph1.rx, gph1.lx);
     }
 
     }
