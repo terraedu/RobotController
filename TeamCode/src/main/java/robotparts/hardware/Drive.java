@@ -22,6 +22,7 @@ public class Drive extends RobotPart {
 
     // TASK 2: Create 4 uninitialized public CMotor objects named (rb, lb, rf, lf)
     // Note that rb stands for right back and lf is left front
+    public CMotor fl, bl, fr, br;
 
     // < motors definitions go here >
 public CMotor rb,lb,rf,lf;
@@ -32,6 +33,10 @@ public CMotor rb,lb,rf,lf;
         // TASK 3: Use the method create(String name, ElectronicType type) to initialize the motors
         // For example to initialize the CMotor (rb)
         // rb = create("rb",  ElectronicType.CMOTOR_REVERSE); [Note that different motors have different directions (see above)]
+        br = create("br",ElectronicType.CMOTOR_FORWARD);
+        bl = create("bl",ElectronicType.CMOTOR_REVERSE);
+        fl = create("fl",ElectronicType.CMOTOR_REVERSE);
+        fr = create("fr",ElectronicType.CMOTOR_FORWARD);
 
         // < motors initializations go here >
 
@@ -44,6 +49,11 @@ public CMotor rb,lb,rf,lf;
 
     @Override
     public void move(double f, double s, double t) {
+
+        br.setPower(f-t-s);
+        bl.setPower(f+t+s);
+        fl.setPower(f+t-s);
+        fr.setPower(f-t+s);
 
         // TASK 4: Program the movement of the mecanum wheels. The input to this function is three doubles
         // which are all a values between -1 and 1

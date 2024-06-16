@@ -1,5 +1,6 @@
 package robot;
 
+import robotparts.hardware.Arm;
 import robotparts.hardware.Drive;
 import robotparts.unused.Intake;
 import robotparts.unused.Lift;
@@ -18,6 +19,8 @@ public interface RobotUser {
      * Implement this in any class that needs to use the robot
       */
 
+    // Create the Arm object here
+    Arm arm = new Arm();
 
 
     /**
