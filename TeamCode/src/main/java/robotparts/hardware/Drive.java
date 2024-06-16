@@ -24,7 +24,7 @@ public class Drive extends RobotPart {
     // Note that rb stands for right back and lf is left front
 
     // < motors definitions go here >
-
+public CMotor rb,lb,rf,lf;
 
     @Override
     public void init() {
@@ -35,7 +35,10 @@ public class Drive extends RobotPart {
 
         // < motors initializations go here >
 
-
+        rb = create("rb",  ElectronicType.CMOTOR_FORWARD);
+        rf = create("rf",  ElectronicType.CMOTOR_REVERSE);
+        lb = create("lb",  ElectronicType.CMOTOR_REVERSE);
+        lf = create("lf",  ElectronicType.CMOTOR_FORWARD);
 
     }
 
@@ -56,6 +59,11 @@ public class Drive extends RobotPart {
         // Do this for all motors
 
         // < motor movement code goes here>
+        rb.setPower(-f+t+s);
+        rf.setPower(-f+t-s);
+        lb.setPower(f+t-s);
+        lf.setPower(f+t+s);
+
 
 
     }

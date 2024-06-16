@@ -47,7 +47,7 @@ public class TerraOp extends Tele {
         // right joystick y moves forward and backward
         // right joystick x strafes sideways
         // left joystick x turns clockwise and counterclockwise
-
+        drive.move(gph1.lx,gph1.rx,gph1.ry);
         // < drive.move code goes here >
 
     }
