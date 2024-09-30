@@ -13,6 +13,7 @@ public class GyroSensors extends RobotPart {
      */
     private IGyro gs;
 
+
     @Override
     public void init() {
         gs = create("gs", ElectronicType.IGYRO);
