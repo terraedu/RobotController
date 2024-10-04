@@ -257,7 +257,7 @@ public class BLUE_CLOSE_FOUR extends AutoFramework {
         customCase(() -> {
             addWaypoint(30,-30,0);
 
-            addTimedSetpoint(1.0,.5,1,40,-75,-90);
+//            addTimedhttps://youtube.com/clip/UgkxOwPF-u-odIgel4nU7PBMKa-V_hCwqRIu?si=S1pl8yl1YBQlfQpN(1.0,.5,1,40,-75,-90);
 
 
             addAutoModule(ExtakeandLift);
