@@ -240,6 +240,16 @@ public class Drive extends RobotPart {
         return super.moveTime(fp, sp, tp, t);
     }
 
+    public Stage smartDrive(double fp, double sp, double tp)
+    {
+        return super.moveCustomExit(fp, sp, tp, distanceSensorsNew.exitClose());
+    }
+
+    public Stage smartSub(double fp, double sp, double tp)
+    {
+        return super.moveCustomExit(fp, sp, tp, distanceSensorsNew.exitSub());
+    }
+
     @Override
     public Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t) {
         return super.moveTime(fp, sp, tp, t);

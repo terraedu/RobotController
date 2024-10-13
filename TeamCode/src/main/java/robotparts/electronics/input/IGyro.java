@@ -55,7 +55,7 @@ public class IGyro extends Electronic {
 
 //    public void setHeading(double heading){  startHeading = this.heading-heading; }
 
-    public void reset(){ gyro.resetYaw(); }
+    public void reset(){ gyro.resetYaw();}
 
     public double getHeading(){
         YawPitchRollAngles orientation = gyro.getRobotYawPitchRollAngles();

@@ -1,8 +1,10 @@
 package automodules;
 
 import automodules.stage.Stage;
+import auton.Auto;
 import robot.RobotUser;
 import robotparts.RobotPart;
+import robotparts.hardware.Intake;
 
 import static global.Modes.*;
 import static global.Modes.Drive.MEDIUM;
@@ -23,6 +25,8 @@ import static global.Modes.OuttakeStatus.DRIVING;
 import static global.Modes.OuttakeStatus.INTAKING;
 import static global.Modes.OuttakeStatus.PLACING;
 import static global.Modes.OuttakeStatus.PLACING2;
+
+import org.firstinspires.ftc.robotcore.internal.camera.libuvc.constants.UvcAutoExposureMode;
 
 
 public interface AutoModuleUser extends RobotUser {
@@ -281,6 +285,46 @@ public interface AutoModuleUser extends RobotUser {
 
 //
     });
+
+
+
+
+    AutoModule reset = new AutoModule(
+            lift.stageLift(1, 0).attach(outtake.stageFarmDown(0.2)).attach(outtake.stageWristDown(0.3)).attach(outtake.stageClawOpen(0.1)).
+                    attach(intake.resetFarm(0.2)).attach(intake.resetClaw(0.2)).attach(intake.closeClaw(0.2))
+    );
+
+    AutoModule basketlow = new AutoModule(
+            lift.stageLift(1, 25).attach(outtake.stageFarmFlip(0.3)).attach(outtake.stageWristFlip(0.5)),
+            outtake.stageClawOpen(0.2)
+    );
+
+   AutoModule baskethigh = new AutoModule(
+           lift.stageLift(1, 50).attach(outtake.stageFarmFlip(0.2)).attach(outtake.stageWristFlip(0.2)),
+           outtake.stageClawOpen(0.2)
+   );
+
+    AutoModule clipHangLow = new AutoModule(
+            outtake.stageFarmFlip(0.2).attach(outtake.stageWristFlip(0.3)).attach(lift.stageLift(1, 20)),
+            lift.stageLift(0.1, 23)
+    );
+
+    AutoModule clipHangHigh = new AutoModule(
+            outtake.stageFarmFlip(0.2).attach(outtake.stageWristFlip(0.3)).attach(lift.stageLift(1, 35)),
+            lift.stageLift(0.1, 38)
+    );
+
+    AutoModule getSample = new AutoModule(
+            intake.extendFarm(0.2).attach(intake.pivotClaw(0.2)).attach(intake.openClaw(0.2)).attach(intake.runIntake(3))
+    );
+
+    AutoModule placeSample = new AutoModule(
+            outtake.stageFarmFlip(0.4).attach(outtake.stageWristFlip(0.3)),
+            outtake.stageClawOpen(0.1)
+    );
+
+
+
 
 
 

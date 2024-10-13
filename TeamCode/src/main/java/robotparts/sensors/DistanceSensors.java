@@ -54,6 +54,16 @@ public class DistanceSensors extends RobotPart {
         return (dsor.getDistance(DistanceUnit.CM) < 80) && (dsor.getDistance(DistanceUnit.CM) < 80);
     }
 
+    public boolean close()
+    {
+        return (dsor.getDistance(DistanceUnit.CM) < 31) && (dsol.getDistance(DistanceUnit.CM) < 33);
+    }
+
+    public boolean alignSub()
+    {
+        return (dsor.getDistance(DistanceUnit.CM) < 33) && (dsol.getDistance(DistanceUnit.CM) < 33);
+    }
+
     public boolean left(){
         return (dsor.getDistance(DistanceUnit.CM) > dsor.getDistance(DistanceUnit.CM));
     }
@@ -65,6 +75,8 @@ public class DistanceSensors extends RobotPart {
     public Exit exitDrive(){return new Exit(this::isClose);}
     public Exit exitDriveclose(){return new Exit(this::jigglepeak);}
 
+    public Exit exitClose(){return new Exit(this::close);}
+    public Exit exitSub(){return new Exit(this::alignSub);}
     public Exit exitStrafe(){return new Exit(this::isClosey);}
     public Exit exitRight(){return new Exit(this::right);}
     public Exit exitLeft(){return new Exit(this::left);}

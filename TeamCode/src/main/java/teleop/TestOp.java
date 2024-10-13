@@ -57,8 +57,8 @@ public class TestOp extends Tele {
         /**
          * Gets light of color sensor
          */
-        log.show("light 1", colorSensorsNew.getLight1());
-        log.show("light 2", colorSensorsNew.getLight2());
+        //log.show("light 1", colorSensorsNew.getLight1());
+        //log.show("light 2", colorSensorsNew.getLight2());
 
 
         /**
@@ -69,7 +69,7 @@ public class TestOp extends Tele {
         /**
          * Outtake Status
          */
-        log.show("OuttakeStatus", outtakeStatus.get());
+        //log.show("OuttakeStatus", outtakeStatus.get());
 
         /**
          * Heading
@@ -80,14 +80,14 @@ public class TestOp extends Tele {
         /**
          * lift encoder positions
          */
-        log.show("Right Motor", lift.motorRight.getPosition());
-        log.show("Left Motor", lift.motorLeft.getPosition());
+        //log.show("Right Motor", lift.motorRight.getPosition());
+        //log.show("Left Motor", lift.motorLeft.getPosition());
 
 
         /**
          * drive mode
          */
-        log.show("DriveMode", driveMode.get());
+        //log.show("DriveMode", driveMode.get());
 
     }
 
