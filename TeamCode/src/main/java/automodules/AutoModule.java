@@ -1,6 +1,6 @@
 package automodules;
 
-import org.checkerframework.checker.units.qual.C;
+//import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +25,6 @@ public class AutoModule {
     public AutoModule(Stage... stageArray){
         stages.addAll(Arrays.asList(stageArray));
     }
-
 
     public AutoModule add(Stage... stageArray){
         stages.addAll(Arrays.asList(stageArray));

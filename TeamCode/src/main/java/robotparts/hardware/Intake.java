@@ -24,6 +24,9 @@ public class Intake extends RobotPart {
     private PServo link2;
     private CMotor hang;
 
+    public PServo farmR, farmL, pivot, claw;
+    public CServo intake;
+
     boolean Pixel;
 
     @Override
@@ -34,6 +37,32 @@ public class Intake extends RobotPart {
         link2 = create("link2", ElectronicType.PSERVO_FORWARD);
 
         lock = create("lock", ElectronicType.PSERVO_FORWARD);
+
+
+
+
+
+
+
+
+        farmR = create("farmR", ElectronicType.PSERVO_FORWARD);
+        farmL = create("farmL", ElectronicType.PSERVO_REVERSE);
+
+        farmR.addPosition("down", 0.42);
+        farmL.addPosition("down", 0.42);
+
+        farmR.addPosition("flip", 0.42);
+        farmL.addPosition("flip", 0.42);
+
+        pivot.addPosition("notflipped", 0);
+        pivot.addPosition("flip", 0.5);
+
+        claw.addPosition("close", 0);
+        claw.addPosition("open", 0.8);
+
+
+
+
 
 
 //        hang = create("hang", ElectronicType.CMOTOR_FORWARD);
@@ -55,6 +84,46 @@ public class Intake extends RobotPart {
         link2.changePosition("middler", .54);
 
     }
+
+
+
+
+
+    public void extendFarm() {
+        farmR.setPosition("flip");
+        farmL.setPosition("flip");
+    }
+
+    public void resetFarm() {
+        farmR.setPosition("down");
+        farmL.setPosition("down");
+    }
+
+    public void pivotClaw() {
+        pivot.setPosition("flip");
+    }
+
+    public void resetClaw() {
+        pivot.setPosition("notflipped");
+    }
+
+    public void openClaw() {
+        claw.setPosition("open");
+    }
+
+    public void closeClaw() {
+        claw.setPosition("close");
+    }
+
+    public void runIntake() {
+        intake.moveTime(5, 3000);
+    }
+
+
+
+
+
+
 
     public void moveInit() {
         link.setPosition("init");
@@ -121,6 +190,24 @@ public class Intake extends RobotPart {
 //        ins.setPower(pow);
         return null;
     }
+
+
+
+
+
+    public Stage extendFarm(double t) {return super.customTime(this::extendFarm, t);}
+    public Stage resetFarm(double t) {return super.customTime(this::resetFarm, t);}
+    public Stage pivotClaw(double t) {return super.customTime(this::pivotClaw, t);}
+    public Stage resetClaw(double t) {return super.customTime(this::resetClaw, t);}
+    public Stage openClaw(double t) {return super.customTime(this::openClaw, t);}
+    public Stage closeClaw(double t) {return super.customTime(this::closeClaw, t);}
+    public Stage runIntake(double t) {return super.customTime(this::runIntake, t);}
+
+
+
+
+
+
 
     public Stage moveSmart(double p, Exit exit2){
             return super.customTwoExit(p, exit2, colorSensorsNew.exitIntake());
