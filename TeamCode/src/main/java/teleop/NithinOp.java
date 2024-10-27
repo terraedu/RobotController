@@ -8,9 +8,9 @@ import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.Drive.SLOW;
 import static global.Modes.Drive.SUPERSLOW;
-import static global.Modes.OuttakeStatus.DRIVING;
-import static global.Modes.OuttakeStatus.PLACING;
-import static global.Modes.OuttakeStatus.PLACING2;
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.PLACING;
+import static global.Modes.RobotStatus.PLACING2;
 import static teleutil.button.Button.*;
 
 @TeleOp(name = "TerraOp", group = "TeleOp")
@@ -22,13 +22,13 @@ public class NithinOp extends Tele {
 
         gph1.link(LEFT_BUMPER, R_BUMPER);
         gph1.link(RIGHT_BUMPER, L_BUMPER);
-        gph1.linkWithCancel(RIGHT_TRIGGER, outtakeStatus.isMode(DRIVING), X_BUTTON, L_TRIGGER);
+        gph1.linkWithCancel(RIGHT_TRIGGER, robotStatus.isMode(DRIVING), X_BUTTON, L_TRIGGER);
         gph1.linkWithCancel(LEFT_TRIGGER, driveMode.isMode(SLOW), R_TRIGGER, driveMode.isMode(SUPERSLOW), CancelIntake, levelsix);
 //        gph1.linkWithCancel(LEFT_STICK_BUTTON,  driveMode.isMode(SLOW), IntakeMid, CancelIntake);
 
-        gph1.link(DPAD_RIGHT,  outtakeStatus.isMode(DRIVING), chubramani, RIGHT_DPAD );
-        gph1.link(DPAD_LEFT, outtakeStatus.isMode(DRIVING), HangStart, LEFT_DPAD);
-        gph1.link(DPAD_UP, outtakeStatus.isMode(DRIVING), HangReady,  UP_DPAD);
+        gph1.link(DPAD_RIGHT,  robotStatus.isMode(DRIVING), chubramani, RIGHT_DPAD );
+        gph1.link(DPAD_LEFT, robotStatus.isMode(DRIVING), HangStart, LEFT_DPAD);
+        gph1.link(DPAD_UP, robotStatus.isMode(DRIVING), HangReady,  UP_DPAD);
         gph1.link(DPAD_DOWN, driveMode.isMode(SLOW), Hang,  DOWN_DPAD );
         gph1.link(RIGHT_STICK_BUTTON, joyoi);
         gph1.link(LEFT_STICK_BUTTON, IntakeMider);
@@ -43,8 +43,8 @@ public class NithinOp extends Tele {
         });
 
 
-        gph1.link(X, outtakeStatus.isMode(PLACING), outtakeStatus.isMode(PLACING2), leveltwo, levelfour);
-        gph1.link(Y, outtakeStatus.isMode(PLACING), outtakeStatus.isMode(PLACING2), levelfive, levelseven);
+        gph1.link(X, robotStatus.isMode(PLACING), robotStatus.isMode(PLACING2), leveltwo, levelfour);
+        gph1.link(Y, robotStatus.isMode(PLACING), robotStatus.isMode(PLACING2), levelfive, levelseven);
 
         gph2.link(X, intake::lockClose);
         gph2.link(A, intake::lockReady);
@@ -83,7 +83,7 @@ public class NithinOp extends Tele {
         intake.moveInit();
         intake.lockInit();
         driveMode.set(SLOW);
-        outtakeStatus.set(DRIVING);
+        robotStatus.set(DRIVING);
 
 
     }

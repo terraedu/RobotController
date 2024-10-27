@@ -6,7 +6,6 @@ import automodules.stage.Main;
 import automodules.stage.Stage;
 import automodules.stage.Stop;
 import global.Constants;
-import global.Modes;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.positional.PMotor;
@@ -19,9 +18,9 @@ import static global.Modes.Height.GROUND;
 //import static global.Modes.Height.HIGH;
 //import static global.Modes.Height.LOW;
 //import static global.Modes.Height.MIDDLE;
-import static global.Modes.OuttakeStatus.PLACING;
+import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.heightMode;
-import static global.Modes.outtakeStatus;
+import static global.Modes.robotStatus;
 
 public class Lift extends RobotPart {
 
@@ -76,7 +75,7 @@ public class Lift extends RobotPart {
     }
 
     public void adjustHolderTarget(double delta) {
-        if (outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
+        if (robotStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
             globalOffset += delta;
         }
         currentCutoffPosition = 0;

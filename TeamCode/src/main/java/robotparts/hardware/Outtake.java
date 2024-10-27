@@ -1,8 +1,7 @@
 package robotparts.hardware;
 
-import static global.Modes.OuttakeStatus.DRIVING;
-import static global.Modes.OuttakeStatus.PLACING;
-import static global.Modes.outtakeStatus;
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.robotStatus;
 
 import automodules.stage.Stage;
 import robotparts.RobotPart;
@@ -115,7 +114,7 @@ public class Outtake extends RobotPart {
 
 
 
-        outtakeStatus.set(DRIVING);
+        robotStatus.set(DRIVING);
     }
 
 
