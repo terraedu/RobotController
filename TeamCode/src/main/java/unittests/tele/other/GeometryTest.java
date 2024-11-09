@@ -1,6 +1,6 @@
 //package unittests.tele.other;
 //
-////import display.Drawer;
+//import display.Drawer;
 //import geometry.circles.Circle;
 //import geometry.framework.CoordinatePlane;
 //import geometry.framework.Point;
@@ -9,8 +9,9 @@
 //import geometry.position.Line;
 //import geometry.position.Pose;
 //
-//public class GeometryTest extends  {
+//public class GeometryTest extends Drawer {
 //
+//    public static void main(String[] args) { drawWindow(new GeometryTest(), "Display");}
 //
 //    @Override
 //    public void define() {
@@ -19,5 +20,6 @@
 //        Triangle triangle = new Triangle(new Point(300,300), new Point(400,500), new Point(600,100));
 //        Rect rect = new Rect(new Point(300,300), new Point(400,400));
 //        Circle circle = new Circle(new Point(200,200), 50);
+//        drawPlane(new CoordinatePlane(line, pose, triangle, rect, circle));
 //    }
 //}

@@ -8,7 +8,7 @@ import static global.General.log;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-//import org.checkerframework.checker.units.qual.A;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -23,7 +23,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-//import java.awt.font.ImageGraphicA.ttribute;
+//import java.awt.font.ImageGraphicAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

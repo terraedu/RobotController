@@ -67,7 +67,7 @@
 //    /**
 //     * The variable to store our instance of the TensorFlow Object Detection processor.
 //     */
-////    private TfodProcessor tfod;
+//    //private TfodProcessor tfod;
 //
 //    /**
 //     * The variable to store our instance of the vision portal.
@@ -116,7 +116,7 @@
 //    private void initTfod() {
 //
 //        // Create the TensorFlow processor by using a builder.
-//        tfod = new TfodProcessor.Builder()
+//        //tfod = new TfodProcessor.Builder()
 //
 //                // With the following lines commented out, the default TfodProcessor Builder
 //                // will load the default model for the season. To define a custom model to load,
@@ -134,7 +134,7 @@
 //                //.setModelInputSize(300)
 //                //.setModelAspectRatio(16.0 / 9.0)
 //
-//                .build();
+//                //.build();
 //
 //        // Create the vision portal by using a builder.
 //        VisionPortal.Builder builder = new VisionPortal.Builder();

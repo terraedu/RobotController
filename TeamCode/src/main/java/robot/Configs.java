@@ -21,13 +21,13 @@ public class Configs implements RobotUser{
     /**
      * Used for CenterStage robot
      */
-    RobotConfig CenterStage = new RobotConfig(drive, gyro, odometry, distanceSensorsNew);
+    RobotConfig IntoTheDeep = new RobotConfig(gyro, odometry, distanceSensorsNew,colorSensorsNew); //drive, intake, lift, outtake, camera
 
     /**
      * Current Config
      */
     public void setCurrentConfig(){
-        setConfig(CenterStage);
+        setConfig(IntoTheDeep);
     }
 
 }

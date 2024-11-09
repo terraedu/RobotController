@@ -8,8 +8,8 @@ import automodules.stage.Exit;
 import robotparts.RobotPart;
 
 import static global.General.hardwareMap;
-import static global.Modes.RobotStatus.PLACING;
-import static global.Modes.robotStatus;
+import static global.Modes.OuttakeStatus.PLACING;
+import static global.Modes.outtakeStatus;
 
 public class DistanceSensors extends RobotPart {
     public DistanceSensor dsol, dsor;
@@ -86,13 +86,13 @@ public class DistanceSensors extends RobotPart {
 
     //    public Stage moveDist(double t){ return super.customTime(this::moveDist, t);}
     public boolean IsRightClose(){
-        if(robotStatus.modeIs(PLACING)) {
+        if(outtakeStatus.modeIs(PLACING)) {
             return dsor.getDistance(DistanceUnit.CM) < 50;
         }
         return false;
     }
     public boolean IsLeftClose(){
-        if(robotStatus.modeIs(PLACING)) {
+        if(outtakeStatus.modeIs(PLACING)) {
             return dsol.getDistance(DistanceUnit.CM) < 30;
         }
         return false;

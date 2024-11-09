@@ -26,7 +26,7 @@ public class TwoOdometry extends Odometry {
     @Override
     protected void setEncoderPoses(){
         double startY = -13.6; double height = 18.6;
-        enc1Pose = new Pose(new Point(-10.8,startY+height), 90);
+        enc1Pose = new Pose(new Point(0,startY), 90);
         enc2Pose = new Pose(new Point(-0.5, startY), 0.0);
     }
 

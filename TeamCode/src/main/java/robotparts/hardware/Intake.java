@@ -226,6 +226,39 @@ public class Intake extends RobotPart {
 
     }
 
+    public Stage moveRedSample(double p){
+        return super.customExit(p,colorSensorsNew.exitRed());
+    }
+
+    public Stage moveBlueSample(double p){
+        return super.customExit(p,colorSensorsNew.exitBlue());
+    }
+
+    public Stage moveYellowSample(double p){
+        return super.customExit(p,colorSensorsNew.exitYellow());
+    }
+
+    public Stage moveSampleIn(double p){
+        return super.customExit(p,colorSensorsNew.exitSample());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Stage moveOneSmart2(double p, Exit exit){
         return super.customExit(p, colorSensorsNew.exitIntake2());

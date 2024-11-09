@@ -1,7 +1,8 @@
 package robotparts.hardware;
 
-import static global.Modes.RobotStatus.DRIVING;
-import static global.Modes.robotStatus;
+import static global.Modes.OuttakeStatus.DRIVING;
+import static global.Modes.OuttakeStatus.PLACING;
+import static global.Modes.outtakeStatus;
 
 import automodules.stage.Stage;
 import robotparts.RobotPart;
@@ -11,37 +12,12 @@ import robotparts.electronics.positional.PServo;
 public class Outtake extends RobotPart {
 
     public PServo armr, arml, claw1, claw2, pivot, rotate;
-    public PServo farmR, farmL, wrist, claw;
 
 
     @Override
     public void init() {
         armr = create("armr", ElectronicType.PSERVO_FORWARD);
         arml = create("arml", ElectronicType.PSERVO_REVERSE);
-
-
-
-
-
-
-        farmR = create("farmR", ElectronicType.PSERVO_FORWARD);
-        farmL = create("farmL", ElectronicType.PSERVO_REVERSE);
-
-        farmR.addPosition("down", 0.42);
-        farmL.addPosition("down", 0.42);
-
-        farmR.addPosition("flip", 0.42);
-        farmL.addPosition("flip", 0.42);
-
-        wrist.addPosition("down", 0);
-        wrist.addPosition("flip", 0.5);
-
-        claw.addPosition("close", 0);
-        claw.addPosition("open", 0.8);
-
-
-
-
 
 
         arml.changePosition("start", 0.1);
@@ -104,7 +80,6 @@ public class Outtake extends RobotPart {
 
         rotate.addPosition("start", .445);
         rotate.addPosition("transfer", .20);
-
         rotate.addPosition("angleleft", .69);
         rotate.addPosition("stack", 0.079);
         rotate.addPosition("flipstack", 0.79);
@@ -114,24 +89,17 @@ public class Outtake extends RobotPart {
 
 
 
-        robotStatus.set(DRIVING);
+
+
+
+
+        outtakeStatus.set(DRIVING);
     }
 
-
-
-    public void farmDown() {farmR.setPosition("down"); farmL.setPosition("down");}
-    public void farmFlip() {farmR.setPosition("flip"); farmL.setPosition("flip");}
-
-    public void wristDown() {wrist.setPosition("down");}
-    public void wristFlip() {wrist.setPosition("down");}
-
-    public void clawClose() {claw.setPosition("close");}
-    public void clawOpen() {claw.setPosition("open");}
-
-
-
-
     public void changeArmPosition(String name, double pos){ armr.changePosition(name, pos); arml.changePosition(name, pos); }
+
+
+
 
 
     public void arm(double pos){ armr.setPosition(pos); arml.setPosition(pos); }
@@ -189,18 +157,6 @@ public class Outtake extends RobotPart {
 
     public void moveMiddler(){ armr.setPosition("middler"); arml.setPosition("middler"); }
 
-
-
-
-
-    public Stage stageFarmDown(double t)  {return super.customTime(this::farmDown, t);}
-    public Stage stageFarmFlip(double t)  {return super.customTime(this::farmFlip, t);}
-
-    public Stage stageWristDown(double t)  {return super.customTime(this::wristDown, t);}
-    public Stage stageWristFlip(double t)  {return super.customTime(this::wristFlip, t);}
-
-    public Stage stageClawClose(double t)  {return super.customTime(this::clawClose, t);}
-    public Stage stageClawOpen(double t)  {return super.customTime(this::clawOpen, t);}
 
 
 

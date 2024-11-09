@@ -12,6 +12,13 @@ public enum GameElement implements Decision {
     NONE,
     PIXEL1,
 
-    PIXELGONE
+    PIXELGONE,
+
+    REDSAMPLE,
+    BLUESAMPLE,
+    YELLOWSAMPLE,
+    WRONGCOLOR,
+    SAMPLE
+
 
     }
