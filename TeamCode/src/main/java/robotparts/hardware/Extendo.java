@@ -14,9 +14,9 @@ import util.codeseg.ReturnCodeSeg;
 //import static global.Modes.Height.MIDDLE;
 
 
-public class Lift extends RobotPart {
+public class Extendo extends RobotPart {
 
-    public PMotor motorRight;
+    public PMotor motorLeft;
 
     public static final double maxPosition = 50;
     public final double defaultCutoffPosition = 0;
@@ -26,10 +26,10 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        motorRight = create("lir", ElectronicType.PMOTOR_FORWARD);
+        motorLeft = create("eil", ElectronicType.PMOTOR_REVERSE);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
-        motorRight.usePositionHolder(0.1, .1);
+        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
+        motorLeft.usePositionHolder(0.1, .1);
         adjust = 0;
         globalOffset = 0;
     }
@@ -37,7 +37,7 @@ public class Lift extends RobotPart {
 
     @Override
     public CodeSeg move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
         return null;
     }
 
@@ -55,8 +55,8 @@ public class Lift extends RobotPart {
 //    }
 
     public void liftAdjust(double delta){
-        motorRight.holdPositionExact();
-        motorRight.setPositionHolderTarget(motorRight.getPositionHolder().getTarget() + delta);
+        motorLeft.holdPositionExact();
+        motorLeft.setPositionHolderTarget(motorLeft.getPositionHolder().getTarget() + delta);
     }
 
 
@@ -72,7 +72,7 @@ public class Lift extends RobotPart {
 
 
     public Stage stageLift(double power, double target) {
-        return moveTarget(() -> motorRight, power, () -> {
+        return moveTarget(() -> motorLeft, power, () -> {
             double Lasttarget = target;
 
                 return target;
@@ -81,6 +81,15 @@ public class Lift extends RobotPart {
     }
 
 
+//    public Stage adjustLift(double power, double adjust){
+//        return moveTarget(() -> motorRight, () -> motorLeft, power, power, () -> {
+//            if (lastTarget == heightMode.getValue(LOW) + 2 || target == heightMode.getValue(MIDDLE) + 2 || target == heightMode.getValue(HIGH) + 2) {
+//                return target + globalOffset;
+//            } else {
+//                return target;
+//            }
+//        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
+//    }
 
     @Override
     public void maintain() {
@@ -88,7 +97,7 @@ public class Lift extends RobotPart {
     }
 
 
-    public void reset(){ motorRight.softReset();}
+    public void reset(){ motorLeft.softReset(); }
 
 }
 

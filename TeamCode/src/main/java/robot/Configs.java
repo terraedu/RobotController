@@ -4,13 +4,6 @@ import static robot.RobotConfig.setConfig;
 
 public class Configs implements RobotUser{
 
-    /**
-     * Used to test only the test part
-     */
-    RobotConfig TestConfig = new RobotConfig(customTestPart);
-    RobotConfig TestConfig2 = new RobotConfig(testPart2);
-    RobotConfig TestConfig3 = new RobotConfig(drive);
-    RobotConfig test = new RobotConfig(camera);
 
     /**
      * Used for PowerPlay robot
@@ -21,7 +14,12 @@ public class Configs implements RobotUser{
     /**
      * Used for CenterStage robot
      */
-    RobotConfig IntoTheDeep = new RobotConfig(gyro, odometry, distanceSensorsNew,colorSensorsNew); //drive, intake, lift, outtake, camera
+//    RobotConfig CenterStage = new RobotConfig(gyro, odometry, distanceSensorsNew,colorSensorsNew); //drive, intake, lift, outtake, camera
+
+    /**
+     * Used for Into The Deep robot
+     */
+    RobotConfig IntoTheDeep = new RobotConfig(gyro, odometry, outtake, intake, extendo, drive); //drive, intake, lift, outtake, camera
 
     /**
      * Current Config

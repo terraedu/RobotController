@@ -1,5 +1,6 @@
 package robot;
 
+import robotparts.hardware.Extendo;
 import robotparts.sensors.ColorSensors;
 import robotparts.sensors.DistanceSensors;
 import robotparts.sensors.odometry.NewOdometry;
@@ -42,6 +43,8 @@ public interface RobotUser {
      */
 
     Intake intake = new Intake();
+    Extendo extendo = new Extendo();
+
     TouchSensors touchSensors = new TouchSensors();
 
 

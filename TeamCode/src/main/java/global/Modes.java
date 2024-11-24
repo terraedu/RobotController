@@ -15,26 +15,23 @@ public interface Modes {
 
     enum GamepadMode implements Mode.ModeType { NORMAL, AUTOMATED }
 
-    enum OuttakeStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING, PLACING2}
-    Mode outtakeStatus = new Mode(OuttakeStatus.class);
+    enum RobotStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING, PLACING2}
+    Mode robotStatus = new Mode(RobotStatus.class);
 
     enum TeleStatus implements Mode.ModeType {RED, BLUE}
     Mode teleStatus = new Mode(TeleStatus.class);
 
 
-    enum Height implements Mode.ModeType {GROUND, one, two, three, four, five, six, seven, currentHeight}
+    enum Height implements Mode.ModeType {GROUND, lowrung, highrung, lowbasket, highbasket, currentHeight}
 
     Mode heightMode = new Mode(Height.class)
 
 
             .set(Height.GROUND, 0)
-            .set(Height.one, 15)
-            .set(Height.two, 20)
-            .set(Height.three, 30)
-            .set(Height.four, 40)
-            .set(Height.five, 45)
-            .set(Height.six, 50)
-            .set(Height.seven, 57);
+            .set(Height.lowrung, 10)
+            .set(Height.highrung, 20)
+            .set(Height.lowbasket, 30)
+            .set(Height.highbasket, 40);
 
 
 
