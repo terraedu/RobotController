@@ -6,12 +6,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import automodules.AutoModules;
-import automodules.TankAutoModules;
 import debugging.Synchroniser;
+import elements.FieldPlacement;
 import elements.FieldSide;
 import robot.TerraBot;
-import teleutil.independent.Independents;
 import teleutil.GamepadHandler;
 import debugging.Fault;
 import debugging.Logger;
@@ -48,8 +46,7 @@ public class General {
      * Gamepad handlers, used to make using the gamepads easier
      */
     public static GamepadHandler gph1;
-    // TOD4
-    // Make defualt onpress handler
+
     public static GamepadHandler gph2;
     /**
      * Logger object to store logs
@@ -67,16 +64,22 @@ public class General {
     /**
      * FieldSide object to represent which side of the field we are on (red or blue)
      */
-    public static FieldSide fieldSide;
+    public static FieldSide fieldSide = FieldSide.BLUE;
     /**
-     * AutoModules (executes series of steps to make driving easier)
+     * FieldPlacement object to represent which location of the field we are on (upper [closer to audience] or lower)
      */
-    public static TankAutoModules tankAutoModules;
-    public static AutoModules automodules;
-    public static Independents independents;
+    public static FieldPlacement fieldPlacement = FieldPlacement.LOWER;
     /**
      * The main user
      * NOTE: This should either be TELE or AUTO
      */
     public static User mainUser;
+    /**
+     * Camera Monitor View ID, used for camera viewing
+     */
+    public static int cameraMonitorViewId;
+    /**
+     * Inversely proportional to the voltage that the robot started at (used to adjust values)
+     */
+    public static double voltageScale;
 }

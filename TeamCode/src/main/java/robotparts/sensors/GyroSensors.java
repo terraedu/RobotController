@@ -1,7 +1,9 @@
 package robotparts.sensors;
 
-import geometry.circles.AngleType;
+import com.qualcomm.robotcore.hardware.IMU;
+
 import robotparts.RobotPart;
+import robotparts.electronics.ElectronicType;
 import robotparts.electronics.input.IGyro;
 
 
@@ -9,67 +11,28 @@ public class GyroSensors extends RobotPart {
     /**
      * Two gyro sensors from each expansion hub on different sides on the robot
      */
-    private IGyro gsr, gsl;
-    private double lastAngle = 0;
-    private double heading = 0;
-    private double start = 0;
+    private IGyro gs;
 
     @Override
     public void init() {
-        gsr = createGyro("gsl");
+        gs = create("gs", ElectronicType.IGYRO);
+
+
 //        gsl = createGyro("gsl");
+        // TOD 5 Cant turn past 540 degs
     }
 
-    /**
-     * Get headings in radians and degrees
-     * @return heading
-     */
-    public double getRightHeadingDeg() {
-        return getRightHeadingDegRaw()-start;
-    }
+//    public void setHeading(double heading){ gs.setHeading(heading); }
 
-    public double getRightHeadingDegRaw() {
-        double currentangle = -gsr.getHeading();
-        double deltaAngle = currentangle - lastAngle;
-        if (deltaAngle < -180)
-            deltaAngle += 360;
-        else if (deltaAngle > 180)
-            deltaAngle -= 360;
-        heading += deltaAngle;
-        lastAngle = currentangle;
-        return heading;
-    }
+    public double getHeading(){ return gs.getHeading(); }
+//    public double getPitch(){ return gsr.getPitch(); }
+//    public double getPitchDerivative(){ return gsr.getPitchDerivative(); }
 
-    public double getRightHeadingRad() { return AngleType.degToRad(getRightHeadingDeg()); }
-    public double getLeftHeadingDeg() { return gsl.getHeading(); }
-    public double getLeftHeadingRad() { return AngleType.degToRad(getRightHeadingDeg()); }
+//    public double getDeltaHeading() { return gs.getDeltaHeading(); }
 
-    public void reset(){
-        heading = 0;
-        lastAngle = 0;
-        start = getRightHeadingDegRaw();
-    }
+//    public void update(){ gs.update(); }
 
-
-
-
-    public static double processThetaError(double error){
-        while (error < -180) {
-            error += 360;
-        }
-        while (error > 180) {
-            error -= 360;
-        }
-        return error;
-    }
-
-    public static double processTheta(double ang){
-        if (ang < -180) {
-            ang += 360;
-        } else if (ang > 180) {
-            ang -= 360;
-        }
-        return ang;
-    }
+    @Override
+    public void reset(){ gs.reset(); }
 
 }

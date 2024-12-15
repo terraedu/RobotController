@@ -1,5 +1,7 @@
 package unittests.tele.framework;
 
-public class PhysicsTest {
-    // TODO 4 NEW Create this
+import unittests.tele.TeleUnitTest;
+
+public class PhysicsTest extends TeleUnitTest {
+    // TOD 5 NEW Create PhysicsTest
 }

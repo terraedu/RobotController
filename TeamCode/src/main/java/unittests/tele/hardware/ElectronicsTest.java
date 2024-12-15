@@ -5,10 +5,9 @@ import robotparts.electronics.continuous.CServo;
 import robotparts.electronics.positional.PMotor;
 import robotparts.electronics.positional.PServo;
 import teleutil.button.Button;
-import teleutil.button.OnPressEventHandler;
+import teleutil.button.main.OnPressEventHandler;
 import unittests.tele.TeleUnitTest;
 
-import static global.General.bot;
 import static global.General.gph1;
 import static global.General.log;
 
@@ -29,16 +28,16 @@ public class ElectronicsTest extends TeleUnitTest {
         /**
          * Get the electronics
          */
-        in = bot.tankIntake.getElectronicsOfType(CMotor.class).get("in");
-        cr = bot.tankCarousel.getElectronicsOfType(CServo.class).get("cr");
-        li = bot.tankLift.getElectronicsOfType(PMotor.class).get("li");
-        lo = bot.tankOuttake.getElectronicsOfType(PServo.class).get("lo");
+//        in = bot.tankIntake.getElectronicsOfType(CMotor.class).get("in");
+//        cr = bot.tankCarousel.getElectronicsOfType(CServo.class).get("cr");
+//        li = bot.tankLift.getElectronicsOfType(PMotor.class).get("li");
+//        lo = bot.tankOuttake.getElectronicsOfType(PServo.class).get("lo");
         /**
          * Link the gamepad handler
          */
         gph1.link(Button.A, OnPressEventHandler.class, () -> in.setPower(0.2));
         gph1.link(Button.B, OnPressEventHandler.class, () -> cr.setPower(0.2));
-        gph1.link(Button.Y, OnPressEventHandler.class, () -> li.setPower(0.2));
+        gph1.link(Button.Y, OnPressEventHandler.class, () -> li.move(0.2));
         gph1.link(Button.RIGHT_BUMPER, OnPressEventHandler.class, () -> lo.setPosition("start"));
     }
 

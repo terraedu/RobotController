@@ -1,26 +1,48 @@
 package teleutil.independent;
 
-import auton.MecanumAuto;
-import util.codeseg.CodeSeg;
-import util.codeseg.ParameterCodeSeg;
+import autoutil.AutoFramework;
+import geometry.position.Pose;
 
-import static global.General.bot;
+public abstract class Independent extends AutoFramework {
+    /**
+     * Class to run an auton program in teleop, independent of teleop
+     */
 
-public class Independent extends MecanumAuto {
-
-    private final ParameterCodeSeg<Independent> define;
-
-    public Independent(ParameterCodeSeg<Independent> define){
-        this.define = define;
+    {
+        startPose = new Pose();
     }
+
+
+    /**
+     * Should the independent exit?
+     */
+    private volatile boolean shouldExit = false;
+
 
     @Override
-    public void initAuto() {
-        makeIndependent();
-    }
+    protected void resetBeforeRun() {}
 
+    /**
+     * Set to default config, can be overriden, reset should exit
+     */
     @Override
-    public void define() {
-        define.run(this);
-    }
+    public final void initialize() { setConfig(DefaultConfig); shouldExit = false; }
+
+    /**
+     * Add should exit to the exit condition
+     * @return oldCondition and should exit
+     */
+    @Override
+    public boolean condition() { return super.condition() && !shouldExit; }
+
+    /**
+     * Set should exit to true
+     */
+    public void exit(){ shouldExit = true; }
+
+    /**
+     * Reset should exit and the auton
+     */
+    @Override
+    public final void reset(){ super.reset(); shouldExit = false; }
 }

@@ -1,10 +1,11 @@
 package global;
 
-import util.condition.Decision;
+import util.template.Mode;
 
-public class Modes {
+
+public interface Modes {
     /**
-     * Class to hold modes (different types of movement/control)
+     * Interface to hold modes (different types of movement/control)
      */
 
 
@@ -12,24 +13,37 @@ public class Modes {
      * List of mode types
      */
 
-    public enum OuttakeMode implements Decision {
-        SHARED,
-        ALLIANCE
-    }
+    enum GamepadMode implements Mode.ModeType { NORMAL, AUTOMATED }
 
-    public enum SharedMode implements Decision {
-        NORMAL,
-        CENTER
-    }
+    enum RobotStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING, PLACING2}
+    Mode robotStatus = new Mode(RobotStatus.class);
 
-    public enum DriveMode implements Decision {
-        FAST,
-        MEDIUM,
-        SLOW
-    }
+    enum TeleStatus implements Mode.ModeType {RED, BLUE}
+    Mode teleStatus = new Mode(TeleStatus.class);
 
-    public enum IndependentMode implements Decision {
-        MANUAL,
-        USING
-    }
+
+    enum Height implements Mode.ModeType {GROUND, lowrung, highrung, lowbasket, highbasket, currentHeight}
+
+    Mode heightMode = new Mode(Height.class)
+
+
+            .set(Height.GROUND, 0)
+            .set(Height.lowrung, 10)
+            .set(Height.highrung, 20)
+            .set(Height.lowbasket, 30)
+            .set(Height.highbasket, 40);
+
+
+
+    Mode current = new Mode(Height.class)
+            .set(Height.currentHeight, heightMode.getValue(heightMode.get()));
+
+
+
+
+    // TOD5 MULTI DIMENSIONAL MODE
+    enum Drive implements Mode.ModeType {FAST, MEDIUM, SLOW, SUPERSLOW}
+    Mode driveMode = new Mode(Drive.class);
+
 }
+//

@@ -1,80 +1,94 @@
 package geometry.position;
 
-import geometry.GeometryObject;
-import geometry.circles.AngleType;
+import org.firstinspires.ftc.robotcore.external.matrices.DenseMatrixF;
+import org.firstinspires.ftc.robotcore.external.matrices.GeneralMatrixF;
+import org.firstinspires.ftc.robotcore.external.matrices.MatrixF;
 
-import static geometry.circles.AngleType.radToDeg;
+import java.util.Locale;
+
+import geometry.framework.GeometryObject;
+import geometry.framework.Point;
+import global.General;
+import math.linearalgebra.Matrix2D;
+import math.linearalgebra.Vector3D;
+import util.codeseg.ParameterCodeSeg;
+
+import static java.lang.Math.atan2;
 import static java.lang.Math.*;
 
-/**
- * NOTE: Uncommented
- */
-
 public class Vector extends GeometryObject {
-    //x and y coords of the tip of vector, theta is angle measured from the right horizontal
-    public Point p;
-    public double theta;
+    private final Point p;
+    private double theta; // Always in radians (effectively final)
 
-    //Constructor to create vect using coords
-    public Vector(double x1, double y1){
-        p = new Point(x1, y1);
-        theta = atan2(p.y, p.x);
+    public Vector(){
+        this(0,0);
     }
-    //Constructor to create vect using angle and length
-    public Vector(double len, double angle, AngleType unit) {
-        angle = toRad(angle, unit);
-        p = new Point(len * cos(angle), len * sin(angle));
-        theta = atan2(p.y, p.x);
+
+    public Vector(double x, double y){
+        p = new Point(x, y); setTheta();
+        addPoints(p);
     }
-    //Gets a rotated vector of the current vector angle - positive is anticlockwise
+
+    public Vector(Point start, Point end){
+        p = end.getSubtracted(start); setTheta();
+        addPoints(p);
+    }
+
+    public Vector(double angle){
+        this(Math.cos(Math.toRadians(angle)), Math.sin(Math.toRadians(angle)));
+    }
+
+    public Vector(Point end){ this(new Point(), end); }
+
+    public double getX() {
+        return p.getX();
+    }
+    public double getY() {
+        return p.getY();
+    }
+    public Point getPoint(){ return p; }
+    public double getLength() {
+        return p.getDistanceToOrigin();
+    }
+    public double getTheta() { return Math.toDegrees(theta); }
+    private void setTheta(){ theta = atan2(getY(), getX()); }
+
+    public Vector getCopy(){
+        return new Vector(getX(), getY());
+    }
+    public Vector getCopy(ParameterCodeSeg<Vector> operation){ Vector copy = getCopy(); operation.run(copy); return copy; }
+
+    public void add(Vector v2){ translate(v2.getPoint().getX(), v2.getPoint().getY() ); setTheta(); }
+    public void subtract(Vector v2){ translate(-v2.getPoint().getX(), -v2.getPoint().getY() ); setTheta(); }
+    public void invert(){ scale(-1); setTheta(); }
+    public void reflectX(){ p.reflectX(); setTheta();}
+    public void reflectY(){ p.reflectY(); setTheta(); }
+    public void scaleToLength(double length){ if(getLength() != 0) { scale(length/getLength());} }
+    public void limitLength(double length){ if(getLength() > length){ scaleToLength(length); }}
 
     @Override
-    public Vector getRelativeTo(Pose origin) {
-        double ang = theta + origin.ang;
-        double radius = getLen();
-        return new Vector(cos(ang) * radius, sin(ang) * radius);
-    }
+    public void rotate(Point anchor, double angle) { super.rotate(anchor, angle); setTheta(); }
 
-    //Gets x
-    public double getX() {
-        return p.x;
-    }
-    //Gets y
-    public double getY() {
-        return p.y;
-    }
-    //Gets length
-    public double getLen() {
-        return sqrt(pow(p.x, 2) + pow(p.y, 2));
-    }
-    //Gets angle
-    public double getAngle(AngleType type) {
-        if (type == AngleType.RADIANS) {
-            return theta;
-        } else {
-            return radToDeg(theta);
-        }
-    }
-    //Sets x and y coords
-    public void setXY(double x1, double y1){
-        p.x = x1;
-        p.y = y1;
-        theta = atan2(p.y, p.x);
-    }
-    //Creates a string representation
-    public String toString() {
-        return "x: " + this.getX() + ", y: " + this.getY() + ", angle: " + this.getAngle(AngleType.DEGREES) + ", length: " + this.getLen();
-    }
+    public Vector getAdded(Vector v2){ return getCopy(v -> v.add(v2)); }
+    public Vector getSubtracted(Vector v2){ return getCopy(v -> v.subtract(v2)); }
+    public Vector getRotated(double phi){ return getCopy(v -> v.rotate(phi)); }
+    public Vector getScaled(double scale){ return getCopy(v -> v.scale(scale)); }
+    public Vector getInverted(){ return getCopy(Vector::invert); }
+    public Vector getReflectedX(){ return getCopy(Vector::reflectX); }
+    public Vector getReflectedY(){ return getCopy(Vector::reflectY); }
 
+    public double getCrossProduct(Vector in){ return Vector3D.getCrossProduct(this, in); }
+    public double getDotProduct(Vector in){ return Vector3D.getDotProduct(this, in); }
+    public double getNormalizedDotProduct(Vector in){ return getDotProduct(in)/(this.getLength()*in.getLength());}
 
-    public void add(Vector in){
-        p.x = p.x+in.p.x;
-        p.y = p.y+in.p.y;
-    }
+    public Vector getUnitVector(){ return getLength() == 0.0 ? this : getScaled(1.0/getLength()); }
+    public Vector getXVector(){ return new Vector(getX(), 0); }
+    public Vector getYVector() { return new Vector(0, getY()); }
 
-    public void subtract(Vector in){
-        p.x = p.x-in.p.x;
-        p.y = p.y-in.p.y;
-    }
+    public boolean isNonZero(){ return !this.equals(new Vector()); }
 
+    public static Vector xHat(){ return new Vector(1,0); }
+    public static Vector yHat(){ return new Vector(0,1); }
+
+    public String toString() { return String.format(Locale.US,"Vector {x: %f, y: %f}", getX(), getY()); }
 }

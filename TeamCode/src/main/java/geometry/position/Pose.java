@@ -1,52 +1,82 @@
 package geometry.position;
 
-import geometry.GeometryObject;
-import geometry.circles.AngleType;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
+
+import geometry.framework.GeometryObject;
+import geometry.framework.Point;
+import util.template.Iterator;
 
 /**
  * NOTE: Uncommented
  */
 
 public class Pose extends GeometryObject {
-    public Point p;
-    public double ang;
+    private final Point p;
+    private double angle; // Units same as input units
+    public Pose(Point p, double angle) { this.p = p; setAngle(angle); addPoints(this.p); }
+    public Pose(Vector v, double angle) { this.p = v.getPoint(); setAngle(angle); addPoints(p);}
+    public Pose(double x, double y, double angle) { this.p = new Point(x,y); setAngle(angle); addPoints(p);}
+    public Pose(double[] pose){this.p = new Point(pose[0], pose[1]); setAngle(pose[2]); addPoints(p);}
+    public Pose(){ this.p = new Point(); setAngle(0); addPoints(p);}
 
-    public Pose(Point p, double ang) { this.p = p; this.ang = ang; }
-    public Pose(Point p, double ang, AngleType angleType) {
-        this.p = p;
-        this.ang = toRad(ang, angleType);
-    }
-    public Pose(double x, double y, double ang) {
-        this.p = new Point(x, y);
-        this.ang = ang;
-    }
-    public Pose(double[] pose){
-        this.p = new Point(pose[0], pose[1]);
-        this.ang = pose[2];
-    }
+    public void add(Pose in){p.translate(in.getX(), in.getY()); angle += in.getAngle(); }
+    public void add(Vector in){p.translate(in.getX(), in.getY());}
+    public Pose getAdded(Pose in){return new Pose(p.getTranslated(in.getX(), in.getY()), this.getAngle()+in.getAngle());}
+    public Pose getInverted(){ return new Pose(-getX(), -getY(), -getAngle()); }
+    public Pose getSubtracted(Pose in){ return getAdded(in.getInverted()); }
+
+    public double getX(){ return p.getX(); }
+    public double getY(){ return p.getY(); }
+    public Point getPoint(){ return p; }
+    public Vector getVector(){ return new Vector(p); }
+    public Vector getAngleUnitVector(){ return new Vector(getAngle()); }
+    public double getAngle(){ return angle; }
+    public Pose getOnlyPointRotated(double angle){ return new Pose(p.getRotated(angle), getAngle()); }
+    public Pose getOnlyOrientationRotated(double angle){ return new Pose(p, getAngle()+angle); }
+    public void setX(double x){ p.setX(x);}
+    public void setY(double y){ p.setY(y);}
+    public void setVector(Vector in){ setX(in.getX()); setY(in.getY()); }
+    public void setAngle(double angle){ this.angle = angle; }
+    public void setZero(){ setX(0); setY(0); setAngle(0); }
+    public void invertOrientation(){ setAngle(-getAngle()); }
+    public void invertX(){ setX(-getX());}
+    public void invertY(){ setY(-getY());}
+    public void rotateOrientation(double angle){ setAngle(getAngle() + angle);}
+    public void scaleOrientation(double scale){setAngle(getAngle()*scale);}
+    public Pose getCopy(){ return new Pose(getX(), getY(), getAngle()); }
+    public Pose getOrientationInverted(){ return new Pose(p.getCopy(), -getAngle()); }
+
+    public double getDistanceTo(Pose p){ return getPoint().getDistanceTo(p.getPoint()); }
+    public double getAngleTo(Pose p){ return p.getAngle() - getAngle(); }
+    public double getLength(){ return getVector().getLength(); }
+    public boolean within(Pose target, double disError, double angleError){ return this.getDistanceTo(target) < disError && Math.abs(target.getAngleTo(target)) < angleError; }
+    public boolean withinY(Pose target, double yError, double angleError){ return Math.abs(this.getY() - target.getY()) < yError && Math.abs(target.getAngleTo(target)) < angleError; }
 
 
-    public double[] asArray(){
-        return new double[]{p.x, p.y, ang};
+    public static Pose forAllAverage(ArrayList<Pose> poses){
+        double x = Iterator.forAllAverage(poses, Pose::getX);
+        double y = Iterator.forAllAverage(poses, Pose::getY);
+        double h = Iterator.forAllAverage(poses, Pose::getAngle);
+        return new Pose(x, y, h);
     }
-    //public boolean angIsInf() { return ang == Constants.INF; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pose pose = (Pose) o;
+        return Math.abs(pose.angle-angle) < 0.0001 && pose.p.equals(p);
+    }
 
     @Override
-    public Pose getRelativeTo(Pose origin) {
-        Pose pos2 = new Pose(p.getRelativeTo(origin), ang);
-        pos2.rotate(-origin.ang);
-        return pos2;
+    public int hashCode() {
+        return Objects.hash(p, angle);
     }
-
-    public void translate(double x, double y) { p.x += x; p.y += y; }
-
-    public void rotate(double a) { ang += a; ang = boundAngleTo2Pi(ang);}
 
     @Override
-    public String toString() {
-        return "Position{" +
-                "p=" + p +
-                ", ang=" + ang +
-                '}';
-    }
+    public void rotate(Point anchor, double angle) { super.rotate(anchor, angle); rotateOrientation(angle);}
+
+    @Override
+    public String toString() { return String.format(Locale.US, "Pose {p: %s, angle: %.3f}", p.toString(), getAngle()); }
 }

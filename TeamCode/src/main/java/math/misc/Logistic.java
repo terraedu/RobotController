@@ -15,6 +15,13 @@ public class Logistic extends Function implements ParameterConstructor<Double> {
      * It looks like an elongated S shaped curve
      */
 
+    /**
+     * Equation to copy paste
+     * \frac{1+be^{-k}}{1+be^{-kx}}
+     * or
+     * https://www.desmos.com/calculator/2mvgkmzyxb
+     */
+
 
     /**
      *
@@ -22,6 +29,7 @@ public class Logistic extends Function implements ParameterConstructor<Double> {
      * @param pars
      */
     public Logistic(LogisticParameterType type, Double... pars){
+        addConstructor(LogisticParameterType.RP_K, 2, in -> new Double[]{1+((in[0]-1)/(Math.exp(-in[1])-in[0]))*Math.exp(-in[1]), (in[0]-1)/(Math.exp(-in[1])-in[0]), in[1]});
         addConstructor(LogisticParameterType.ONE_ONE, 2, in -> new Double[]{1+in[0]*Math.exp(-in[1]), in[0], in[1]});
         addConstructor(LogisticParameterType.STANDARD_FORM, 3);
         createConstructors(type, pars, new Double[]{1.0,1.0,1.0});
@@ -60,6 +68,7 @@ public class Logistic extends Function implements ParameterConstructor<Double> {
      */
     public enum LogisticParameterType implements ParameterType{
         ONE_ONE,
-        STANDARD_FORM
+        STANDARD_FORM,
+        RP_K
     }
 }

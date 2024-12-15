@@ -1,23 +1,30 @@
 package teleutil;
 
 import static global.General.bot;
+import static global.General.gamepad1;
+import static global.General.gamepad2;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.Objects;
 import java.util.TreeMap;
 
-import automodules.StageList;
+import automodules.AutoModule;
+import global.Modes;
 import teleutil.button.Button;
-import teleutil.button.ButtonEventHandler;
+import teleutil.button.main.ButtonEventHandler;
 import teleutil.button.ButtonHandler;
-import teleutil.button.OnPressEventHandler;
+import teleutil.button.main.OnPressEventHandler;
+import teleutil.button.toggle.OnTurnOffEventHandler;
+import teleutil.button.toggle.OnTurnOnEventHandler;
 import teleutil.independent.Independent;
+import teleutil.independent.Machine;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
 import util.condition.DecisionList;
+import util.condition.OutputList;
 import util.template.Iterator;
-import teleutil.button.Button.*;
+import util.template.Precision;
 
 public class GamepadHandler {
     /**
@@ -26,17 +33,20 @@ public class GamepadHandler {
      * Ex: gph1.link(Button.A, OnPressEventHandler.class, <code to run>)
      */
 
+    private final Precision precision = new Precision();
 
     /**
      * Private gamepad object depending on which gamepad handler this is
      */
     private Gamepad gamepad;
+
+    private boolean isBackPressed = false;
     /**
      * Map from buttons to gamepad buttons
      */
     public final TreeMap<Button, ReturnCodeSeg<Boolean>> pressedMap = new TreeMap<Button, ReturnCodeSeg<Boolean>>() {{
-        put(Button.A, () -> gamepad.a);
-        put(Button.B, () -> gamepad.b);
+        put(Button.A, () -> !gamepad2.start && !gamepad1.start && gamepad.a);
+        put(Button.B, () -> !gamepad2.start && !gamepad1.start && gamepad.b);
         put(Button.X, () -> gamepad.x);
         put(Button.Y, () -> gamepad.y);
         put(Button.RIGHT_BUMPER, () -> gamepad.right_bumper);
@@ -49,6 +59,7 @@ public class GamepadHandler {
         put(Button.RIGHT_TRIGGER, () -> gamepad.right_trigger > 0.5);
         put(Button.LEFT_STICK_BUTTON, () -> gamepad.left_stick_button);
         put(Button.RIGHT_STICK_BUTTON, () -> gamepad.right_stick_button);
+        put(Button.BACK, () -> gamepad.back);
     }};
     /**
      * Map from buttons to gamepad values
@@ -67,43 +78,65 @@ public class GamepadHandler {
     public TreeMap<Button, ButtonHandler> handlerMap = new TreeMap<>();
 
     /**
+     *  Values of triggers, joysticks
+     *  ry = right stick y, rx = right stick x, ly = left stick y, lx = left stick x, rt = right trigger, lt = left trigger
+     */
+    public double ry, rx, ly, lx, rt, lt;
+
+    /**
      * Constructor to create a gamepad handler
      * @param gp
      */
     public GamepadHandler(Gamepad gp) {
         gamepad = gp;
+        precision.reset();
         defineAllButtons();
     }
 
     /**
-     * Default link method, uses on press handler
+     * Link methods to connect button to action
      */
-    public void link(Button b, CodeSeg codeSeg){
-        link(b, OnPressEventHandler.class, codeSeg);
-    }
+    public void link(Button b, CodeSeg code){ link(b, code, Modes.GamepadMode.NORMAL); }
+    public void link(Button b, Class<? extends ButtonEventHandler> type, CodeSeg codeSeg) { Objects.requireNonNull(handlerMap.get(b)).addEvent(type, codeSeg); }
+    public void link(Button b, AutoModule list) { link(b, () -> bot.addAutoModule(list), Modes.GamepadMode.NORMAL); }
+    public void link(Button b, DecisionList decisionList){ link(b,  decisionList::check, Modes.GamepadMode.NORMAL); }
+    public void link(Button b, OutputList outputList){ link(b, () -> bot.addAutoModule(outputList.check()), Modes.GamepadMode.NORMAL); }
+    public void link(Button b, Independent independent){ link(b, () -> bot.addIndependent(independent), Modes.GamepadMode.NORMAL); }
+    public void link(Button b, Machine machine){ link(b, () -> bot.addMachine(machine), Modes.GamepadMode.NORMAL); }
+    public void link(Button b, AutoModule list, Modes.GamepadMode mode) { link(b, () -> bot.addAutoModule(list), mode); }
+    public void link(Button b, DecisionList decisionList, Modes.GamepadMode mode){  link(b, decisionList::check, mode); }
+    public void link(Button b, OutputList outputList, Modes.GamepadMode mode){ link(b, () -> bot.addAutoModule(outputList.check()), mode); }
+    public void link(Button b, Independent independent, Modes.GamepadMode mode){ link(b, () -> bot.addIndependent(independent), mode); }
+    public void link(Button b, Machine machine, Modes.GamepadMode mode){ link(b, () -> bot.addMachine(machine), mode);}
+    public void link(Button b, CodeSeg codeSeg, Modes.GamepadMode mode) { link(b, OnPressEventHandler.class, codeSeg, mode); }
+    public void link(Button b, ReturnCodeSeg<Boolean> condition, AutoModule one, AutoModule two){ link(b, () -> {if(condition.run()){bot.addAutoModule(one);}else{bot.addAutoModule(two);}}); }
+    public void link(Button b, ReturnCodeSeg<Boolean> condition, ReturnCodeSeg<Boolean> condition2, AutoModule one, AutoModule two){ link(b, () -> {if(condition.run()){bot.addAutoModule(one);}else if(condition2.run()){bot.addAutoModule(two);}}); }
+
+    public void link(Button b, ReturnCodeSeg<Boolean> condition, CodeSeg one, CodeSeg two){ link(b, () -> {if(condition.run()){one.run();}else{two.run();}});}
+    public void link(Button b, ReturnCodeSeg<Boolean> conditionOne, CodeSeg one, ReturnCodeSeg<Boolean> conditionTwo, CodeSeg two, CodeSeg three){ link(b, () -> {if(conditionOne.run()){one.run();}else if(conditionTwo.run()){two.run();}else{three.run();}}); }
+    public void link(Button b, ReturnCodeSeg<Boolean> conditionOne, AutoModule one, ReturnCodeSeg<Boolean> conditionTwo, AutoModule two, AutoModule three){ link(b, conditionOne, () -> bot.addAutoModuleWithCancel(one), conditionTwo, () -> bot.addAutoModuleWithCancel(two),() -> bot.addAutoModuleWithCancel(three));}
+    /**
+     * Link toggle
+     */
+    public void link(Button b, CodeSeg onOn, CodeSeg onOff, Modes.GamepadMode mode){ link(b, OnTurnOnEventHandler.class, onOn, mode); link(b, OnTurnOffEventHandler.class, onOff, mode); }
+    public void link(Button b, CodeSeg onOn, CodeSeg onOff){ link(b, onOn, onOff, Modes.GamepadMode.NORMAL); }
+
+    public void linkWithCancel(Button b, ReturnCodeSeg<Boolean> condition, AutoModule one, AutoModule two){ link(b, () -> {if(condition.run()){bot.addAutoModuleWithCancel(one);}else{bot.addAutoModuleWithCancel(two);}}); }
+    public void linkWithCancel(Button b, ReturnCodeSeg<Boolean> conditionOne, AutoModule one, ReturnCodeSeg<Boolean> conditionTwo, AutoModule two, AutoModule three){ link(b, conditionOne, () -> bot.addAutoModuleWithCancel(one), conditionTwo, () -> bot.addAutoModuleWithCancel(two),() -> bot.addAutoModuleWithCancel(three));}
 
     /**
-     * Link method used to link a button to a button handler to run some code
+     * Main link method, parameters for type of event handler, codeseg, and mode
      * @param b
      * @param type
      * @param codeSeg
+     * @param mode
      */
-    public void link(Button b, Class<? extends ButtonEventHandler> type, CodeSeg codeSeg) {
-        Objects.requireNonNull(handlerMap.get(b)).addEvent(type, codeSeg);
+    public void link(Button b, Class<? extends ButtonEventHandler> type, CodeSeg codeSeg, Modes.GamepadMode mode){
+        switch (mode){
+            case NORMAL: Objects.requireNonNull(handlerMap.get(b)).addEvent(type, codeSeg, () -> !isBackPressed); break;
+            case AUTOMATED: Objects.requireNonNull(handlerMap.get(b)).addEvent(type, codeSeg, () -> isBackPressed); break;
+        }
     }
-
-    public void link(Button b, StageList list) {
-        link(b, OnPressEventHandler.class, () -> bot.addAutoModule(list));
-    }
-
-    public void link(Button b, DecisionList decisionList){
-        link(b, OnPressEventHandler.class, decisionList::check);
-    }
-
-    public void link(Button b, Independent independent){
-        link(b, OnPressEventHandler.class, () -> bot.addIndependent(independent));
-    }
-
 
 
     /**
@@ -122,9 +155,30 @@ public class GamepadHandler {
     }
 
     /**
+     * Update values on the controller NOTE: y values are positive when joystick is moved forward
+     */
+    private void updateValues(){
+        ry = -gamepad.right_stick_y;
+        rx = gamepad.right_stick_x;
+        ly = -gamepad.left_stick_y;
+        lx = gamepad.left_stick_x;
+        rt = gamepad.right_trigger;
+        lt = gamepad.left_trigger;
+    }
+
+    /**
+     * Is the back button pressed
+     * @return isBackPressed
+     */
+    public boolean isBackPressed(){ return isBackPressed; }
+
+    /**
      * Run using the handlerMap
      */
     public void run() {
+        updateValues();
+        isBackPressed = precision.outputTrueForTime(gamepad.back, 0.3);
         Iterator.forAll(handlerMap.values(), ButtonHandler::run);
     }
+
 }

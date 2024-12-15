@@ -1,11 +1,13 @@
 package robotparts;
 
-import org.checkerframework.checker.units.qual.A;
 
+
+import automodules.StageBuilder;
 import util.Access;
 import util.condition.Status;
+import util.template.Precision;
 
-public class Electronic {
+public class Electronic extends StageBuilder {
     /**
      * Naming conventions for electronics
      * C -> continuous
@@ -14,6 +16,7 @@ public class Electronic {
      * I -> input
      */
 
+    protected final Precision precision = new Precision();
 
     /**
      * Status represents the current status of the electronic part
@@ -23,7 +26,7 @@ public class Electronic {
     /**
      * Access represents the access the user has to use the electronic
      */
-    protected Access access = new Access();
+    protected final Access access = new Access();
 
     /**
      * Gets the current status

@@ -1,13 +1,13 @@
 package unittests.tele.framework;
 
 import teleutil.button.Button;
-import teleutil.button.ButtonEventHandler;
-import teleutil.button.ChangeHoldEventHandler;
-import teleutil.button.OnPressEventHandler;
-import teleutil.button.OnTurnOffEventHandler;
-import teleutil.button.OnTurnOnEventHandler;
-import teleutil.button.WhenOffEventHandler;
-import teleutil.button.WhenOnEventHandler;
+import teleutil.button.main.ButtonEventHandler;
+import teleutil.button.main.ChangeHoldEventHandler;
+import teleutil.button.main.OnPressEventHandler;
+import teleutil.button.toggle.OnTurnOffEventHandler;
+import teleutil.button.toggle.OnTurnOnEventHandler;
+import teleutil.button.toggle.WhenOffEventHandler;
+import teleutil.button.toggle.WhenOnEventHandler;
 import unittests.tele.TeleUnitTest;
 
 import static global.General.*;

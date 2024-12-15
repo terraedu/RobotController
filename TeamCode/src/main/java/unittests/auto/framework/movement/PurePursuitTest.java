@@ -1,8 +1,6 @@
 package unittests.auto.framework.movement;
 
-import autoutil.executors.MecanumExecutor;
-import autoutil.generators.LineGenerator;
-import autoutil.reactors.mecanum.MecanumPurePursuitReactor;
+import autoutil.AutoFramework;
 import unittests.auto.AutoUnitTest;
 
 public class PurePursuitTest extends AutoUnitTest {
@@ -10,29 +8,18 @@ public class PurePursuitTest extends AutoUnitTest {
      * Test pure pursuit
      */
 
-    /**
-     * Generators, reactors, and executors
-     */
-    LineGenerator generator;
-    MecanumPurePursuitReactor reactor;
-    MecanumExecutor executor;
-
-    /**
-     * Run method for testing
-     */
     @Override
-    protected void run() {
-        generator = new LineGenerator();
-        reactor = new MecanumPurePursuitReactor();
-        executor = new MecanumExecutor(linearOpMode);
+    protected void start() {
+        setAuto(new AutoFramework() {
+            @Override
+            public void define() {
+                setConfig(DefaultConfig);
+            }
 
-//        generator.addAutoModule(automodules.DuckTele);
-
-        generator.add(40,0,0);
-        generator.add(40,40,0);
-
-        executor.setPath(generator.getPath());
-        executor.setReactor(reactor);
-        executor.followPath();
+            @Override
+            public void initialize() {
+                addWaypoint(0, 40, 0);
+            }
+        });
     }
 }

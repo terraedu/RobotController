@@ -1,18 +1,30 @@
 package robot;
 
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+
 import java.util.ArrayList;
 
-import automodules.StageList;
-import geometry.CoordinatePlane;
+import automodules.AutoModule;
+import elements.FieldPlacement;
+import elements.FieldSide;
+import geometry.framework.CoordinatePlane;
+import geometry.position.Pose;
+import global.Constants;
+import global.General;
+import math.polynomial.Linear;
 import robotparts.RobotPart;
+import robotparts.electronics.input.IEncoder;
 import teleutil.independent.Independent;
-import teleutil.independent.IndependentRunner;
+import teleutil.independent.IndependentFunctions;
+import teleutil.independent.Machine;
 import util.TerraThread;
 import util.User;
-import util.codeseg.ParameterCodeSeg;
 import util.template.Iterator;
+import util.template.Precision;
 
 import static global.General.*;
+import static robot.RobotUser.gyro;
+import static robot.RobotUser.odometry;
 
 public class RobotFramework {
     /**
@@ -33,19 +45,35 @@ public class RobotFramework {
      * The odometry thread is used to update odometry
      */
     public static TerraThread odometryThread;
-
-    // TODO 4 FIX Background thread
     /**
      * Background thread
      */
     public static TerraThread backgroundThread;
     /**
+     * Independent thread
+     */
+    public static TerraThread independentThread;
+    /**
      * rfsHandler is used for running rfs code. Stages can be added to the queue
      */
     public RobotFunctions rfsHandler;
 
+    /**
+     * Background functions handler
+     */
+    public BackgroundFunctions backHandler;
 
-    public IndependentRunner independentRunner;
+    /**
+     * Independent Handler
+     */
+    public IndependentFunctions indHandler;
+
+    public Machine machine;
+
+    /**
+     * Configs object, stores all configs
+     */
+    public final Configs configs = new Configs();
 
     /**
      * Constructor for creating a robotFramework, this should be overridden by terraBot by extending this class
@@ -54,14 +82,19 @@ public class RobotFramework {
     protected RobotFramework(){
         allRobotParts = new ArrayList<>();
         TerraThread.resetAllThreads();
-        Configs.setCurrentConfig();
+        configs.setCurrentConfig();
         localPlane = new CoordinatePlane();
         rfsHandler = new RobotFunctions();
-        robotFunctionsThread = new TerraThread("RobotFunctionsThread");
-        odometryThread = new TerraThread("OdometryThread");
-        backgroundThread = new TerraThread("BackgroundThread");
-        independentRunner = new IndependentRunner();
+        backHandler = new BackgroundFunctions();
+        indHandler = new IndependentFunctions();
+        machine = new Machine();
+        robotFunctionsThread = new TerraThread("RobotFunctionsThread", Constants.ROBOT_FUNCTIONS_REFRESH_RATE);
+        odometryThread = new TerraThread("OdometryThread", Constants.ODOMETRY_THREAD_REFRESH_RATE);
+        backgroundThread = new TerraThread("BackgroundThread", Constants.BACKGROUND_THREAD_REFRESH_RATE);
+        independentThread = new TerraThread("IndependentThread", Constants.INDEPENDENT_THREAD_REFRESH_RATE);
         rfsHandler.init();
+        backHandler.init();
+        indHandler.init();
     }
 
     /**
@@ -71,10 +104,9 @@ public class RobotFramework {
      */
     public void init(){
         setUser(mainUser);
+        IEncoder.setEncoderReadingAuto();
         Iterator.forAll(allRobotParts, RobotPart::init);
-        robotFunctionsThread.start();
-        odometryThread.start();
-        backgroundThread.start();
+        TerraThread.startAllThreads();
         gameTime.reset();
     }
 
@@ -88,16 +120,14 @@ public class RobotFramework {
     public void update(){
         checkAccess(mainUser);
         TerraThread.checkAllThreadsForExceptions();
+        machine.update();
     }
     /**
      * the stop method stops updating threads, and halts the robot
      * @link halt
      */
     public void stop(){
-        cancelAutoModules();
-        RobotFramework.backgroundThread.stopUpdating();
-        cancelIndependents();
-        independentRunner.disableIndependent();
+        cancelAll();
         TerraThread.stopUpdatingAllThreads();
         halt();
     }
@@ -112,8 +142,16 @@ public class RobotFramework {
      * Adds an automodule (or list of stages) to the robotfunctions to add it to the queue
      * @param autoModule
      */
-    public void addAutoModule(StageList autoModule){
+    public void addAutoModule(AutoModule autoModule){
         rfsHandler.addAutoModule(autoModule);
+    }
+
+    public void addAutoModuleWithCancel(AutoModule autoModule){
+        cancelAutoModules(); addAutoModule(autoModule);
+    }
+
+    public void addBackgroundTask(BackgroundTask backgroundTask){
+        backHandler.addBackgroundTask(backgroundTask);
     }
 
     /**
@@ -131,12 +169,22 @@ public class RobotFramework {
     public synchronized void checkAccess(User potentialUser){ Iterator.forAll(allRobotParts, part -> part.checkAccess(potentialUser)); }
 
     /**
-     * Cancel all of the automodules by emptying the robot functions queue
+     * Cancel methods
      */
-    public void cancelAutoModules(){
-        setUserMainAndHalt();
-        rfsHandler.emptyQueue();
-    }
+    public void cancelAutoModules(){ rfsHandler.emptyQueue(); setUserMainAndHalt();  }
+    public void cancelBackgroundTasks(){  backHandler.emptyTaskList(); setUserMainAndHalt(); }
+    public void cancelIndependents(){ indHandler.stopCurrentIndependent(); setUserMainAndHalt(); }
+    public void cancelMovements(){ rfsHandler.emptyQueue(); indHandler.stopCurrentIndependent(); machine.cancel(); setUserMainAndHalt(); }
+    public void cancelAll(){ cancelMovements(); cancelBackgroundTasks();  }
+
+    public boolean isMachineNotRunning(){ return !machine.isRunning(); }
+    public Machine getMachine(){ return machine; }
+    public boolean isIndependentRunning(){ return bot.indHandler.isIndependentRunning(); }
+    public Independent getIndependent(){ return bot.indHandler.getCurrentIndependent(); }
+    public void pauseOrPlayMachine(){ machine.pauseOrPlay(); }
+    public void skipToNextMachine(){ machine.skipToNext(); }
+    public void skipToLastMachine(){ machine.skipToLast(); }
+    public void skipToLastImmediate(){ machine.skipToLastImmediate(); }
 
     /**
      * Set the user to main and halt all of the robot parts that aren't the main user
@@ -161,18 +209,42 @@ public class RobotFramework {
      */
     public void pauseAutoModules() { rfsHandler.pauseNow(); }
 
+    /**
+     * Add an independent to run
+     * @param independent
+     */
+    public void addIndependent(Independent independent){ indHandler.runIndependent(independent); }
 
-    public void addIndependent(Independent independent){
-        independentRunner.addIndependent(independent);
+    /**
+     * Add a machine to run
+     * @param machine
+     */
+    public void addMachine(Machine machine){ this.machine = machine; this.machine.activate(); }
+
+    /**
+     * Get the battery voltage
+     * @return voltage
+     */
+    public static double getBatteryVoltage() { double result = 15; for (VoltageSensor sensor : hardwareMap.voltageSensor) { double voltage = sensor.getVoltage(); if (voltage > 0) {result = Math.min(result, voltage); } } return Precision.clip(result, 12.0, 15.0);
     }
 
-    public void cancelIndependents(){
-        independentRunner.disableIndependent();
-        independentRunner.cancelIndependent();
+    /**
+     * Calculate and return the voltage scale from battery voltage
+     * @return new voltage scale
+     */
+    public static double calculateVoltageScale(double currentVoltage){
+        Linear voltageScaleCurve = new Linear(-0.05896, 1);
+        return voltageScaleCurve.f(currentVoltage-Constants.DEFAULT_VOLTAGE);
     }
 
-    public void cancelAll(){
-        cancelAutoModules();
-        cancelIndependents();
-    }
+    /**
+     * Save and load methods
+     */
+//    public void savePose(Pose pose){ storage.addItem("XPos", pose.getX()); storage.addItem("YPos", pose.getY()); storage.addItem("Heading", pose.getAngle()); storage.saveItems(); }
+//    public Pose getSavedPose(){ return new Pose((double) storage.getItem("XPos").getValue(), (double) storage.getItem("YPos").getValue(), (double) storage.getItem("Heading").getValue()); }
+//    public void loadPose(){ odometry.setCurrentPose(getSavedPose());; }
+    public void saveLocationOnField(){ storage.addItem("FieldSide", fieldSide.toString()); storage.addItem("FieldPlacement", fieldPlacement.toString()); storage.saveItems(); }
+    public void loadLocationOnField(){ fieldSide = FieldSide.create((String) storage.getItem("FieldSide").getValue()); fieldPlacement = FieldPlacement.create((String) storage.getItem("FieldPlacement").getValue()); }
+    public void loadFieldSide(){ fieldSide = FieldSide.create((String) storage.getItem("FieldSide").getValue()); fieldPlacement = FieldPlacement.LOWER; }
+
 }

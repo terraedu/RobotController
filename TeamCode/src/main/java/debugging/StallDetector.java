@@ -1,48 +1,51 @@
 package debugging;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
+import robotparts.electronics.input.IEncoder;
 import util.template.Precision;
-import autoutil.profilers.Profiler;
 
-public class StallDetector implements Precision {
-    // TODO 4 FIX THIS
-    private final Profiler profiler;
-    private final DcMotor motor;
-    private double maxPower;
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
+public class StallDetector {
+
+    private final Precision precision = new Precision();
+
+    private final IEncoder encoder;
     private double minSpeed;
-    private double minTime;
-    private double offset;
-    private double disableTime;
-    private boolean hasBeenInitialized = false;
+    private double maxCurrent;
+    public final double stallTime = 0.1;
 
-    public StallDetector(DcMotor m){
-        motor = m;
-        profiler = new Profiler(() -> (double) motor.getCurrentPosition());
-        resetPrecisionTimers();
+    /**
+     * @param minSpeedThresh (deg/s) ~10
+     * @param maxCurrentThresh (amps) ~8
+     */
+    public StallDetector(IEncoder e, double minSpeedThresh, double maxCurrentThresh){
+        encoder = e;
+        minSpeed = minSpeedThresh;
+        maxCurrent = maxCurrentThresh;
+        precision.reset();
     }
 
-
-    public void init(double maxPower, double powerOffset, double minSpeed, double minTime, double disableTime){
-        this.maxPower = maxPower;
-        this.minSpeed = minSpeed;
-        this.minTime = minTime;
-        this.offset = powerOffset;
-        this.disableTime = disableTime;
-        hasBeenInitialized = true;
+    public void setCustomThresholds(double minSpeedThresh, double maxCurrentThresh){
+        minSpeed = minSpeedThresh;
+        maxCurrent = maxCurrentThresh;
     }
 
+    public double getMotorSpeed(){ return abs(Math.toDegrees(encoder.getAngularVelocity())); }
+
+    public double getMotorCurrent(){
+        return abs(encoder.getCurrent());
+    }
+
+    public boolean isMotorVelocityLow(){
+        return getMotorSpeed() < minSpeed;
+    }
+
+    public boolean isMotorCurrentHigh(){
+        return getMotorCurrent() > maxCurrent;
+    }
 
     public boolean isStalling() {
-        if(hasBeenInitialized) {
-            profiler.update();
-            boolean isStalling = isInputTrueForTime(Math.abs(motor.getPower() - offset) > maxPower && Math.abs(profiler.getDerivative()) < minSpeed, minTime);
-            return outputTrueForTime(isStalling, disableTime);
-        }
-        return false;
-    }
-
-    public double getCurrentDerivative(){
-        return profiler.getDerivative();
+        return precision.outputTrueForTime(isMotorVelocityLow() && precision.isInputTrueForTime(isMotorCurrentHigh(), stallTime), 1);
     }
 }

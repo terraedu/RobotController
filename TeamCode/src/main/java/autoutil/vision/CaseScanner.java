@@ -1,59 +1,81 @@
 package autoutil.vision;
 
+import android.graphics.Color;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import elements.Case;
-import util.codeseg.ParameterCodeSeg;
+import util.Timer;
+import util.template.Iterator;
 
-import static autoutil.vision.Processor.BLUE;
-import static autoutil.vision.Processor.GREEN;
+import static global.General.log;
+import static java.lang.Math.abs;
 
-public abstract class CaseScanner extends Scanner{
-    private volatile Case caseDetected;
 
-    protected final Mat YCrCb = new Mat();
-    protected final Mat Cb = new Mat();
+public class CaseScanner extends Scanner{
+    private volatile Case caseDetected = Case.THIRD;
+    protected final Case[] cases = new Case[]{Case.FIRST, Case.SECOND, Case.THIRD};
+    protected final Case[] pastCases = new Case[5];
+    { Arrays.fill(pastCases, caseDetected); }
 
-    protected final Case[] cases = new Case[]{Case.LEFT, Case.CENTER, Case.RIGHT};
-    protected Rect[] rects;
+    public int getCase(Mat input){
+        cropAndFill(input, getZoomedRect(input, 1.6, 30));
+        getHSV(input);
 
-    protected abstract Rect[] defineRegions();
-    protected abstract Case detectCase();
+        computeRects(80, 150);
 
-    protected Rect[] defaultRegionGenerator(Point center, int size, int offset){
-        Rect rectLeft = processor.getRectFromCenter(new Point(center.x-offset, center.y), size);
-        Rect rectCenter = processor.getRectFromCenter(center, size);
-        Rect rectRight = processor.getRectFromCenter(new Point(center.x+offset, center.y), size);
-        return new Rect[]{rectLeft, rectCenter, rectRight};
+
+        debug(input);
+
+
+        Point center = getCenter(input);
+        Point pictureCenter = new Point(center.x+10, center.y+30);
+        drawRectangle(input, getRectFromCenter(pictureCenter, 100, 150), GREEN);
+
+        double cyanValue = getBestRectStDev(input, 90, 110, CYAN);
+        double magentaValue = getBestRectStDev(input, 140, 180, MAGENTA);
+        double orangeValue = getBestRectStDev(input, 1, 60, ORANGE);
+        return Iterator.minIndex(cyanValue*1.5, magentaValue*1.2, orangeValue);
     }
 
     @Override
-    protected void start() {
-        rects = defineRegions();
-
-        processor.addDefiner(input -> {
-            processor.toYCrCb(input, YCrCb);
-            processor.toCb(YCrCb, Cb);
-
-            caseDetected = detectCase();
-
-            processor.drawRectangle(input, rects[0], BLUE);
-            processor.drawRectangle(input, rects[1], BLUE);
-            processor.drawRectangle(input, rects[2], BLUE);
-
-            processor.drawFilledRectangle(input, rects[Arrays.asList(cases).indexOf(caseDetected)], GREEN);
-        });
+    public void message(){
+//        logDebug();
+//        caseDetected = getCaseStable(getCase());
+        log.show("Case Detected", caseDetected);
     }
 
-    public Case getCase(){
-        return caseDetected;
+
+    private Case getCaseStable(Case currentCase){
+        boolean casesAreSame = true;
+        for (int i = 0; i < pastCases.length-1; i++) {
+            pastCases[i] = pastCases[i+1];
+            if(!pastCases[i].equals(currentCase)){ casesAreSame = false; }
+        }
+        pastCases[pastCases.length-1] = currentCase;
+        return casesAreSame ? currentCase : pastCases[0];
     }
+
+
+    @Override
+    public final void preProcess(Mat input) {
+//        Core.rotate(input, input, Core.ROTATE_90_COUNTERCLOCKWISE);
+    }
+
+    @Override
+    public final void postProcess(Mat input) {
+//        Core.rotate(input, input, Core.ROTATE_90_CLOCKWISE);
+    }
+
+    @Override
+    public final void run(Mat input) {
+        caseDetected = getCaseStable(cases[getCase(input)]);
+    }
+
+    public final Case getCase(){ return caseDetected; }
 }

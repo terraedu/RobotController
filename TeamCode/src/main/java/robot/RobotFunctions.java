@@ -4,28 +4,29 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
-import automodules.StageList;
+import automodules.AutoModule;
 import util.User;
-import util.codeseg.CodeSeg;
 import util.codeseg.ExceptionCodeSeg;
 import util.condition.Status;
 import util.Timer;
 import automodules.stage.Stage;
+import util.template.Iterator;
 
 import static global.General.*;
 import static robot.RobotFramework.robotFunctionsThread;
 
 public class RobotFunctions {
 
+
     /**
      * List of all robot functions currently in the queue (LinkedList is a FIFO Queue)
      *
      */
-    public volatile Queue<Stage> rfsQueue = new LinkedList<>();
+    private final Queue<Stage> rfsQueue = new LinkedList<>();
     /**
      * Timer for robotfunctions, resets after every stage is run
      */
-    public final Timer timer = new Timer();
+    private final Timer timer = new Timer();
     /**
      * Define the updateCode codeseg to contain the code that will run in the Thread
      */
@@ -37,32 +38,36 @@ public class RobotFunctions {
         /**
          * If the robotfunctions queue is not empty
          */
-        if(!rfsQueue.isEmpty()){
-            /**
-             * Get the oldest stage
-             */
-            Stage s = rfsQueue.peek();
-            /**
-             * If the stage has not started start it,
-             * Then run the loop code
-             */
-            if(!Objects.requireNonNull(s).hasStarted()){
-                s.start();
-            }
-            s.loop();
-            /**
-             * If the stage should stop, then run on stop code, remove the stage, and reset the timer
-             * Otherwise, set the thread to Status.IDLE to prevent unnecessary lag
-             */
-            if (s.shouldStop() && !s.isPause()) {
-                s.runOnStop();
-                rfsQueue.poll();
-                timer.reset();
-            } else if (s.isPause()) {
+        synchronized (rfsQueue) {
+            if (!rfsQueue.isEmpty()) {
+                /**
+                 * Get the oldest stage
+                 */
+                Stage s = rfsQueue.peek();
+                /**
+                 * If the stage has not started start it,
+                 * Then run the loop code
+                 */
+                if (Objects.requireNonNull(s).hasNotStartedYet()) {
+                    s.start();
+                    synchronized (timer) {
+                        timer.reset();
+                    }
+                }
+                s.loop();
+                /**
+                 * If the stage should stop, then run on stop code, remove the stage, and reset the timer
+                 * Otherwise, set the thread to Status.IDLE to prevent unnecessary lag
+                 */
+                if (s.shouldStop() && !s.isPause()) {
+                    s.runOnStop();
+                    rfsQueue.poll();
+                } else if (s.isPause()) {
+                    robotFunctionsThread.setStatus(Status.IDLE);
+                }
+            } else {
                 robotFunctionsThread.setStatus(Status.IDLE);
             }
-        } else {
-            robotFunctionsThread.setStatus(Status.IDLE);
         }
     };
 
@@ -74,7 +79,6 @@ public class RobotFunctions {
     public void resume() {
         if (!rfsQueue.isEmpty() && rfsQueue.peek().isPause()) {
             rfsQueue.poll();
-            timer.reset();
             robotFunctionsThread.setStatus(Status.ACTIVE);
         }
     }
@@ -93,12 +97,14 @@ public class RobotFunctions {
      * Add all of the stages in the automodule to the queue
      * @param autoModule
      */
-    public final void addAutoModule(StageList autoModule){
-        if (rfsQueue.isEmpty()) {
-            timer.reset();
-            robotFunctionsThread.setStatus(Status.ACTIVE);
+    public final void addAutoModule(AutoModule autoModule){
+        autoModule.runStartCode();
+        synchronized (rfsQueue) {
+            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
+            rfsQueue.addAll(autoModule.getStages());
+            autoModule.runEndCode();
         }
-        rfsQueue.addAll(autoModule.getStages());
+
     }
 
     /**
@@ -107,11 +113,10 @@ public class RobotFunctions {
      * @link addAutoModule
      */
     public final void addToQueue(Stage s) {
-        if (rfsQueue.isEmpty()) {
-            timer.reset();
-            robotFunctionsThread.setStatus(Status.ACTIVE);
+        synchronized (rfsQueue) {
+            if (rfsQueue.isEmpty()) { robotFunctionsThread.setStatus(Status.ACTIVE); }
+            rfsQueue.add(s);
         }
-        rfsQueue.add(s);
     }
 
     /**
@@ -126,20 +131,24 @@ public class RobotFunctions {
         while (!rfsQueue.isEmpty()) {
             newStages.add(rfsQueue.poll());
         }
-        rfsQueue = newStages;
+        Iterator.forAll(newStages, rfsQueue::add);
     }
 
     /**
      * Empty the queue and reset the timer
      */
     public final void emptyQueue(){
-        if (!rfsQueue.isEmpty()) {
-            Stage s = rfsQueue.peek();
-            rfsQueue.clear();
-            s.runOnStop();
-        } else {
-            rfsQueue.clear();
+        synchronized (rfsQueue) {
+            if (!rfsQueue.isEmpty()) {
+                Stage s = rfsQueue.peek();
+                rfsQueue.clear();
+                assert s != null;
+                s.runOnStop();
+            }
         }
-        timer.reset();
     }
+
+
+    public Timer getTimer(){ return timer; }
+    public Queue<Stage> getRfsQueue(){ return rfsQueue; }
 }

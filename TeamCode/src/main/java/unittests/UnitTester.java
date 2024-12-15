@@ -77,7 +77,7 @@ public interface UnitTester {
         /**
          * Display the testing mode
          */
-        log.show("Testing Mode: " + testingMode.toString());
+        log.show("Testing Mode: " + testingMode);
     }
 
     /**
@@ -88,6 +88,12 @@ public interface UnitTester {
     default void add(UnitTest test){
         checkForDuplicates(test);
         selector.addItem(new Item<>(test.getClass().getSimpleName(), test));
+    }
+
+    default void clearAll(){
+
+        selector.clearItems();
+
     }
 
     /**

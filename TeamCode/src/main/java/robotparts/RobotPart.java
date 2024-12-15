@@ -4,8 +4,10 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
@@ -14,15 +16,22 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
+import java.util.ArrayList;
 import java.util.Map.*;
+import java.util.Objects;
 import java.util.TreeMap;
 
+import automodules.AutoModule;
+import automodules.StageBuilder;
 import automodules.stage.Exit;
 import automodules.stage.Initial;
+import automodules.stage.Main;
 import automodules.stage.Stage;
 import automodules.stage.Stop;
+import robot.BackgroundTask;
 import robot.RobotFramework;
 import robot.RobotUser;
+import robotparts.electronics.ElectronicType;
 import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.continuous.CServo;
 import robotparts.electronics.input.ICamera;
@@ -38,17 +47,20 @@ import static global.General.*;
 
 import robotparts.electronics.input.ITouch;
 import util.User;
+import util.codeseg.CodeSeg;
 import util.codeseg.ParameterCodeSeg;
+import util.codeseg.ReturnCodeSeg;
+import util.condition.Expectation;
+import util.condition.Magnitude;
+import util.store.Item;
 import util.template.Iterator;
 
-public class RobotPart implements RobotUser {
+public abstract class RobotPart extends StageBuilder implements RobotUser {
     /**
      * Represents a part of the robot like the drivetrain or the intake
      * When making a new part of the robot part make sure to extend this class
      * then override the init method
      */
-
-    // TODO 4 FIX Backgroud thread easier to use
 
 
     /**
@@ -69,102 +81,88 @@ public class RobotPart implements RobotUser {
     }
 
     /**
-     * Init method (to be overwritten)
+     * Init method (to be overriden)
      */
-    public void init() {}
-
-    // TODO 4 Fix, maybe use parameter constructor?, maybe use enum?, clean up?
+    public abstract void init();
 
     /**
-     * Create different robot parts from a set of parameters
+     * Reset method (can be overriden)
      */
-    protected CMotor createCMotor(String name, DcMotor.Direction dir){
-        CMotor cmotor = new CMotor(hardwareMap.get(DcMotor.class, name), dir, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        addElectronic(name, cmotor);
-        return cmotor;
+    public void reset(){}
+
+    /**
+     * Creates electronic given name and type
+     * Ex: To create a CMotor named fr that has a default direction of forward
+     *
+     * fr = create(fr, ElectronicType.CMOTOR_FORWARD);
+     *
+     * @param name
+     * @param type
+     * @param <T>
+     * @return electronic
+     */
+    @SuppressWarnings("unchecked")
+    protected <T extends Electronic> T create(String name, ElectronicType type){
+        Electronic newElectronic = createFromType(name, type);
+        addElectronic(name, Objects.requireNonNull(newElectronic));
+        return (T) newElectronic;
     }
 
-    protected CMotor createCMotor(String name, DcMotor.Direction dir, DcMotor.ZeroPowerBehavior zpb, DcMotor.RunMode mode){
-        CMotor cmotor = new CMotor(hardwareMap.get(DcMotor.class, name), dir, zpb, mode);
-        addElectronic(name, cmotor);
-        return cmotor;
-    }
-
-    protected CServo createCServo(String name, CRServo.Direction dir){
-        CServo cservo = new CServo(hardwareMap.get(CRServo.class, name), dir);
-        addElectronic(name, cservo);
-        return cservo;
-    }
-
-    protected PServo createPServo(String name, Servo.Direction dir, double startpos, double endpos){
-        PServo pservo = new PServo(hardwareMap.get(Servo.class, name), dir, startpos, endpos);
-        addElectronic(name, pservo);
-        return pservo;
-    }
-
-    protected PMotor createPMotor(String name, DcMotor.Direction dir){
-        PMotor pmotor = new PMotor(hardwareMap.get(DcMotor.class, name), dir, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        addElectronic(name, pmotor);
-        return pmotor;
-    }
-
-    protected PMotor createPMotor(String name, DcMotor.Direction dir, DcMotor.ZeroPowerBehavior zph){
-        PMotor pmotor = new PMotor(hardwareMap.get(DcMotor.class, name), dir, zph, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        addElectronic(name, pmotor);
-        return pmotor;
-    }
-
-    protected IGyro createGyro(String name){
-        IGyro gyro = new IGyro(hardwareMap.get(BNO055IMU.class, name));
-        addElectronic(name, gyro);
-        return gyro;
-    }
-
-    protected IDistance createDistanceSensor(String name){
-        IDistance distanceSensor = new IDistance(hardwareMap.get(DistanceSensor.class, name));
-        addElectronic(name, distanceSensor);
-        return distanceSensor;
-    }
-
-    protected IColor createColorSensor(String name){
-        IColor colorSensor = new IColor(hardwareMap.get(ColorRangeSensor.class, name));
-        addElectronic(name, colorSensor);
-        return colorSensor;
-    }
-
-    protected ITouch createTouchSensor(String name){
-        ITouch touchSensor = new ITouch(hardwareMap.get(TouchSensor.class, name));
-        addElectronic(name, touchSensor);
-        return touchSensor;
-    }
-
-    protected IEncoder createEncoder(String motor, String name, IEncoder.EncoderType encoderType){
-        IEncoder encoder = new IEncoder(hardwareMap.get(DcMotor.class, motor), encoderType);
-        addElectronic(name, encoder);
-        return encoder;
-    }
-
-    protected OLed createLED(String name){
-        OLed led = new OLed(hardwareMap.get(DigitalChannel.class,  "g" + name), hardwareMap.get(DigitalChannel.class,  "r" + name));
-        addElectronic(name, led);
-        return led;
-    }
-
-    protected ICamera createExternalCamera(String name, OpenCvCameraRotation orientation, boolean turnOnDisplay){
-        if(turnOnDisplay) {
-            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            return new ICamera(OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, name), cameraMonitorViewId), ICamera.CameraType.EXTERNAL, orientation);
-        }else{
-            return new ICamera(OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, name)), ICamera.CameraType.EXTERNAL, orientation);
-        }
-    }
-
-    protected ICamera createInternalCamera(OpenCvCameraRotation orientation, boolean turnOnDisplay){
-        if(turnOnDisplay) {
-            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            return new ICamera(OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId), ICamera.CameraType.INTERNAL, orientation);
-        }else{
-            return new ICamera(OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK), ICamera.CameraType.INTERNAL, orientation);
+    /**
+     * Get electronic object from type
+     * @param name
+     * @param type
+     * @return
+     */
+    private Electronic createFromType(String name, ElectronicType type){
+        switch (type){
+            case CMOTOR_FORWARD:
+                return new CMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case CMOTOR_REVERSE:
+                return new CMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case CMOTOR_FORWARD_FLOAT:
+                return new CMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.FLOAT, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case CMOTOR_REVERSE_FLOAT:
+                return new CMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.FLOAT, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case CSERVO_FORWARD:
+                return new CServo(hardwareMap.get(CRServo.class, name), DcMotorSimple.Direction.FORWARD);
+            case CSERVO_REVERSE:
+                return new CServo(hardwareMap.get(CRServo.class, name), DcMotorSimple.Direction.REVERSE);
+            case PMOTOR_FORWARD:
+                return new PMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case PMOTOR_REVERSE:
+                return new PMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case PMOTOR_FORWARD_FLOAT:
+                return new PMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.FLOAT, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case PMOTOR_REVERSE_FLOAT:
+                return new PMotor(hardwareMap.get(DcMotor.class, name), DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.FLOAT, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            case PSERVO_FORWARD:
+                return new PServo(hardwareMap.get(Servo.class, name), Servo.Direction.FORWARD);
+            case PSERVO_REVERSE:
+                return new PServo(hardwareMap.get(Servo.class, name), Servo.Direction.REVERSE);
+            case ICAMERA_EXTERNAL:
+                return new ICamera(hardwareMap.get(WebcamName.class, name), ICamera.CameraType.EXTERNAL, OpenCvCameraRotation.UPRIGHT);
+            case ICAMERA_INTERNAL:
+                return new ICamera(ICamera.CameraType.INTERNAL, OpenCvCameraRotation.UPRIGHT);
+            case ICOLOR:
+                return new IColor(hardwareMap.get(ColorRangeSensor.class, name));
+            case IDISTANCE:
+                return new IDistance(hardwareMap.get(DistanceSensor.class, name));
+            case IENCODER_NORMAL:
+                return new IEncoder(hardwareMap.get(DcMotor.class, IEncoder.getMotorName(name)), IEncoder.EncoderType.NORMAL);
+            case IENCODER_PMOTOR:
+                return new IEncoder(hardwareMap.get(DcMotor.class, IEncoder.getMotorName(name)), IEncoder.EncoderType.PMOTOR);
+            case IENCODER_CMOTOR:
+                return new IEncoder(hardwareMap.get(DcMotor.class, IEncoder.getMotorName(name)), IEncoder.EncoderType.CMOTOR);
+            case IGYRO:
+                return new IGyro(hardwareMap.get(IMU.class, name));
+            case ITOUCH:
+                return new ITouch(hardwareMap.get(TouchSensor.class, name));
+            case OLED:
+                return new OLed(hardwareMap.get(DigitalChannel.class,  "g" + name), hardwareMap.get(DigitalChannel.class,  "r" + name));
+            default:
+                fault.check("Electronic creation does not match any known type", Expectation.INCONCEIVABLE, Magnitude.CATASTROPHIC);
+                return null;
         }
     }
 
@@ -183,10 +181,10 @@ public class RobotPart implements RobotUser {
      * @return Electronic TreeMap
      */
     @SuppressWarnings("unchecked")
-    public <T> TreeMap<String, T> getElectronicsOfType(Class<T> encoderType) {
+    public <T> TreeMap<String, T> getElectronicsOfType(Class<T> electronicType) {
         TreeMap<String, T> ret = new TreeMap<>();
         for (Entry<String, Electronic> o : electronics.entrySet()) {
-            if (o.getValue().getClass().equals(encoderType)) {
+            if (o.getValue().getClass().equals(electronicType)) {
                 ret.put(o.getKey(), (T) o.getValue());
             }
         }
@@ -198,7 +196,10 @@ public class RobotPart implements RobotUser {
      * NOTE: This should only be called in a thread that has access to use the robot
      */
     public void halt(){
-        Iterator.forAll(electronics, Electronic::halt);
+        Iterator.forAll(getElectronicsOfType(CMotor.class), CMotor::halt);
+        Iterator.forAll(getElectronicsOfType(PMotor.class), PMotor::halt);
+        Iterator.forAll(getElectronicsOfType(CServo.class), CServo::halt);
+//        Iterator.forAll(electronics, Electronic::halt);
     }
 
     /**
@@ -235,56 +236,33 @@ public class RobotPart implements RobotUser {
     }
 
     /**
-     * For all electronics of a certain encoderType run...
-     * @param run
+     * Stop the part
+     * @return stop
      */
-    private <T extends Electronic> void forAllElectronicsOfType(Class<T> encoderType, ParameterCodeSeg<T> run){ for(Electronic e: getElectronicsOfType(encoderType).values()){ run.run((T) e); } }
-
-    /**
-     * Exit based on time
-     * @param s
-     * @return exit
-     */
-    public static Exit exitTime(double s){return new Exit(() -> bot.rfsHandler.timer.seconds() > s);}
-
-    /**
-     * Exit always
-     * @return exit
-     */
-    public static Exit exitAlways(){return new Exit(() -> true);}
-
-    /**
-     * Exit never
-     * @return exit
-     */
-    public static Exit exitNever(){return new Exit(() -> false);}
+    @Override
+    public final Stop stop(){ return new Stop(this::halt); }
 
     /**
      * Use this robot part
      * NOTE: This must be called before the robot part can be used in a stage
      * @return initial
      */
-    public Initial usePart(){return new Initial(() -> switchUser(User.ROFU));}
+    @Override
+    public final Initial usePart(){return new Initial(() -> switchUser(User.ROFU));}
 
     /**
      * Return the robot part to the main user
      * NOTE: This must be called after the robot part is use in a stage
      * @return stop
      */
-    public Stop returnPart(){return new Stop(() -> switchUser(mainUser));}
+    @Override
+    public final Stop returnPart(){return new Stop(() -> switchUser(mainUser));}
 
     /**
-     * Make part used for backgroud task
-     * @return
+     * Maintain the state of this robot part
      */
-    public Initial usePartForBackgroundTask(){return new Initial(() -> switchUser(User.BACK));}
+    @Override
+    protected void maintain() { bot.addBackgroundTask(new BackgroundTask(() -> {checkAccess(User.AUTO); move(0);}));}
 
-    /**
-     * Pause for some amount of time
-     * @param time
-     * @return
-     */
-    public static Stage pause(double time){
-        return new Stage(exitTime(time));
-    }
+
 }

@@ -4,32 +4,28 @@ import static robot.RobotConfig.setConfig;
 
 public class Configs implements RobotUser{
 
-    /**
-     * Used when there is nothing on the robot
-     */
-    public static RobotConfig EmptyConfig = new RobotConfig();
 
     /**
-     * Used when there is only part to test
+     * Used for PowerPlay robot
      */
-    public static RobotConfig TestConfig = new RobotConfig(testPart);
+//    RobotConfig PowerPlay = new RobotConfig(drive, lift, outtake, gyro, camera, odometry, distanceSensors);
+//    RobotConfig PowerPlay = new RobotConfig(drive, lift, outtake, gyro, camera, odometry);
 
     /**
-     * Used for tank robots
+     * Used for CenterStage robot
      */
-    public static RobotConfig TankConfig = new RobotConfig(tankDrive, tankIntake, tankTurret, tankLift, tankOuttake, tankCarousel, color, gyro, odometry, camera);
+//    RobotConfig CenterStage = new RobotConfig(gyro, odometry, distanceSensorsNew,colorSensorsNew); //drive, intake, lift, outtake, camera
 
     /**
-     * Used for mecanum robots
+     * Used for Into The Deep robot
      */
-    public static RobotConfig MecanumConfig = new RobotConfig(drive, gyro, odometry, camera, carousel, intake, lift, outtake, color);
-
+    RobotConfig IntoTheDeep = new RobotConfig(lift); //drive, intake, lift, outtake, camera
 
     /**
      * Current Config
      */
-    public static void setCurrentConfig(){
-        setConfig(TestConfig);
+    public void setCurrentConfig(){
+        setConfig(IntoTheDeep);
     }
 
 }

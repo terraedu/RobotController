@@ -78,6 +78,12 @@ public class Selector<T> {
         itemClassNames.add(item.getValue().getClass().getSimpleName());
     }
 
+    public void clearItems(){
+
+        items.clear();
+
+    }
+
     /**
      * Initialize the selector
      */

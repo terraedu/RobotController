@@ -1,5 +1,6 @@
 package util;
 
+import automodules.stage.Initial;
 import util.condition.Expectation;
 import util.condition.Magnitude;
 
@@ -35,11 +36,11 @@ public class Timer {
      * Reset the timer by setting the start time
      */
     public void reset(){
-        startTime = gameTime.seconds();
+        startTime = gameTime == null ? 0 : gameTime.seconds();
         hasBeenReset = true;
     }
     public void set(double time){
-        startTime = gameTime.seconds()-time;
+        startTime = gameTime == null ? 0 : gameTime.seconds() -time;
         hasBeenReset = true;
     }
     /**
@@ -50,5 +51,13 @@ public class Timer {
     public double seconds(){
         fault.warn("Used timer before reset", Expectation.SURPRISING, Magnitude.CRITICAL, hasBeenReset, true);
         return gameTime.seconds()-startTime;
+    }
+
+    /**
+     * Initial to reset the timer
+     * @return reset initial
+     */
+    public Initial initialReset(){
+        return new Initial(this::reset);
     }
 }

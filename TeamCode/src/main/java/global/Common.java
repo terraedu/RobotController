@@ -2,12 +2,12 @@ package global;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import automodules.AutoModules;
-import automodules.TankAutoModules;
 import debugging.Synchroniser;
+import elements.FieldPlacement;
 import elements.FieldSide;
+import robot.RobotFramework;
 import robot.TerraBot;
-import teleutil.independent.Independents;
+import robotparts.sensors.Cameras;
 import teleutil.GamepadHandler;
 import debugging.Fault;
 import debugging.Logger;
@@ -15,7 +15,6 @@ import util.User;
 import util.store.Storage;
 
 import static global.General.*;
-import static global.General.fieldSide;
 
 public interface Common{
     /**
@@ -31,6 +30,10 @@ public interface Common{
         gamepad1 = thisOpMode.gamepad1;
         gamepad2 = thisOpMode.gamepad2;
         /**
+         * Create the gameTime
+         */
+        gameTime = new ElapsedTime();
+        /**
          * Create the gamepadhanlders from the gamepads
          */
         gph1 = new GamepadHandler(gamepad1);
@@ -42,14 +45,18 @@ public interface Common{
         sync = new Synchroniser();
         log = new Logger();
         /**
-         * Create the gameTime
-         */
-        gameTime = new ElapsedTime();
-        /**
          * Get the main user
          * NOTE: the user is automatically set from the type of opMode
          */
         mainUser = User.getUserFromTypeOfOpMode(thisOpMode);
+        /**
+         * Set the view ID
+         */
+        cameraMonitorViewId = Cameras.getCameraMonitorViewId();
+        /**
+         * Set the voltage scale
+         */
+        voltageScale = RobotFramework.calculateVoltageScale(RobotFramework.getBatteryVoltage());
         /**
          * Create the storage
          */
@@ -59,12 +66,6 @@ public interface Common{
          */
         bot = new TerraBot();
         /**
-         * Create the automodules
-         */
-        tankAutoModules = new TankAutoModules();
-        automodules = new AutoModules();
-        independents = new Independents();
-        /**
          * Initialize the robot
          */
         bot.init();
@@ -73,10 +74,8 @@ public interface Common{
     /**
      * Activate sets the field side and thus should only be used in teleop or auton
      * Also shows telemetry to display that the robot is ready
-     * @param side
      */
-    default void activate(FieldSide side){
-        fieldSide = side;
+    default void activate(){
         sync.logReady();
     }
 

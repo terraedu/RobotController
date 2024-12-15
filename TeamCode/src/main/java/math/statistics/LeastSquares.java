@@ -1,11 +1,11 @@
 package math.statistics;
 
-    // TOD4 NEW ARNAV
-    // Make this, given set of points it finds line of least squares
-    // Function to calculate b
+
 
 
 public class LeastSquares {
+
+    // TOD5
 
     // Function to calculate b
     private static double calculateB(

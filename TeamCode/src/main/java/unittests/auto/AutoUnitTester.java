@@ -1,18 +1,29 @@
 package unittests.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import static global.General.fieldPlacement;
+import static global.General.fieldSide;
 import static global.General.log;
 
 import auton.Auto;
+import elements.FieldPlacement;
 import elements.FieldSide;
 import unittests.UnitTester;
-import unittests.auto.framework.IteratorTest;
-import unittests.auto.framework.ThreadStopTest;
-import unittests.auto.framework.movement.PurePursuitTest;
+//import unittests.auto.framework.VuforiaTest;
+import unittests.auto.framework.calibration.ArmRestPowerCalib;
+import unittests.auto.framework.calibration.OdometryCalib;
+import unittests.auto.framework.calibration.OdometryCalib2;
+import unittests.auto.framework.calibration.RestPowerCalib;
+import unittests.auto.framework.calibration.VoltageScaleCalib;
+//import unittests.auto.framework.movement.DistanceSensorStraightenTest;
+import unittests.auto.framework.movement.OdometryTest;
 import util.condition.Status;
 
+//@Disabled
 @SuppressWarnings("ALL")
+@Disabled
 @Autonomous(name = "AutoUnitTester", group = "UnitTests")
 public class AutoUnitTester extends Auto implements UnitTester {
     /**
@@ -26,6 +37,7 @@ public class AutoUnitTester extends Auto implements UnitTester {
      * @link TestType
      */
     TestingMode testingMode = TestingMode.CONTROL;
+//    TestingMode testingMode = TestingMode.SELECTION;
 
     @Override
     public void createUnitTests(){
@@ -33,26 +45,36 @@ public class AutoUnitTester extends Auto implements UnitTester {
          * Framework
          */
 
-        // Works as of 3.29.16
+//        Works as of 4.2.5
 //        add(new IteratorTest());
 //        add(new ThreadStopTest());
 
 
+//        add(new VoltageScaleCalib());
+//        add(new VuforiaTest());
+        add(new OdometryCalib2());
+//        add(new RestPowerCalib());
+//        add(new ArmRestPowerCalib());
+
         /**
-         * Other
+         * Framework (needs hardware, in movement package)
          */
-        addAll(
-//                new ArcTest()
-//                new OdometryTest()
-//                new IteratorTest(),
-//                new PIDTest(),
-//                new MoveTest()
-//                new InternalCameraTest()
-//                new ParameterConstructorTest()
-//                new PurePursuitTest()
-//                new AutoModuleInitialTest()
-//                new OdometryTest()
-        );
+//        TOD 5 Test
+//        Works as of 4.3.11
+//        add(new MoveTimeTest());
+//        add(new PIDTest());
+//        add(new PARTest());
+
+//        add(new PurePursuitTest());
+//        add(new DRPTest());
+//
+//
+//        add(new OdometryTest.ForwardTest());
+//        add(new OdometryTest.StrafeTest());
+//        add(new OdometryTest.TurnTest());
+
+//        add(new DistanceSensorStraightenTest());
+
     }
 
     /**
@@ -60,9 +82,11 @@ public class AutoUnitTester extends Auto implements UnitTester {
      */
     @Override
     public void initAuto() {
+        fieldSide = FieldSide.BLUE;
+        fieldPlacement = FieldPlacement.LOWER;
         AutoUnitTest.linearOpMode = this;
         readyTestsAndSelector(testingMode);
-        activate(FieldSide.UNKNOWN);
+        activate();
         log.showTelemetry();
     }
 

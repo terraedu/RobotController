@@ -1,5 +1,10 @@
 package elements;
+
+
+import util.codeseg.CodeSeg;
 import util.condition.Decision;
+
+import static global.General.fieldSide;
 
 public enum FieldSide implements Decision {
     /**
@@ -46,6 +51,12 @@ public enum FieldSide implements Decision {
             default:
                 return null;
         }
+    }
+
+    public static boolean isBlue(){ if(fieldSide != null) { return fieldSide.equals(BLUE) || fieldSide.equals(UNKNOWN);}else {return true; } }
+
+    public static void on(CodeSeg blue, CodeSeg red){
+        if(isBlue()){blue.run();}else {red.run();};
     }
 
     @Override

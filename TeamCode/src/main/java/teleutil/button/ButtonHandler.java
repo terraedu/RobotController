@@ -3,8 +3,10 @@ package teleutil.button;
 import java.util.ArrayList;
 
 import teleutil.GamepadHandler;
+import teleutil.button.main.ButtonEventHandler;
 import util.ExceptionCatcher;
 import util.codeseg.CodeSeg;
+import util.codeseg.ReturnCodeSeg;
 import util.condition.Expectation;
 import util.condition.Magnitude;
 
@@ -41,15 +43,16 @@ public class ButtonHandler {
      * @param codeToRun
      * @param <T>
      */
-    public <T> void addEvent(Class<T> type, CodeSeg codeToRun) {
+    public <T extends ButtonEventHandler> void addEvent(Class<T> type, CodeSeg codeToRun){ addEvent(type, codeToRun, () -> true); }
+    public <T extends ButtonEventHandler> void addEvent(Class<T> type, CodeSeg codeToRun, ReturnCodeSeg<Boolean> extraCondition) {
         fault.check("YOU USED BUTTON HANDLER IN LOOP", Expectation.UNEXPECTED, Magnitude.CATASTROPHIC, eventHandlers.size() < 50, true);
         ExceptionCatcher.catchNewInstance(() -> {
             T obj = type
                 .getDeclaredConstructor(Button.class, CodeSeg.class, GamepadHandler.class)
                 .newInstance(button, codeToRun, gph);
-            eventHandlers.add((ButtonEventHandler) obj);
+            obj.setExtraCondition(extraCondition);
+            eventHandlers.add(obj);
         });
-
     }
 
     /**

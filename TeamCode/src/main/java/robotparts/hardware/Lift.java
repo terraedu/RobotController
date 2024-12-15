@@ -1,85 +1,94 @@
 package robotparts.hardware;
 
-import automodules.stage.Exit;
 import automodules.stage.Initial;
-import automodules.stage.Main;
 import automodules.stage.Stage;
-import automodules.stage.Stop;
 import global.Constants;
+import robotparts.RobotPart;
+import robotparts.electronics.ElectronicType;
 import robotparts.electronics.positional.PMotor;
 import util.codeseg.CodeSeg;
-import util.codeseg.ReturnParameterCodeSeg;
+import util.codeseg.ReturnCodeSeg;
 
-import static global.General.*;
+//import static global.Modes.Height.HIGH;
+//import static global.Modes.Height.LOW;
+//import static global.Modes.Height.MIDDLE;
 
-public abstract class Lift extends PMotorRobotPart {
 
-    // TODO 4 Why do we need this?
+public class Lift extends RobotPart {
+
+    public PMotor motorRight;
+
+    public static final double maxPosition = 50;
+    public final double defaultCutoffPosition = 0;
+    public volatile double currentCutoffPosition = defaultCutoffPosition;
+    public int adjust = 0;
+    public double globalOffset = 0;
 
     @Override
-    public double getOverallTarget(double in) {
-        return in/Math.sin(getAngle());
+    public void init() {
+        motorRight = create("lir", ElectronicType.PMOTOR_REVERSE);
+        // 0.25
+        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
+        motorRight.usePositionHolder(0.5, .1);
+        adjust = 0;
+        globalOffset = 0;
+    }
+
+
+    @Override
+    public CodeSeg move(double p) {
+        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        return null;
+    }
+
+//      Old holder target
+//    public void adjustHolderTarget(double delta) {
+//        if (outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
+//            globalOffset += delta;
+//        }
+//        currentCutoffPosition = 0;
+//        motorRight.holdPositionExact();
+//        motorLeft.holdPositionExact();
+//        double target = Precision.clip(motorRight.getPositionHolder().getTarget() + delta, 0, maxPosition);
+//        motorRight.setPositionHolderTarget(target);
+//        motorLeft.setPositionHolderTarget(target);
+//    }
+
+    public void liftAdjust(double delta){
+        motorRight.holdPositionExact();
+        motorRight.setPositionHolderTarget(motorRight.getPositionHolder().getTarget() + delta);
+    }
+
+
+    @Override
+    public Stage moveTime(double p, double t) {
+        return super.moveTime(p, t).combine(new Initial(() -> currentCutoffPosition = p > 0 ? 0 : defaultCutoffPosition));
     }
 
     @Override
-    public double CM_PER_TICK() {
-        return 1 / Constants.LIFT_CM_TO_TICKS;
+    public Stage moveTime(double p, ReturnCodeSeg<Double> t) {
+        return super.moveTime(p, t);
     }
 
-    /**
-     * Set the power of the lift in a main
-     * @param power
-     * @return
-     */
-    public Main main(double power){
-        return new Main(() -> move(power));
+
+    public Stage stageLift(double power, double target) {
+        return moveTarget(() -> motorRight, power, () -> {
+            double Lasttarget = target;
+
+                return target;
+
+        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
     }
 
-//    /**
-//     * Exit when the lift is down
-//     * NOTE: Uses the touch sensor
-//     * @return
-//     */
-//    public Exit exitDown(){return new Exit(() -> bot.touchSensors.isOuttakePressingTouchSensor());}
-
-    /**
-     * Lift for a certain time
-     * @param power
-     * @param time
-     * @return
-     */
-    public Stage liftTime(double power, double time){return new Stage(
-            usePart(),
-            main(power),
-            exitTime(time),
-            stop(),
-            returnPart()
-    );}
-
-    /**
-     * Lift to a certain position
-     * @param power
-     * @param height
-     * @return
-     */
-    public Stage liftEncoder(double power, double height){return new Stage(
-            usePart(),
-            initialSetTarget(height),
-            main(power),
-            exitReachedTarget(),
-            stopEncoder(),
-            returnPart()
-    );}
 
 
-    public Stage liftEncoderCustom(double power, double height, CodeSeg custom){return new Stage(
-            usePart(),
-            initialSetTarget(height),
-            new Initial(custom),
-            main(power),
-            exitReachedTarget(),
-            stopEncoder(),
-            returnPart()
-    );}
+    @Override
+    public void maintain() {
+        super.maintain();
+    }
+
+
+    public void reset(){ motorRight.softReset();}
 
 }
+

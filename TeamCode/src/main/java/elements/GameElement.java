@@ -9,5 +9,16 @@ public enum GameElement implements Decision {
     BALL,
     CUBE,
     UNKNOWN,
-    NONE
-}
+    NONE,
+    PIXEL1,
+
+    PIXELGONE,
+
+    REDSAMPLE,
+    BLUESAMPLE,
+    YELLOWSAMPLE,
+    WRONGCOLOR,
+    SAMPLE
+
+
+    }

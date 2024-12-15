@@ -1,8 +1,11 @@
 package geometry.circles;
 
-import geometry.GeometryObject;
-import geometry.position.Point;
+import geometry.framework.GeometryObject;
+import geometry.framework.Point;
+import geometry.framework.Tracer;
 import geometry.position.Pose;
+import geometry.position.Vector;
+import global.Constants;
 
 import static java.lang.Math.*;
 
@@ -10,29 +13,37 @@ import static java.lang.Math.*;
  * NOTE: Uncommented
  */
 
-public class Circle extends GeometryObject {
-    public Point center;
-    public double r; // center is (h, k) and radius is r
+public class Circle extends GeometryObject implements Tracer {
+
+    protected final Point center;
+    protected double r;
+
+    // TOD 5 Fix circle scaling (maybe have endpoint or something)
 
     public Circle(Point center, double r) {
         this.center = center;
         this.r = r;
+        addPoints(center);
     }
 
-    public double getThetaFromPoint(Point p) {
-        double ang = atan2(p.y - center.y, p.x - center.x);
-        ang %= 2 * PI;
-        return ang;
+    public double getCenterX(){ return center.getX(); }
+    public double getCenterY(){ return center.getY(); }
+    public Point getCenter() { return center; }
+    public double getRadius(){ return r; }
+
+    @Override
+    public Point getAt(double t) {
+        return center.getRotated(t/360.0);
     }
 
-    public Pose getPositionFromTheta(double theta) {
-        Point p = new Point(center.x + r * cos(theta), center.y + r * sin(theta));
-        double ang = PI/2 - atan2(p.y - center.y, center.x - p.x);
-        return new Pose(p, ang);
+    public Point getClosestTo(Point p){ return new Vector(center, p).getUnitVector().getScaled(r).getPoint().getAdded(center); }
+
+    public Circle getScaledRadius(double scale){
+        return new Circle(this.center.getCopy(), r*scale);
     }
 
     @Override
-    public GeometryObject getRelativeTo(Pose origin) {
-        return new Circle(center.getRelativeTo(origin), r);
+    public Circle getCopy() {
+        return new Circle(center.getCopy(), r);
     }
 }

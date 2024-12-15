@@ -3,7 +3,7 @@ import static global.General.*;
 
 import debugging.Synchroniser;
 import teleutil.button.Button;
-import teleutil.button.ButtonEventHandler;
+import teleutil.button.main.ButtonEventHandler;
 import unittests.tele.TeleUnitTest;
 
 public class SynchroniserTest extends TeleUnitTest {
@@ -37,7 +37,7 @@ public class SynchroniserTest extends TeleUnitTest {
          * When A is not pressed it should keep going up
          * Hold down A button and delay should eventually stabilise to something around 1ms - 30ms
          */
-        log.show("Synchroniser delay, press A to update", synchroniser.getDelay());
+        log.show("Synchroniser delay, hold A to update", synchroniser.getDelay());
     }
 
     @Override

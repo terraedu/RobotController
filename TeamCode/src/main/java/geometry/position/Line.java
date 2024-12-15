@@ -1,51 +1,57 @@
 package geometry.position;
 
-import geometry.GeometryObject;
-
-import static java.lang.Math.*;
+import geometry.framework.GeometryObject;
+import geometry.framework.Point;
+import geometry.framework.Tracer;
 
 /**
  * NOTE: Uncommented
  */
 
-public class Line extends GeometryObject {
-    //start coords (x1,y1) end coords (x2,y2) mx is slope in x dir from 0-1 and my is the same for y
-    public Point p1;
-    public Point p2;
-    public double mx;
-    public double my;
+public class Line extends GeometryObject implements Tracer {
 
-    //Define line using endpoints
-    public Line(Point p1, Point p2){
-        this.p1 = p1;
-        this.p2 = p2;
+    private final Point ps;
+    private final Point pe;
+    private final double mx;
+    private final double my;
 
-        mx = p2.x-p1.x;
-        my = p2.y-p1.y;
-
+    public Line(Point ps, Point pe){
+        this.ps = ps; this.pe = pe; mx = pe.getX()-ps.getX(); my = pe.getY()-ps.getY();
+        addPoints(ps, pe);
     }
 
-    //Gets the position of the line at a certain t value
-    public Point getAt(double t){
-        return new Point ((p1.x)+(mx*t), (p1.y)+(my*t));
+    public Line(){
+        this(new Point(), new Point());
     }
 
-    //Gets the length of the line
-    public double getlength(){
-        return sqrt(pow(mx, 2) + pow(my, 2));
-    }
+    public Point getStartPoint(){ return ps; }
+    public Point getEndPoint(){ return pe; }
 
     @Override
-    public GeometryObject getRelativeTo(Pose origin) {
-        return new Line(p1.getRelativeTo(origin), p2.getRelativeTo(origin));
+    public Point getAt(double t){
+        return new Point ((ps.getX())+(mx*t), (ps.getY())+(my*t));
     }
+
+    public double getSlopeX(){ return mx; }
+    public double getSlopeY() {return my; }
+
+    public Point getMidpoint(){return getAt(0.5); }
+
+    public double getLength(){ return ps.getDistanceTo(pe); }
+
+    public Vector getVector(){ return new Vector(mx, my); }
 
     public String toString() {
         return "Line {" +
-                " p1: " + p1 +
-                ", p2: " + p2 +
+                " ps: " + ps +
+                ", pe: " + pe +
                 ", mx: " + mx +
                 ", my: " + my +
                 '}';
+    }
+
+    @Override
+    public Line getCopy() {
+        return new Line(ps.getCopy(), pe.getCopy());
     }
 }
