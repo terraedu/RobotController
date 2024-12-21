@@ -3,9 +3,14 @@ package teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
+import static global.General.gph2;
 import static global.General.log;
 import static global.General.voltageScale;
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TeleStatus.RED;
+import static teleutil.button.Button.A;
+import static teleutil.button.Button.B;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -14,11 +19,12 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-
-
+gph1.link(B, PlaceHigh);
+gph1.link(A, Place);
 
         teleStatus.set(RED);
-
+    outtake.moveStart();
+    robotStatus.set(DRIVING);
 
     }
 
@@ -34,8 +40,8 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-lift.move(gph1.ly);
-
+drive.newMove(gph1.ly, gph1.lx, gph1.ry);
+lift.move(gph2.ly);
         /**
          * Gets Distance
          */

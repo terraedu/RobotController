@@ -54,10 +54,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        fr = create("fr", ElectronicType.CMOTOR_REVERSE);
-        br = create("br", ElectronicType.CMOTOR_REVERSE);
-        fl = create("fl", ElectronicType.CMOTOR_FORWARD);
-        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
+        fr = create("fr", ElectronicType.CMOTOR_FORWARD);
+        br = create("br", ElectronicType.CMOTOR_FORWARD);
+        fl = create("fl", ElectronicType.CMOTOR_REVERSE);
+        bl = create("bl", ElectronicType.CMOTOR_REVERSE);
 
 
 
@@ -87,10 +87,10 @@ public class Drive extends RobotPart {
             if(heightMode.get() == GROUND) {
 
 
-                fl.setPower(f + s + .55 * t);
-                bl.setPower(f - s + .55 * t);
-                fr.setPower(f - s - .55 * t);
-                br.setPower(f + s - .55 * t);
+                fl.setPower(f - s - .55 * t);
+                bl.setPower(f + s - .55 * t);
+                fr.setPower(f + s + .55 * t);
+                br.setPower(f - s + .55 * t);
 
 
             }else{
