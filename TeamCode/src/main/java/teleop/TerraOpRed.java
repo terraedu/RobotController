@@ -2,9 +2,9 @@ package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static global.General.log;
 import static global.General.voltageScale;
-import static global.Modes.TeleStatus.RED;
+import static global.Modes.TeleStatus.BLUEA;
+import static global.Modes.TeleStatus.REDA;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -14,9 +14,10 @@ public class TerraOpRed extends Tele {
     public void initTele() {
         voltageScale = 1;
 
+        Tele auto = this;
+        auto.scan(true);
 
-
-        teleStatus.set(RED);
+        teleStatus.set(REDA);
 
 
     }

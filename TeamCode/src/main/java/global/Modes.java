@@ -18,7 +18,7 @@ public interface Modes {
     enum RobotStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING, PLACING2}
     Mode robotStatus = new Mode(RobotStatus.class);
 
-    enum TeleStatus implements Mode.ModeType {RED, BLUE}
+    enum TeleStatus implements Mode.ModeType {REDA, BLUEA}
     Mode teleStatus = new Mode(TeleStatus.class);
 
 

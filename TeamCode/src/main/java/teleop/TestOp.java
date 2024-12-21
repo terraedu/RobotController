@@ -2,7 +2,7 @@ package teleop;
 
 import static global.General.log;
 import static global.General.voltageScale;
-import static global.Modes.TeleStatus.BLUE;
+import static global.Modes.TeleStatus.BLUEA;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -12,7 +12,7 @@ public class TestOp extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-        teleStatus.set(BLUE);
+        teleStatus.set(BLUEA);
 
                /**
          * Start code

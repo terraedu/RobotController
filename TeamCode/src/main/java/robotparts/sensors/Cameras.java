@@ -4,8 +4,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 //import auton.AutonomousDummy;
+import autoutil.vision.RecorderPipeline;
 import autoutil.vision.Scanner;
 import geometry.position.Pose;
 import robotparts.RobotPart;
@@ -39,7 +41,10 @@ public class Cameras extends RobotPart {
             @Override
             public void onOpened()
             {
-                camera1.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+//                OpenCvPipeline recorderPipeline = new RecorderPipeline();
+                camera1.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+//                camera1.setPipeline(recorderPipeline);
+
             }
             @Override
             public void onError(int errorCode)
@@ -47,9 +52,10 @@ public class Cameras extends RobotPart {
                 log.show("CAN'T BE OPENED");
             }
         });}
+
     public void startAndResume(boolean view){ start(view); resume(); }
     public void pause(){ camera1.pauseViewport(); }
-    public void resume(){ cam.resume(); }
+    public void resume(){ camera1.resumeViewport(); }
     public void setScanner(Scanner scanner){ camera1.setPipeline(scanner);}
     //    public void startVuforia(boolean view){ cam.startVuforia(view); }
 //    public boolean updateVuforia(){ return cam.updateVuforia(); }

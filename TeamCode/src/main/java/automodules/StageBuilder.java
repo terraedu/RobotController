@@ -84,7 +84,7 @@ public class StageBuilder {
      * Methods to override and use to create stages
      */
 
-    protected void move(double fp, double sp, double tp){}
+    public void move(double fp, double sp, double tp){}
     protected Main main(double fp, double sp, double tp){ return new Main(() -> move(fp, sp, tp)); }
     protected Stage moveTime(double fp, double sp, double tp, double t){ return new Stage(usePart(), main(fp, sp, tp), exitTime(t), stop(), returnPart()); }
     protected Stage moveTime(double fp, double sp, double tp, ReturnCodeSeg<Double> t){ return new Stage(usePart(), main(fp, sp, tp), new Exit(() -> bot.rfsHandler.getTimer().seconds() > t.run()), stop(), returnPart()); }

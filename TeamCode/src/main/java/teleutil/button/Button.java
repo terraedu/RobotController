@@ -24,5 +24,5 @@ public enum Button {
     RIGHT_STICK_Y,
     LEFT_TRIGGER,
     RIGHT_TRIGGER,
-    BACK
+    SampleScanner, BACK
 }

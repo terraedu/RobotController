@@ -1,19 +1,15 @@
 package robotparts.sensors;
 
 import static global.General.hardwareMap;
-import static global.Modes.TeleStatus.BLUE;
-import static global.Modes.TeleStatus.RED;
+import static global.Modes.TeleStatus.BLUEA;
+import static global.Modes.TeleStatus.REDA;
 import static global.Modes.teleStatus;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRColor;
-
 import automodules.stage.Exit;
-import automodules.stage.Stage;
-import auton.redauton.RED_CLOSE_PY_P;
+// import auton.redauton.RED_CLOSE_PY_P;
 import elements.GameElement;
-import global.Modes;
 import robotparts.RobotPart;
 
 public class ColorSensors extends RobotPart {
@@ -86,9 +82,9 @@ public class ColorSensors extends RobotPart {
     }
 
     public GameElement isredSample(){
-        if (teleStatus.equals((BLUE)))
+        if (teleStatus.equals((BLUEA)))
             return GameElement.WRONGCOLOR;
-        if (teleStatus.equals(RED) && cso1.green() <= 80 && cso1.red() <= 60) {
+        if (teleStatus.equals(REDA) && cso1.green() <= 80 && cso1.red() <= 60) {
             return GameElement.REDSAMPLE;
         }else{
             return GameElement.NONE;
@@ -96,9 +92,9 @@ public class ColorSensors extends RobotPart {
     }
 
     public GameElement isblueSample(){
-        if (teleStatus.equals((RED)))
+        if (teleStatus.equals((REDA)))
             return GameElement.WRONGCOLOR;
-        if (teleStatus.equals(BLUE) && cso1.blue() <= 255 && cso1.blue() >= 200){
+        if (teleStatus.equals(BLUEA) && cso1.blue() <= 255 && cso1.blue() >= 200){
             return GameElement.BLUESAMPLE;
         }else{
             return GameElement.NONE;

@@ -73,6 +73,10 @@ public class Precision {
         }
     }
 
+    public static double calculateWeightedValue(double limitLeft, double limitRight, double weight) {
+        if (weight < 0 || weight > 1) return -1;
+        return limitLeft + (limitRight - limitLeft) * (1 - weight);
+    }
 
     /**
      * Helper methods for running on a condition

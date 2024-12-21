@@ -2,21 +2,27 @@ package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static global.General.log;
+import static global.General.gph1;
 import static global.General.voltageScale;
-import static global.Modes.TeleStatus.BLUE;
+import static global.Modes.TeleStatus.BLUEA;
+import static teleutil.button.Button.B;
+
+import teleutil.button.Button;
 
 @TeleOp(name = "TerraOpBlue", group = "TeleOp")
 public class TerraOpBlue extends Tele {
 
     @Override
     public void initTele() {
+
         voltageScale = 1;
 
+        Tele auto = this;
+        auto.scan(true);
 
+        gph1.link(B, angleIntake);
 
-        teleStatus.set(BLUE);
-
+        teleStatus.set(BLUEA);
 
     }
 

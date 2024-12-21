@@ -1,16 +1,22 @@
 package robotparts.hardware;
 
+import org.openftc.easyopencv.OpenCvPipeline;
+
 import automodules.AutoModule;
 import automodules.stage.Exit;
 import automodules.stage.Stage;
+import autoutil.vision.SampleScanner;
+import autoutil.vision.Scanner;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.continuous.CServo;
 import robotparts.electronics.input.IColor;
 import robotparts.electronics.positional.PServo;
+import util.User;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
+import util.template.Precision;
 
 public class Intake extends RobotPart {
 
@@ -18,36 +24,40 @@ public class Intake extends RobotPart {
 
     private PServo iarmr, iarml, ipivot, iturret, iclaw, linkager, linkagel;
 
-
+    private SampleScanner Scanner;
 
     @Override
     public void init() {
-        iarmr = create("iarmr", ElectronicType.PSERVO_FORWARD);
-        iarml = create("iarml", ElectronicType.PSERVO_REVERSE);
-        ipivot = create("ipivot", ElectronicType.PSERVO_REVERSE);
-        iclaw = create("iclaw", ElectronicType.PSERVO_REVERSE);
-        linkager = create("linkager", ElectronicType.PSERVO_FORWARD);
-        linkagel = create("linkagel", ElectronicType.PSERVO_REVERSE);
+//        iarmr = create("iarmr", ElectronicType.PSERVO_FORWARD);
+//        iarml = create("iarml", ElectronicType.PSERVO_REVERSE);
+//        ipivot = create("ipivot", ElectronicType.PSERVO_REVERSE);
+//        iclaw = create("iclaw", ElectronicType.PSERVO_REVERSE);
+//        linkager = create("linkager", ElectronicType.PSERVO_FORWARD);
+//        linkagel = create("linkagel", ElectronicType.PSERVO_REVERSE);
+        iturret = create("iturret", ElectronicType.PSERVO_REVERSE);
 
-        iarml.changePosition("start", 0);
-        iarmr.changePosition("start", 0);
+//        iarml.changePosition("start", 0);
+//        iarmr.changePosition("start", 0);
+//
+//        ipivot.changePosition("start", 0);
+//
+//        iclaw.changePosition("start", 0);
+//
+//        linkager.changePosition("start", 0);
+//        linkagel.changePosition("start", 0);
 
-        ipivot.changePosition("start", 0);
-
-        iclaw.changePosition("start", 0);
-
-        linkager.changePosition("start", 0);
-        linkagel.changePosition("start", 0);
-
-
-
-
-
-
+        camera.setUser(User.ROFU);
+        camera.checkAccess(User.ROFU);
 
     }
 
+    public void updatePipeline() {
+        if (Scanner.getAngle() == -1) return;
+        iturret.changePosition("angle", Math.round(Precision.calculateWeightedValue(0, 1, (Scanner.getAngle() % 179) / 180) * 10) / 10.0);
+        iturret.setPosition("angle");
+    }
 
+    public Stage stageAngle(double t){return super.customTime(this::updatePipeline, t);}
 
     public Stage moveRedSample(double p){
         return super.customExit(p,colorSensorsNew.exitRed());
