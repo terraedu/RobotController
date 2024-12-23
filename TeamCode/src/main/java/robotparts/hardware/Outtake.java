@@ -33,8 +33,8 @@ public class Outtake extends RobotPart {
         claw.changePosition("grab", 0.4);
 
 //
-//
-//
+
+
         robotStatus.set(DRIVING);
     }
 

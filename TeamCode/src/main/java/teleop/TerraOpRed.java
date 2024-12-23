@@ -11,6 +11,9 @@ import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TeleStatus.RED;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
+import static teleutil.button.Button.LEFT_TRIGGER;
+import static teleutil.button.Button.RIGHT_TRIGGER;
+import static teleutil.button.Button.Y;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -19,11 +22,16 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-gph1.link(B, PlaceHigh);
-gph1.link(A, Place);
+//gph1.link(B, PlaceHigh);
+//gph1.link(A, Place);
+gph1.link(RIGHT_TRIGGER, Intake);
+        gph1.link(LEFT_TRIGGER, Grab);
 
+
+//gph1.link(Y, ()-> out()  );
+intake.moveStart();
         teleStatus.set(RED);
-    outtake.moveStart();
+//    outtake.moveStart();
     robotStatus.set(DRIVING);
 
     }
@@ -41,7 +49,7 @@ gph1.link(A, Place);
     public void loopTele() {
 
 drive.newMove(gph1.ly, gph1.lx, gph1.ry);
-lift.move(gph2.ly);
+extendo.move(gph2.ly);
         /**
          * Gets Distance
          */
