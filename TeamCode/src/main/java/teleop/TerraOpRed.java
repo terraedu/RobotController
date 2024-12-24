@@ -28,14 +28,9 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-
+    gph1.link(Y, ()-> outtake.moveLinkEnd());
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
-
-        gph1.link(DPAD_UP, ()-> intake.moveStartTurret());
-        gph1.link(DPAD_RIGHT, ()-> intake.moveTurret());
-        gph1.link(DPAD_LEFT, ()-> intake.moveTurretMiddler());
-        gph1.link(DPAD_DOWN, ()-> intake.moveTurretMiddlest());
 
         gph1.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);
@@ -54,10 +49,9 @@ public class TerraOpRed extends Tele {
         /**
          * Start code
          */
-        intake.moveStart();
-        outtake.moveStart();
 
-
+    outtake.moveLinkStart();
+    outtake.moveStart();
 
 
     }
@@ -65,8 +59,8 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(-gph1.lx, gph1.ly, -gph1.rx);
-//lift.move(gph2.ly);
+drive.newMove(gph1.ly, gph1.lx, gph1.rx);
+lift.move(gph2.ly);
         /**
          * Gets Distance
          */

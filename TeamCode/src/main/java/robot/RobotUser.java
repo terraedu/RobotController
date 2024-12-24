@@ -1,12 +1,10 @@
 package robot;
 
-import robotparts.hardware.Extendo;
 import robotparts.sensors.ColorSensors;
 import robotparts.sensors.DistanceSensors;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
-import robotparts.hardware.Intake;
 import robotparts.hardware.Lift;
 import robotparts.hardware.Outtake;
 import robotparts.sensors.Cameras;
@@ -41,9 +39,6 @@ public interface RobotUser {
     /**
      * UNUSED
      */
-
-    Intake intake = new Intake();
-    Extendo extendo = new Extendo();
 
     TouchSensors touchSensors = new TouchSensors();
 

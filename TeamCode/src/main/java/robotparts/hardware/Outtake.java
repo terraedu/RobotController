@@ -11,31 +11,38 @@ import robotparts.electronics.positional.PServo;
 
 public class Outtake extends RobotPart {
 
-    public PServo armr, arml, claw, pivot;
+    public PServo armr, arml, claw, pivot, linkr, linkl, turret;
 //    public CServo armr;
 
     @Override
     public void init() {
         armr = create("armr", ElectronicType.PSERVO_FORWARD);
         arml = create("arml", ElectronicType.PSERVO_REVERSE);
-        pivot = create("pivot", ElectronicType.PSERVO_FORWARD);
-        claw = create("claw", ElectronicType.PSERVO_REVERSE);
+//        pivot = create("pivot", ElectronicType.PSERVO_FORWARD);
+//        claw = create("claw", ElectronicType.PSERVO_REVERSE);
+        linkr = create("linkr", ElectronicType.PSERVO_FORWARD);
+        linkl = create("linkl", ElectronicType.PSERVO_REVERSE);
 
-        arml.changePosition("start", .85);
-        armr.changePosition("start", .85);
-        arml.changePosition("transfer", .8);
-        armr.changePosition("transfer", .8);
+        arml.changePosition("start", 0);
+        armr.changePosition("start", 0);
+//        arml.changePosition("transfer", .8);
+//        armr.changePosition("transfer", .8);
+//
+//        arml.changePosition("grab", 0.4);
+//        armr.changePosition("grab", 0.4);
+//
+//
+//        pivot.changePosition("start", 0.05);
+//        pivot.changePosition("transfer", 0.1);
+//
+//
+//        claw.changePosition("start", 0);
+//        claw.changePosition("grab", 0.4);
 
-        arml.changePosition("grab", 0.4);
-        armr.changePosition("grab", 0.4);
-
-
-        pivot.changePosition("start", 0.05);
-        pivot.changePosition("transfer", 0.1);
-
-
-        claw.changePosition("start", 0);
-        claw.changePosition("grab", 0.4);
+        linkl.changePosition("start", 0);
+        linkr.changePosition("start", 0);
+        linkl.changePosition("end", 0.2);
+        linkr.changePosition("end", 0.2);
 
 //
 
@@ -45,11 +52,14 @@ public class Outtake extends RobotPart {
 
 
 
-    public void moveStart(){ armr.setPosition("start"); arml.setPosition("start"); claw.setPosition("grab");pivot.setPosition("start");}
+    public void moveStart(){ armr.setPosition("start"); arml.setPosition("start");}
     public void moveGrab(){ armr.setPosition("grab");arml.setPosition("grab");}
     public void moveOpen(){ claw.setPosition("start");}
     public void moveClose(){ claw.setPosition("grab");}
     public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer");}
+    public void moveLinkStart(){ linkr.setPosition("start"); linkl.setPosition("start");}
+    public void moveLinkEnd(){ linkr.setPosition("end"); linkl.setPosition("end");}
+
 
     //public void moveTest(){ armr.setPower(.3);}
 public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
