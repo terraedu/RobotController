@@ -11,7 +11,13 @@ import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TeleStatus.RED;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
+import static teleutil.button.Button.DPAD_DOWN;
+import static teleutil.button.Button.DPAD_LEFT;
+import static teleutil.button.Button.DPAD_RIGHT;
+import static teleutil.button.Button.DPAD_UP;
+import static teleutil.button.Button.LEFT_BUMPER;
 import static teleutil.button.Button.LEFT_TRIGGER;
+import static teleutil.button.Button.RIGHT_BUMPER;
 import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.Y;
 
@@ -22,16 +28,23 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-//gph1.link(B, PlaceHigh);
-//gph1.link(A, Place);
-gph1.link(RIGHT_TRIGGER, Intake);
+
+        gph1.link(B, PlaceHigh);
+        gph1.link(A, Place);
+
+        gph1.link(DPAD_UP, ()-> intake.moveStartTurret());
+        gph1.link(DPAD_RIGHT, ()-> intake.moveTurret());
+        gph1.link(DPAD_LEFT, ()-> intake.moveTurretMiddler());
+        gph1.link(DPAD_DOWN, ()-> intake.moveTurretMiddlest());
+
+        gph1.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);
+        gph1.link(RIGHT_BUMPER, SpecimenReady);
+        gph1.link(LEFT_BUMPER, Specimen);
 
 
 //gph1.link(Y, ()-> out()  );
-intake.moveStart();
         teleStatus.set(RED);
-//    outtake.moveStart();
     robotStatus.set(DRIVING);
 
     }
@@ -41,6 +54,10 @@ intake.moveStart();
         /**
          * Start code
          */
+        intake.moveStart();
+        outtake.moveStart();
+
+
 
 
     }
@@ -48,8 +65,8 @@ intake.moveStart();
     @Override
     public void loopTele() {
 
-drive.newMove(gph1.ly, gph1.lx, gph1.ry);
-extendo.move(gph2.ly);
+drive.newMove(-gph1.lx, gph1.ly, -gph1.rx);
+//lift.move(gph2.ly);
         /**
          * Gets Distance
          */

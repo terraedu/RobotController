@@ -31,25 +31,44 @@ public class Intake extends RobotPart {
 //
         iarml.changePosition("start", 0.6);
         iarmr.changePosition("start", 0.6);
+        iarml.changePosition("transfer1", 0.5);
+        iarmr.changePosition("transfer1", 0.5);
+        iarml.changePosition("specimen", 0.45);
+        iarmr.changePosition("specimen", 0.45);
         iarml.changePosition("transfer", 0.2);
         iarmr.changePosition("transfer", 0.2);
-        iarml.changePosition("end", 0);
+        iarml.changePosition("end", 0.02);
         iarmr.changePosition("end", 0);
-//
+        iarml.changePosition("end1", 0.12);
+        iarmr.changePosition("end1", 0.12);
+        iarml.changePosition("removespecimen", 0.45);
+        iarmr.changePosition("removespecimen", 0.45);
+
         ipivot.changePosition("start", 1);
+        ipivot.changePosition("transfer", .7);
+        ipivot.changePosition("specimen", 0);
+
+
         ipivot.changePosition("middle", .3);
 //
-        iclaw.changePosition("start", 0.23);
+        iclaw.changePosition("start", 0.3);
+        iclaw.changePosition("adjust", 0.25);
+
         iclaw.changePosition("close", 0);
+
 
         iturret.changePosition("start", 0);
         iturret.changePosition("middle",.38);
+        iturret.changePosition("middler",1);
+        iturret.changePosition("middlest",.77);
+
+
 
 //
-        linkager.changePosition("start", 0);
-        linkagel.changePosition("start", 0);
-        linkager.changePosition("end", 0.2);
-        linkagel.changePosition("end", 0.2);
+        linkager.changePosition("start", 0.08);
+        linkagel.changePosition("start", 0.08);
+        linkager.changePosition("end", 0.25);
+        linkagel.changePosition("end", 0.25);
 
 //                linkagel = create("linkagel", ElectronicType.CSERVO_FORWARD);
 
@@ -63,24 +82,57 @@ public class Intake extends RobotPart {
     public void moveStart(){ ipivot.setPosition("start"); iturret.setPosition("start");iclaw.setPosition("start");iarmr.setPosition("start"); iarml.setPosition("start"); linkager.setPosition("start"); linkagel.setPosition("start"); }
     public void moveLinkEnd(){ linkager.setPosition("end"); linkagel.setPosition("end");}
     public void moveLinkStart(){ linkager.setPosition("start"); linkagel.setPosition("start");}
+    public void moveEnd(){iarmr.setPosition("end"); iarml.setPosition("end");}
 
-    public void moveEnd(){iarmr.setPosition("end"); iarml.setPosition("end"); iturret.setPosition("middle");}
+    public void moveEnd1() {
+        iarmr.setPosition("end1");
+        iarml.setPosition("end1");
+        iclaw.setPosition("start");
+    }
+    public void moveSpecimen(){ipivot.setPosition("specimen"); iclaw.setPosition("close");iarmr.setPosition("specimen"); iarml.setPosition("specimen"); }
+    public void removeSpecimen(){iarmr.setPosition("removespecimen"); iarml.setPosition("removespecimen");}
+
+
+    public void moveTurret() {iturret.setPosition("middle");}
+    public void moveTurretMiddler(){iturret.setPosition("middler");}
+    public void moveTurretMiddlest(){iturret.setPosition("middlest");}
+    public void moveStartTurret() {iturret.setPosition("start");}
+
     public void moveTransfer(){iarmr.setPosition("start"); iarml.setPosition("start");iturret.setPosition("middle"); ipivot.setPosition("middle");}
-    public void moveTransfer2(){iarmr.setPosition("transfer"); iarml.setPosition("transfer");}
+    public void moveTransfer2(){iarmr.setPosition("transfer"); iarml.setPosition("transfer"); ipivot.setPosition("transfer");}
     public void moveTransfer3(){ipivot.setPosition("middle");}
+    public void moveStartPivot(){ ipivot.setPosition("start");}
+    public void moveTransfer4(){iarmr.setPosition("transfer1"); iarml.setPosition("transfer1");}
 
-    public void moveOpen(){ iclaw.setPosition("open"); }
+
+    public void moveOpen(){ iclaw.setPosition("start"); }
+    public void moveClose(){ iclaw.setPosition("close"); }
+    public void moveAdjust(){ iclaw.setPosition("adjust"); }
+
+
+    public Stage removeSpecimen(double t){return super.customTime(this::removeSpecimen,t);}
+    public Stage stagePivotStart(double t){return super.customTime(this::moveStartPivot, t);}
+    public Stage stageTurret(double t){return super.customTime(this::moveTurret, t);}
+    public Stage stageStartTurret(double t){return super.customTime(this::moveStartTurret, t);}
+    public Stage stageDownTurret(double t){return super.customTime(this::moveTurretMiddlest, t);}
+    public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen, t);}
+
+    public Stage stageAdjustClaw(double t){return super.customTime(this::moveAdjust, t );}
 
     public Stage stageTransfer3(double t){return super.customTime(this::moveTransfer3, t);}
     public Stage stageOpen(double t){return super.customTime(this::moveOpen, t);}
     public Stage stageTransfer2(double t){return super.customTime(this::moveTransfer2, t);}
     public Stage stageLinkEnd(double t){return super.customTime(this::moveLinkEnd, t);}
     public Stage stageLinkStart(double t){return super.customTime(this::moveLinkStart, t);}
-
     public Stage stageEnd(double t){return super.customTime(this::moveEnd, t);}
+    public Stage stageEnd1(double t){return super.customTime(this::moveEnd1, t);}
+    public Stage stageClose(double t){return super.customTime(this::moveClose,t);}
     public Stage stageTransfer(double t){
        return super.customTime(this::moveTransfer, t);
     }
+    public Stage stageTransfer4(double t){return super.customTime(this::moveTransfer4, t);}
+
+
 //    public Stage moveRedSample(double p){
 //        return super.customExit(p,colorSensorsNew.exitRed());
 //    }

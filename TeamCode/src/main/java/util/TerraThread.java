@@ -114,7 +114,7 @@ public class TerraThread extends Thread{
             try {
                 updateCode.run();
             } catch (RuntimeException r){
-                log.show(r.getStackTrace());
+                r.printStackTrace();
                 wasExceptionThrown = true;
                 stopUpdating();
             }
