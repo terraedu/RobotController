@@ -54,6 +54,8 @@ public class Lift extends RobotPart {
 //        motorLeft.setPositionHolderTarget(target);
 //    }
 
+
+
     public void liftAdjust(double delta){
         motorRight.holdPositionExact();
         motorRight.setPositionHolderTarget(motorRight.getPositionHolder().getTarget() + delta);
@@ -69,6 +71,7 @@ public class Lift extends RobotPart {
     public Stage moveTime(double p, ReturnCodeSeg<Double> t) {
         return super.moveTime(p, t);
     }
+
 
 
     public Stage stageLift(double power, double target) {

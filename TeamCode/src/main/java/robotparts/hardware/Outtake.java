@@ -11,7 +11,7 @@ import robotparts.electronics.positional.PServo;
 
 public class Outtake extends RobotPart {
 
-    public PServo armr, arml, claw, pivot, linkr, linkl, turret;
+    public PServo armr, arml, claw, pivot, linkr, linkl, pivot1, slides, turret;
 //    public CServo armr;
 
     @Override
@@ -22,6 +22,7 @@ public class Outtake extends RobotPart {
 //        claw = create("claw", ElectronicType.PSERVO_REVERSE);
         linkr = create("linkr", ElectronicType.PSERVO_FORWARD);
         linkl = create("linkl", ElectronicType.PSERVO_REVERSE);
+        pivot1 = create("pivot1", ElectronicType.PSERVO_FORWARD);
 
         arml.changePosition("start", 0);
         armr.changePosition("start", 0);
@@ -44,13 +45,16 @@ public class Outtake extends RobotPart {
         linkl.changePosition("end", 0.2);
         linkr.changePosition("end", 0.2);
 
+        pivot1.changePosition("pivotDown",0.3);
+        arml.changePosition("down", 0.5);
+;
 //
 
 
         robotStatus.set(DRIVING);
     }
 
-
+    public void armDown(){ arml.setPosition("down");}
 
     public void moveStart(){ armr.setPosition("start"); arml.setPosition("start");}
     public void moveGrab(){ armr.setPosition("grab");arml.setPosition("grab");}
@@ -59,18 +63,19 @@ public class Outtake extends RobotPart {
     public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer");}
     public void moveLinkStart(){ linkr.setPosition("start"); linkl.setPosition("start");}
     public void moveLinkEnd(){ linkr.setPosition("end"); linkl.setPosition("end");}
-
+    public void pivotExample(){ pivot1.setPosition("pivotDown");}
 
     //public void moveTest(){ armr.setPower(.3);}
 public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
     public Stage stageClose(double t){return super.customTime(this::moveClose, t);}
     public Stage stageOpen(double t){return super.customTime(this::moveOpen, t);}
-
+    public Stage stageArmDown(double t){return super.customTime(this::armDown, t);}
     public Stage stageStart(double t) {
         return super.customTime(this::moveStart, t);
     }
     public Stage stageTransfer(double t){return super.customTime(this::moveTransfer, t);}
-
+    public Stage pivotExample(double t){return super.customTime(this::moveTransfer, t);}
+    public Stage stageMaxExtends(double t){return super.customTime(this::maxExtends, t);}
 
 
 

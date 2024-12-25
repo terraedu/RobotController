@@ -37,7 +37,10 @@ public class TerraOpRed extends Tele {
         gph1.link(RIGHT_BUMPER, SpecimenReady);
         gph1.link(LEFT_BUMPER, Specimen);
 
+        gph1.link(DPAD_DOWN, Armdown);
 
+        gph1.link(DPAD_UP, PivotUp);
+        gph1.link(DPAD_LEFT, ReadyForDrop);
 //gph1.link(Y, ()-> out()  );
         teleStatus.set(RED);
     robotStatus.set(DRIVING);

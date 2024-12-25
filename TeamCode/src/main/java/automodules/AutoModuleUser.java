@@ -42,14 +42,20 @@ AutoModule Intake = new AutoModule(
     AutoModule Grab = new AutoModule(
 
 
+    );
 
+    AutoModule Armdown = new AutoModule(
+            outtake.stageArmDown(.1)
 
     );
 
 
-
-
-
+AutoModule PivotUp = new AutoModule(
+        outtake.pivotExample(.1)
+);
+AutoModule ReadyForDrop = new AutoModule(
+        lift.stageLift(1, 20)
+);
 
 }
 
