@@ -14,16 +14,20 @@ import robotparts.RobotPart;
 public interface AutoModuleUser extends RobotUser {
 
     AutoModule SpecimenReady = new AutoModule(
+            outtake.stageSpecimen(.1)
+
 
 
     );
     AutoModule Specimen = new AutoModule(
-
-
+            outtake.stageClose(.1),
+            outtake.stageStart(.1),
+            lift.stagePivot(1,10)
 
     );
 AutoModule PlaceHigh = new AutoModule(
-
+lift.stagePivot(.2,15)
+//        lift.stageLift(1,30)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
@@ -35,12 +39,18 @@ AutoModule Place = new AutoModule(
 
 
 AutoModule Intake = new AutoModule(
-
+        lift.stageLift(1, 20).attach(outtake.stageLinkEnd(.1)),
+        outtake.stageGrab(.1),
+        outtake.stageOpen(.1)
 
 
         );
     AutoModule Grab = new AutoModule(
-
+        outtake.stageCloseArm(.1),
+            RobotPart.pause(.2),
+            outtake.stageClose(.1),
+            outtake.stageStart(.1),
+            lift.stageLift(1,0)
 
 
 

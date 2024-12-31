@@ -21,8 +21,9 @@ public class NewOdometry extends RobotPart {
     public DcMotor yOdo;
     public DcMotor xOdo;
     public DcMotor y2Odo;
-    public final Vector leftOdometryCenterToRobotCenter = new Vector(10.5, 13.0);
-    public final double wheelDiameter = 3.55; // cm
+    public final Vector leftOdometryCenterToRobotCenter = new Vector(10.5, 13.0); //TODO EDIT WHEEL POSITIONS
+    // cm
+    public final double wheelDiameter = 7.8; //TODO EDIT WHEEL DIAMETER
     public final Precision precision = new Precision();
 
     @Override
@@ -35,8 +36,8 @@ public class NewOdometry extends RobotPart {
     }
 
     public void update(){
-        double currentX = -getEncX();
-        double currentY = -getEncY();
+        double currentX = getEncX();
+        double currentY = getEncY();
 //        double currentY2 = getEncY2();
         double deltaX = currentX - lastX;
         double deltaY = currentY - lastY;
@@ -96,7 +97,7 @@ public class NewOdometry extends RobotPart {
 
 
     public double getEncX() { return (xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
-    public double getEncY() { return (-yOdo.getCurrentPosition()-startY) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
+    public double getEncY() { return (yOdo.getCurrentPosition()-startY) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
     public double getEncY2() { return 1.009*(-y2Odo.getCurrentPosition()-startY2) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV;}
 
     public double autocorrect() { return (x + 5);}

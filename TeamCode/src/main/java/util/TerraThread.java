@@ -114,7 +114,11 @@ public class TerraThread extends Thread{
             try {
                 updateCode.run();
             } catch (RuntimeException r){
-                r.printStackTrace();
+                fault.warn("Exception caught:");
+
+                log.show(r.getStackTrace());
+
+
                 wasExceptionThrown = true;
                 stopUpdating();
             }
@@ -148,6 +152,18 @@ public class TerraThread extends Thread{
     private synchronized void checkForException(){
         if(wasExceptionThrown){
             fault.warn("Exception thrown from inside thread " + name, Expectation.SURPRISING, Magnitude.CATASTROPHIC);
+            try {
+                updateCode.run();
+            } catch (RuntimeException r){
+                fault.warn("Exception caught:");
+
+                log.show(r.getStackTrace());
+
+                StackTraceElement[] trace = r.getStackTrace();
+                String Exception = trace[trace.length - 1].toString();
+                wasExceptionThrown = true;
+                stopUpdating();
+            }
         }
     }
 

@@ -28,15 +28,15 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-    gph1.link(Y, ()-> outtake.moveLinkEnd());
+//    gph1.link(Y, ()-> outtake.moveLinkEnd());
         gph1.link(B, PlaceHigh);
-        gph1.link(A, Place);
-
-        gph1.link(RIGHT_TRIGGER, Intake);
-        gph1.link(LEFT_TRIGGER, Grab);
-        gph1.link(RIGHT_BUMPER, SpecimenReady);
-        gph1.link(LEFT_BUMPER, Specimen);
-
+//        gph1.link(A, Place);
+//
+//        gph1.link(RIGHT_TRIGGER, Intake);
+//        gph1.link(LEFT_TRIGGER, Grab);
+//        gph1.link(RIGHT_BUMPER, SpecimenReady);
+//        gph1.link(LEFT_BUMPER, Specimen);
+//
 
 //gph1.link(Y, ()-> out()  );
         teleStatus.set(RED);
@@ -50,8 +50,8 @@ public class TerraOpRed extends Tele {
          * Start code
          */
 
-    outtake.moveLinkStart();
-    outtake.moveStart();
+//    outtake.moveLinkStart();
+//    outtake.moveStart();
 
 
     }
@@ -60,7 +60,8 @@ public class TerraOpRed extends Tele {
     public void loopTele() {
 
 drive.newMove(gph1.ly, gph1.lx, gph1.rx);
-lift.move(gph2.ly);
+//lift.move(gph2.ly);
+
         /**
          * Gets Distance
          */
@@ -94,7 +95,8 @@ lift.move(gph2.ly);
         /**
          * lift encoder positions
          */
-//        log.show("Right", lift.motorRight.getPosition());
+        log.show("lift", lift.motorRight.getPosition());
+        log.show("pivot", lift.motorLeft.getPosition());
 
 
         /**

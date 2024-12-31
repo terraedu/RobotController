@@ -16,7 +16,7 @@ import util.codeseg.ReturnCodeSeg;
 
 public class Lift extends RobotPart {
 
-    public PMotor motorRight;
+    public PMotor motorRight, motorLeft;
 
     public static final double maxPosition = 50;
     public final double defaultCutoffPosition = 0;
@@ -30,6 +30,11 @@ public class Lift extends RobotPart {
         // 0.25
         motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
         motorRight.usePositionHolder(0.18, .5);
+        motorLeft = create("lpivot", ElectronicType.PMOTOR_REVERSE);
+        // 0.25
+        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
+        motorLeft.usePositionHolder(0.1, .1);
+
         adjust = 0;
         globalOffset = 0;
     }
@@ -41,6 +46,12 @@ public class Lift extends RobotPart {
         return null;
     }
 
+
+
+    public CodeSeg pivotmove(double p) {
+        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        return null;
+    }
 //      Old holder target
 //    public void adjustHolderTarget(double delta) {
 //        if (outtakeStatus.modeIs(PLACING) && !heightMode.modeIs(GROUND)) {
@@ -76,6 +87,16 @@ public class Lift extends RobotPart {
             double Lasttarget = target;
 
                 return target;
+
+        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
+    }
+
+
+    public Stage stagePivot(double power, double target) {
+        return moveTarget(() -> motorLeft, power, () -> {
+            double Lasttarget = target;
+
+            return target;
 
         }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
     }

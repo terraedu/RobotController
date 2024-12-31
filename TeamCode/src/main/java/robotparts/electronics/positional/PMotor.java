@@ -110,6 +110,12 @@ public class PMotor extends Electronic {
         outputToTicks = distance -> (distance/(2*Math.PI*radius))*ticksPerRev*(ratio/cos(toRadians(angle)));
         ticksToOutput = Precision.invert(outputToTicks);
     }
+    public void setToGearLinear(double ticksPerRev, double radius, double ratio, double angle){
+        movementType = MovementType.LINEAR;
+        outputToTicks = distance -> -(distance/(2*Math.PI*radius))*ticksPerRev*(ratio/cos(toRadians(angle)));
+        ticksToOutput = Precision.invert(outputToTicks);
+    }
+
 
     /**
      * Set the motor to rotational mode

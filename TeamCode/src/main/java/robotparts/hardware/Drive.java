@@ -87,10 +87,10 @@ public class Drive extends RobotPart {
             if(heightMode.get() == GROUND) {
 
 
-                fl.setPower(f - s - .55 * t);
-                bl.setPower(f + s - .55 * t);
-                fr.setPower(f + s + .55 * t);
-                br.setPower(f - s + .55 * t);
+                fl.setPower(f - s - t);
+                bl.setPower(f + s - t);
+                fr.setPower(f + s + t);
+                br.setPower(f - s + t);
 
 
             }else{
