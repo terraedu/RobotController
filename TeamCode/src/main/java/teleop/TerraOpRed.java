@@ -38,8 +38,8 @@ public class TerraOpRed extends Tele {
          * Start code
          */
 
-//    outtake.moveLinkStart();
-//    outtake.moveStart();
+    outtake.moveLinkStart();
+    outtake.moveStart();
 
 
     }
