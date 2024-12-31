@@ -11,7 +11,7 @@ import static global.General.log;
 public class CustomPMotorPIDTest extends TeleUnitTest {
 
 
-    private final PMotor motor = lift.motorRight;
+    private final PMotor motor = lift.lir;
 
     @Override
     public void init() {

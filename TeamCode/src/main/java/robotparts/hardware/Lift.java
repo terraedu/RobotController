@@ -16,7 +16,7 @@ import util.codeseg.ReturnCodeSeg;
 
 public class Lift extends RobotPart {
 
-    public PMotor motorRight, motorLeft;
+    public PMotor lir, lpivot;
 
     public static final double maxPosition = 50;
     public final double defaultCutoffPosition = 0;
@@ -26,14 +26,14 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        motorRight = create("lir", ElectronicType.PMOTOR_REVERSE);
+        lir = create("lir", ElectronicType.PMOTOR_REVERSE);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
-        motorRight.usePositionHolder(0.18, .5);
-        motorLeft = create("lpivot", ElectronicType.PMOTOR_REVERSE);
+        lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
+        lir.usePositionHolder(0.18, .5);
+        lpivot = create("lpivot", ElectronicType.PMOTOR_REVERSE);
         // 0.25
-        motorLeft.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
-        motorLeft.usePositionHolder(0.1, .1);
+        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
+        lpivot.usePositionHolder(0.1, .1);
 
         adjust = 0;
         globalOffset = 0;
@@ -42,14 +42,12 @@ public class Lift extends RobotPart {
 
     @Override
     public CodeSeg move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        lir.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
         return null;
     }
 
-
-
     public CodeSeg pivotmove(double p) {
-        motorLeft.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
         return null;
     }
 //      Old holder target
@@ -66,8 +64,8 @@ public class Lift extends RobotPart {
 //    }
 
     public void liftAdjust(double delta){
-        motorRight.holdPositionExact();
-        motorRight.setPositionHolderTarget(motorRight.getPositionHolder().getTarget() + delta);
+        lir.holdPositionExact();
+        lir.setPositionHolderTarget(lir.getPositionHolder().getTarget() + delta);
     }
 
 
@@ -83,7 +81,7 @@ public class Lift extends RobotPart {
 
 
     public Stage stageLift(double power, double target) {
-        return moveTarget(() -> motorRight, power, () -> {
+        return moveTarget(() -> lir, power, () -> {
             double Lasttarget = target;
 
                 return target;
@@ -92,14 +90,18 @@ public class Lift extends RobotPart {
     }
 
 
+//    public Stage stagePivot(double power, double target) {
+//        return moveTarget(() -> lpivot, power, () -> {
+//            double Lasttarget = target;
+//
+//            return target;
+//
+//        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
+//    }
+
     public Stage stagePivot(double power, double target) {
-        return moveTarget(() -> motorLeft, power, () -> {
-            double Lasttarget = target;
+        return moveTarget(() -> lpivot, power, () -> target).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
 
-            return target;
-
-        }).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
-    }
 
 
 
@@ -109,7 +111,7 @@ public class Lift extends RobotPart {
     }
 
 
-    public void reset(){ motorRight.softReset();}
+    public void reset(){ lir.softReset();}
 
 }
 

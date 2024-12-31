@@ -3,23 +3,11 @@ package teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
-import static global.General.gph2;
 import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
-import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TeleStatus.RED;
-import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
-import static teleutil.button.Button.DPAD_DOWN;
-import static teleutil.button.Button.DPAD_LEFT;
-import static teleutil.button.Button.DPAD_RIGHT;
-import static teleutil.button.Button.DPAD_UP;
-import static teleutil.button.Button.LEFT_BUMPER;
-import static teleutil.button.Button.LEFT_TRIGGER;
-import static teleutil.button.Button.RIGHT_BUMPER;
-import static teleutil.button.Button.RIGHT_TRIGGER;
-import static teleutil.button.Button.Y;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -95,8 +83,8 @@ drive.newMove(gph1.ly, gph1.lx, gph1.rx);
         /**
          * lift encoder positions
          */
-        log.show("lift", lift.motorRight.getPosition());
-        log.show("pivot", lift.motorLeft.getPosition());
+        log.show("lift", lift.lir.getPosition());
+        log.show("pivot", lift.lpivot.getPosition());
 
 
         /**
