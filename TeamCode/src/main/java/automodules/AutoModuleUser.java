@@ -26,8 +26,8 @@ public interface AutoModuleUser extends RobotUser {
 
     );
 AutoModule PlaceHigh = new AutoModule(
-lift.stagePivot(.2,15)
-//        lift.stageLift(1,30)
+lift.stagePivot(.2,13.5),
+        lift.stageLift(1,15)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );

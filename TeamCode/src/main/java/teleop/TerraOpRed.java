@@ -7,7 +7,12 @@ import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.RED;
+import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
+import static teleutil.button.Button.LEFT_BUMPER;
+import static teleutil.button.Button.LEFT_TRIGGER;
+import static teleutil.button.Button.RIGHT_BUMPER;
+import static teleutil.button.Button.RIGHT_TRIGGER;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -18,12 +23,12 @@ public class TerraOpRed extends Tele {
         voltageScale = 1;
 //    gph1.link(Y, ()-> outtake.moveLinkEnd());
         gph1.link(B, PlaceHigh);
-//        gph1.link(A, Place);
+        gph1.link(A, Place);
 //
-//        gph1.link(RIGHT_TRIGGER, Intake);
-//        gph1.link(LEFT_TRIGGER, Grab);
-//        gph1.link(RIGHT_BUMPER, SpecimenReady);
-//        gph1.link(LEFT_BUMPER, Specimen);
+        gph1.link(RIGHT_TRIGGER, Intake);
+        gph1.link(LEFT_TRIGGER, Grab);
+        gph1.link(RIGHT_BUMPER, SpecimenReady);
+        gph1.link(LEFT_BUMPER, Specimen);
 //
 
 //gph1.link(Y, ()-> out()  );

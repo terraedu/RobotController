@@ -26,12 +26,12 @@ public class Outtake extends RobotPart {
 
         arml.changePosition("start", 0.2);
         armr.changePosition("start", 0.2);
-        arml.changePosition("grab", 0.35);
-        armr.changePosition("grab", 0.35);
-        arml.changePosition("intake", 0.2);
-        armr.changePosition("intake", 0.2);
-        arml.changePosition("specimen", 0.5);
-        armr.changePosition("specimen", 0.5);
+        arml.changePosition("grab", 0.3);
+        armr.changePosition("grab", 0.3);
+        arml.changePosition("intake", 0.22);
+        armr.changePosition("intake", 0.22);
+        arml.changePosition("specimen", 0.52);
+        armr.changePosition("specimen", 0.52);
 //        arml.changePosition("transfer", .8);
 //        armr.changePosition("transfer", .8);
 //
@@ -51,7 +51,7 @@ public class Outtake extends RobotPart {
         claw.changePosition("open", 0);
 //        claw.changePosition("grab", 0.4);
 
-        linkl.changePosition("start", 0);
+        linkl.changePosition("start", 0.05);
         linkr.changePosition("start", 0);
         linkl.changePosition("end", 0.2);
         linkr.changePosition("end", 0.2);

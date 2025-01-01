@@ -33,7 +33,7 @@ public class Lift extends RobotPart {
         lpivot = create("lpivot", ElectronicType.PMOTOR_REVERSE);
         // 0.25
         lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
-        lpivot.usePositionHolder(0.1, .1);
+        lpivot.usePositionHolder(0.7, .1);
 
         adjust = 0;
         globalOffset = 0;
