@@ -1,9 +1,9 @@
 package automodules;
 
+import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.robotStatus;
 
-import auton.Auto;
 import robot.RobotUser;
 import robotparts.RobotPart;
 
@@ -14,29 +14,51 @@ import robotparts.RobotPart;
 public interface AutoModuleUser extends RobotUser {
 
     AutoModule SpecimenReady = new AutoModule(
+outtake.stageClose(.1),
+            outtake.stageLinkEnd(.1),
+            lift.stagePivot(.5,2),
+            outtake.stageStart(.1),
             outtake.stageSpecimen(.1)
 
 
 
         );
-        AutoModule Specimen = new AutoModule(
+    AutoModule OutSpecimen = new AutoModule(
+           lift.stageLift(.7,15)
+
+
+
+    );
+    AutoModule InSpecimen = new AutoModule(
+            outtake.stageOpen(.1),
+            lift.stageLift(.7,0),
+            lift.stagePivot(.5,0).attach(            outtake.stageStart(.1)
+            )
+
+
+
+    );
+        AutoModule SpecimenDrop = new AutoModule(
     //            outtake.stageClose(.1),
     //            outtake.stageStart(.1),
-                lift.stagePivot(1,10)
+                lift.stagePivot(.3,7.5),  outtake.stageOpen(.1)
 
-        );
+                );
     AutoModule PlaceHigh = new AutoModule(
             outtake.stageLinkEnd(.1),
-    lift.stagePivot(.5,7.5),
-        lift.stageLift(1,30)
+    lift.stagePivot(.3,7.5).attach(outtake.stagePlace(.1)),
+        lift.stageLift(1,35)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
 AutoModule Place = new AutoModule(
-  outtake.stageOpen(.1).attach(outtake.stageStart(.1)),
-        outtake.stageStart(.1).attach(lift.stageLift(1,0)),
-        lift.stagePivot(.5,0)
+  outtake.stageOpen(.1),
+       lift.stageLift(.7,0),
+        lift.stagePivot(.1,0),
+                outtake.stageStart(.1)
 
+        ).setStartCode(()->
+        robotStatus.set(DRIVING)
         );
 
 
@@ -47,7 +69,9 @@ AutoModule Intake = new AutoModule(
         outtake.stageOpen(.1)
 
 
-        );
+        ).setStartCode(()->
+        robotStatus.set(PLACING)
+);
     AutoModule Grab = new AutoModule(
         outtake.stageCloseArm(.1),
             RobotPart.pause(.2),
@@ -57,6 +81,8 @@ AutoModule Intake = new AutoModule(
 
 
 
+    ).setStartCode(()->
+            robotStatus.set(DRIVING)
     );
 
 

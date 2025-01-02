@@ -26,6 +26,8 @@ public class Outtake extends RobotPart {
 
         arml.changePosition("start", 0.28);
         armr.changePosition("start", 0.28);
+        arml.changePosition("place", 0.24);
+        armr.changePosition("place", 0.24);
         arml.changePosition("grab", 0.35);
         armr.changePosition("grab", 0.35);
         arml.changePosition("intake", 0.29);
@@ -40,21 +42,25 @@ public class Outtake extends RobotPart {
 //
 //
         pivot.changePosition("start", 0.1);
+        pivot.changePosition("place", 0.5);
         pivot.changePosition("grab", .88);
 
 //        pivot.changePosition("transfer", 0.1);
 //
         turret.changePosition("start", 0.0);
+        turret.changePosition("specimen", 0.75);
+
 
 
         claw.changePosition("start", 0.2);
+        claw.changePosition("half", 0.4);
         claw.changePosition("open", 0);
 //        claw.changePosition("grab", 0.4);
 
         linkl.changePosition("start", 0.1);
         linkr.changePosition("start", 0.1);
-        linkl.changePosition("end", 0.36);
-        linkr.changePosition("end", 0.36);
+        linkl.changePosition("end", 0.45);
+        linkr.changePosition("end", 0.45);
 
 //
 
@@ -67,12 +73,14 @@ public class Outtake extends RobotPart {
     public void moveStart(){ armr.setPosition("start"); arml.setPosition("start"); pivot.setPosition("start"); turret.setPosition("start"); claw.setPosition("start");linkr.setPosition("start"); linkl.setPosition("start");}
     public void moveGrab(){ armr.setPosition("intake");arml.setPosition("intake");}
     public void moveOpen(){ claw.setPosition("open");}
+    public void movePlace(){armr.setPosition("place"); arml.setPosition("place"); pivot.setPosition("place");}
     public void moveClose(){ claw.setPosition("start");}
     public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer");}
     public void moveLinkStart(){ linkr.setPosition("start"); linkl.setPosition("start");}
     public void moveLinkEnd(){ linkr.setPosition("end"); linkl.setPosition("end");}
     public void moveIntake(){ pivot.setPosition("grab"); armr.setPosition("grab"); arml.setPosition("grab");}
-    public void moveSpecimen(){pivot.setPosition("start"); armr.setPosition("specimen"); arml.setPosition("specimen"); claw.setPosition("open");}
+    public void moveSpecimen(){turret.setPosition("specimen");}
+    public void moveHalf(){turret.setPosition("half");}
 
     public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen,t);}
     //public void moveTest(){ armr.setPower(.3);}
@@ -82,6 +90,7 @@ public Stage stageGrab(double t){return super.customTime(this::moveIntake, t);}
 
     public Stage stageOpen(double t){return super.customTime(this::moveOpen, t);}
 
+    public Stage stagePlace(double t){return super.customTime(this::movePlace,t);}
     public Stage stageLinkEnd(double t){return super.customTime(this::moveLinkEnd, t);}
     public Stage stageStart(double t) {
         return super.customTime(this::moveStart, t);

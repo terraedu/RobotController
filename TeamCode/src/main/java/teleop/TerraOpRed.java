@@ -10,10 +10,13 @@ import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.RED;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
+import static teleutil.button.Button.DPAD_DOWN;
 import static teleutil.button.Button.LEFT_BUMPER;
 import static teleutil.button.Button.LEFT_TRIGGER;
 import static teleutil.button.Button.RIGHT_BUMPER;
 import static teleutil.button.Button.RIGHT_TRIGGER;
+import static teleutil.button.Button.X;
+import static teleutil.button.Button.Y;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -29,7 +32,10 @@ public class TerraOpRed extends Tele {
         gph1.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);
         gph1.link(RIGHT_BUMPER, SpecimenReady);
-        gph1.link(LEFT_BUMPER, Specimen);
+        gph1.link(LEFT_BUMPER, SpecimenDrop);
+        gph1.link(Y, OutSpecimen);
+        gph1.link(X, InSpecimen);
+        gph1.link(DPAD_DOWN, ()-> outtake.moveHalf());
 //
 
 //gph1.link(Y, ()-> out()  );
@@ -53,8 +59,10 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(gph1.ly, gph1.lx, -gph1.rx);
-lift.move(gph2.ly);
+drive.newMove(gph1.ry, gph1.rx, gph1.lx);
+lift.pivotmove(gph2.ly);
+        lift.move(gph2.lx);
+
 
         /**
          * Gets Distance
