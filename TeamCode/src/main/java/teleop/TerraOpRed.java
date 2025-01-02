@@ -3,6 +3,7 @@ package teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
+import static global.General.gph2;
 import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
@@ -52,8 +53,8 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(gph1.ly, gph1.lx, gph1.rx);
-//lift.move(gph2.ly);
+drive.newMove(gph1.ly, gph1.lx, -gph1.rx);
+lift.move(gph2.ly);
 
         /**
          * Gets Distance

@@ -18,23 +18,26 @@ public interface AutoModuleUser extends RobotUser {
 
 
 
-    );
-    AutoModule Specimen = new AutoModule(
-            outtake.stageClose(.1),
-            outtake.stageStart(.1),
-            lift.stagePivot(1,10)
+        );
+        AutoModule Specimen = new AutoModule(
+    //            outtake.stageClose(.1),
+    //            outtake.stageStart(.1),
+                lift.stagePivot(1,10)
 
-    );
-AutoModule PlaceHigh = new AutoModule(
-lift.stagePivot(.2,13.5),
-        lift.stageLift(1,15)
+        );
+    AutoModule PlaceHigh = new AutoModule(
+            outtake.stageLinkEnd(.1),
+    lift.stagePivot(.5,7.5),
+        lift.stageLift(1,30)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
 AutoModule Place = new AutoModule(
-  outtake.stageOpen(.1),
-        outtake.stageStart(.1).attach(lift.stageLift(1,0))
-);
+  outtake.stageOpen(.1).attach(outtake.stageStart(.1)),
+        outtake.stageStart(.1).attach(lift.stageLift(1,0)),
+        lift.stagePivot(.5,0)
+
+        );
 
 
 

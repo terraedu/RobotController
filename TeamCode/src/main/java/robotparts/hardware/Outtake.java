@@ -24,12 +24,12 @@ public class Outtake extends RobotPart {
         linkr = create("linkr", ElectronicType.PSERVO_FORWARD);
         linkl = create("linkl", ElectronicType.PSERVO_REVERSE);
 
-        arml.changePosition("start", 0.2);
-        armr.changePosition("start", 0.2);
-        arml.changePosition("grab", 0.3);
-        armr.changePosition("grab", 0.3);
-        arml.changePosition("intake", 0.22);
-        armr.changePosition("intake", 0.22);
+        arml.changePosition("start", 0.28);
+        armr.changePosition("start", 0.28);
+        arml.changePosition("grab", 0.35);
+        armr.changePosition("grab", 0.35);
+        arml.changePosition("intake", 0.29);
+        armr.changePosition("intake", 0.29);
         arml.changePosition("specimen", 0.52);
         armr.changePosition("specimen", 0.52);
 //        arml.changePosition("transfer", .8);
@@ -40,7 +40,7 @@ public class Outtake extends RobotPart {
 //
 //
         pivot.changePosition("start", 0.1);
-        pivot.changePosition("grab", .85);
+        pivot.changePosition("grab", .88);
 
 //        pivot.changePosition("transfer", 0.1);
 //
@@ -51,10 +51,10 @@ public class Outtake extends RobotPart {
         claw.changePosition("open", 0);
 //        claw.changePosition("grab", 0.4);
 
-        linkl.changePosition("start", 0.05);
-        linkr.changePosition("start", 0);
-        linkl.changePosition("end", 0.2);
-        linkr.changePosition("end", 0.2);
+        linkl.changePosition("start", 0.1);
+        linkr.changePosition("start", 0.1);
+        linkl.changePosition("end", 0.36);
+        linkr.changePosition("end", 0.36);
 
 //
 

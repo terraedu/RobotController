@@ -29,11 +29,11 @@ public class Lift extends RobotPart {
         lir = create("lir", ElectronicType.PMOTOR_REVERSE);
         // 0.25
         lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
-        lir.usePositionHolder(0.18, .5);
+        lir.usePositionHolder(0.1, .1);
         lpivot = create("lpivot", ElectronicType.PMOTOR_REVERSE);
         // 0.25
-        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
-        lpivot.usePositionHolder(0.7, .1);
+        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 2, 0);
+        lpivot.usePositionHolder(.1, .1);
 
         adjust = 0;
         globalOffset = 0;
@@ -42,12 +42,12 @@ public class Lift extends RobotPart {
 
     @Override
     public CodeSeg move(double p) {
-        lir.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        lir.moveWithPositionHolder(p, currentCutoffPosition, 0.1);
         return null;
     }
 
     public CodeSeg pivotmove(double p) {
-        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.2);
         return null;
     }
 //      Old holder target
@@ -100,7 +100,9 @@ public class Lift extends RobotPart {
 //    }
 
     public Stage stagePivot(double power, double target) {
-        return moveTarget(() -> lpivot, power, () -> target).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0)); }
+        return moveTarget(() -> lpivot, power, () -> target).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
+
+    }
 
 
 
