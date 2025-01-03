@@ -29,10 +29,10 @@ public class Intake extends RobotPart {
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
 //
-        iarml.changePosition("start", 0.6);
-        iarmr.changePosition("start", 0.6);
-        iarml.changePosition("transfer1", 0.5);
-        iarmr.changePosition("transfer1", 0.5);
+        iarml.changePosition("start", 0.7);
+        iarmr.changePosition("start", 0.7);
+        iarml.changePosition("transfer1", 0.65);
+        iarmr.changePosition("transfer1", 0.65);
         iarml.changePosition("specimen", 0.45);
         iarmr.changePosition("specimen", 0.45);
         iarml.changePosition("transfer", 0.2);
@@ -51,8 +51,8 @@ public class Intake extends RobotPart {
 
         ipivot.changePosition("middle", .3);
 //
-        iclaw.changePosition("start", 0.3);
-        iclaw.changePosition("adjust", 0.25);
+        iclaw.changePosition("start", 0.27);
+        iclaw.changePosition("adjust", 0.21);
 
         iclaw.changePosition("close", 0);
 
@@ -65,8 +65,8 @@ public class Intake extends RobotPart {
 
 
 //
-        linkager.changePosition("start", 0.08);
-        linkagel.changePosition("start", 0.08);
+        linkager.changePosition("start", 0);
+        linkagel.changePosition("start", 0);
         linkager.changePosition("end", 0.25);
         linkagel.changePosition("end", 0.25);
 
@@ -126,6 +126,7 @@ public class Intake extends RobotPart {
     public Stage stageLinkStart(double t){return super.customTime(this::moveLinkStart, t);}
     public Stage stageEnd(double t){return super.customTime(this::moveEnd, t);}
     public Stage stageEnd1(double t){return super.customTime(this::moveEnd1, t);}
+    public Stage stageStart(double t){return super.customTime(this::moveStart,t);}
     public Stage stageClose(double t){return super.customTime(this::moveClose,t);}
     public Stage stageTransfer(double t){
        return super.customTime(this::moveTransfer, t);

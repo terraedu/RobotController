@@ -21,10 +21,10 @@ public class Outtake extends RobotPart {
         pivot = create("pivot", ElectronicType.PSERVO_FORWARD);
         claw = create("claw", ElectronicType.PSERVO_REVERSE);
 
-        arml.changePosition("start", .85);
-        armr.changePosition("start", .85);
-        arml.changePosition("transfer", .8);
-        armr.changePosition("transfer", .8);
+        arml.changePosition("start", .8);
+        armr.changePosition("start", .8);
+        arml.changePosition("transfer", 1);
+        armr.changePosition("transfer", 1);
 
         arml.changePosition("grab", 0.4);
         armr.changePosition("grab", 0.4);

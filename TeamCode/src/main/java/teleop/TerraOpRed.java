@@ -27,7 +27,6 @@ public class TerraOpRed extends Tele {
 
     @Override
     public void initTele() {
-        voltageScale = 1;
 
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
@@ -65,8 +64,8 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(-gph1.lx, gph1.ly, -gph1.rx);
-//lift.move(gph2.ly);
+drive.newMove(gph1.ly, -gph1.lx, gph1.rx);
+lift.move(gph2.ly);
         /**
          * Gets Distance
          */
@@ -100,7 +99,7 @@ drive.newMove(-gph1.lx, gph1.ly, -gph1.rx);
         /**
          * lift encoder positions
          */
-//        log.show("Right", lift.motorRight.getPosition());
+        log.show("Right", lift.motorRight.getPosition());
 
 
         /**

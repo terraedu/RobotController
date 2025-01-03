@@ -20,8 +20,10 @@ import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
 import static global.Modes.Height.GROUND;
+import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.driveMode;
 import static global.Modes.heightMode;
+import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
 
 public class Drive extends RobotPart {
@@ -84,21 +86,21 @@ public class Drive extends RobotPart {
 
 
     public void newMove(double f, double s, double t) {
-            if(heightMode.get() == GROUND) {
+            if(robotStatus.get()== DRIVING) {
 
 
-                fl.setPower(f - s - .55 * t);
-                bl.setPower(f + s - .55 * t);
-                fr.setPower(f + s + .55 * t);
-                br.setPower(f - s + .55 * t);
+                fl.setPower(-f +s + .55 * t); //fr
+                bl.setPower(f -s + .55 * t);
+                fr.setPower(f + s - .55 * t); //br
+                br.setPower(-f - s - .55 * t); //fl
 
 
             }else{
 
-                fl.setPower(.3 * f + .3 * s + .2 * t);
-                bl.setPower(.3 * f - .3 * s + .2 * t);
-                fr.setPower(.3 * f - .3 * s - .2 * t);
-                br.setPower(.3 * f + .3 * s - .2 * t);
+                fl.setPower(-.3 * f + .3 * s - .2 * t);
+                bl.setPower(.3 * f + .3 * s - .2 * t);
+                fr.setPower(.3 * f + .3 * s + .2 * t);
+                br.setPower(-.3 * f + .3 * s + .2 * t);
             }
 
 

@@ -1,5 +1,7 @@
 package automodules;
 
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.robotStatus;
 
@@ -32,19 +34,21 @@ public interface AutoModuleUser extends RobotUser {
     );
 AutoModule PlaceHigh = new AutoModule(
         outtake.stageOpen(.1),
-//outtake.stageTransfer(.1),
+outtake.stageTransfer(.1),
   intake.stageTransfer4(.1),
         RobotPart.pause(.2),
         outtake.stageClose(.1),
         intake.stageClose(.1),
-  outtake.stageGrab(.1).attach(lift.stageLift(1,36)  )
+  outtake.stageGrab(.1).attach(lift.stageLift(1,40)  )
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
 AutoModule Place = new AutoModule(
   outtake.stageOpen(.1),
+        intake.stageStart(.1),
         outtake.stageStart(.1).attach(lift.stageLift(1,0))
-);
+).setStartCode(()->
+        robotStatus.set(DRIVING));;
 
 
 
@@ -58,7 +62,8 @@ AutoModule Intake = new AutoModule(
         intake.stageClose(.1)
 
 
-        );
+        ).setStartCode(()->
+        robotStatus.set(INTAKING));
     AutoModule Grab = new AutoModule(
             intake.stageEnd(.1),
             intake.stageOpen(.1),
@@ -70,14 +75,15 @@ AutoModule Intake = new AutoModule(
             intake.stagePivotStart(.1),
             intake.stageStartTurret(.1),
             intake.stageAdjustClaw(.3),
-            intake.stageDownTurret(.1),
-            RobotPart.pause(.2),
+            RobotPart.pause(.4),
             intake.stageOpen(.1).attach(outtake.stageOpen(.1))
 
 
 
 
-    );
+
+    ).setStartCode(()->
+            robotStatus.set(DRIVING));;
 
 
 
