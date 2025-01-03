@@ -29,14 +29,14 @@ public class TerraOpRed extends Tele {
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
 //
-        gph1.link(RIGHT_TRIGGER, Intake);
+        gph2.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);
         gph1.link(RIGHT_BUMPER, SpecimenReady);
         gph1.link(LEFT_BUMPER, SpecimenDrop);
         gph1.link(Y, OutSpecimen);
         gph1.link(X, InSpecimen);
         gph1.link(DPAD_DOWN, ()-> outtake.moveHalf());
-//
+
 
 //gph1.link(Y, ()-> out()  );
         teleStatus.set(RED);
