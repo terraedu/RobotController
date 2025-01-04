@@ -29,45 +29,53 @@ public class Intake extends RobotPart {
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
 //
-        iarml.changePosition("start", 0.7);
-        iarmr.changePosition("start", 0.7);
-        iarml.changePosition("transfer1", 0.65);
-        iarmr.changePosition("transfer1", 0.65);
-        iarml.changePosition("specimen", 0.45);
-        iarmr.changePosition("specimen", 0.45);
+        iarml.changePosition("start", .67);
+        iarmr.changePosition("start", .67);
+        iarml.changePosition("transfer1", 0.61);
+        iarmr.changePosition("transfer1", 0.61);
+        iarml.changePosition("transferspecimen", 0.7);
+        iarmr.changePosition("transferspecimen", 0.7);
+        iarml.changePosition("specimen", 0.52);
+        iarmr.changePosition("specimen", 0.52);
         iarml.changePosition("transfer", 0.2);
         iarmr.changePosition("transfer", 0.2);
-        iarml.changePosition("end", 0.02);
+        iarml.changePosition("end", 0);
         iarmr.changePosition("end", 0);
-        iarml.changePosition("end1", 0.12);
-        iarmr.changePosition("end1", 0.12);
-        iarml.changePosition("removespecimen", 0.45);
-        iarmr.changePosition("removespecimen", 0.45);
+        iarml.changePosition("end1", 0.18);
+        iarmr.changePosition("end1", 0.18);
+        iarml.changePosition("removespecimen", 0.5);
+        iarmr.changePosition("removespecimen", 0.5);
 
-        ipivot.changePosition("start", 1);
-        ipivot.changePosition("transfer", .7);
-        ipivot.changePosition("specimen", 0);
+        ipivot.changePosition("start", .8);
+        ipivot.changePosition("end", 1);
+
+        ipivot.changePosition("transfer", .85);
+        ipivot.changePosition("transferspecimen", .88);
+
+        ipivot.changePosition("specimen", 0.0);
 
 
-        ipivot.changePosition("middle", .3);
+        ipivot.changePosition("middle", 0.2);
 //
-        iclaw.changePosition("start", 0.27);
-        iclaw.changePosition("adjust", 0.21);
+        iclaw.changePosition("start", .31);
+        iclaw.changePosition("adjust", 0.27);
 
-        iclaw.changePosition("close", 0);
+        iclaw.changePosition("close", .18);
 
 
         iturret.changePosition("start", 0);
-        iturret.changePosition("middle",.38);
+        iturret.changePosition("middle",.5);
         iturret.changePosition("middler",1);
-        iturret.changePosition("middlest",.77);
+        iturret.changePosition("middlest",.75);
 
 
 
 //
         linkager.changePosition("start", 0);
         linkagel.changePosition("start", 0);
-        linkager.changePosition("end", 0.25);
+        linkager.changePosition("transfer", 0.03);
+        linkagel.changePosition("transfer", 0.03);
+        linkager.changePosition("end", 0.23);
         linkagel.changePosition("end", 0.25);
 
 //                linkagel = create("linkagel", ElectronicType.CSERVO_FORWARD);
@@ -82,7 +90,7 @@ public class Intake extends RobotPart {
     public void moveStart(){ ipivot.setPosition("start"); iturret.setPosition("start");iclaw.setPosition("start");iarmr.setPosition("start"); iarml.setPosition("start"); linkager.setPosition("start"); linkagel.setPosition("start"); }
     public void moveLinkEnd(){ linkager.setPosition("end"); linkagel.setPosition("end");}
     public void moveLinkStart(){ linkager.setPosition("start"); linkagel.setPosition("start");}
-    public void moveEnd(){iarmr.setPosition("end"); iarml.setPosition("end");}
+    public void moveEnd(){iarmr.setPosition("end"); iarml.setPosition("end");ipivot.setPosition("end");}
 
     public void moveEnd1() {
         iarmr.setPosition("end1");
@@ -90,17 +98,17 @@ public class Intake extends RobotPart {
         iclaw.setPosition("start");
     }
     public void moveSpecimen(){ipivot.setPosition("specimen"); iclaw.setPosition("close");iarmr.setPosition("specimen"); iarml.setPosition("specimen"); }
-    public void removeSpecimen(){iarmr.setPosition("removespecimen"); iarml.setPosition("removespecimen");}
-
+    public void removeSpecimen(){ipivot.setPosition("start"); iturret.setPosition("middlest");iclaw.setPosition("start");iarmr.setPosition("start"); iarml.setPosition("start"); linkager.setPosition("start"); linkagel.setPosition("start");}
+    public void moveLinkTransfer(){linkagel.setPosition("transfer"); linkager.setPosition("transfer");}
 
     public void moveTurret() {iturret.setPosition("middle");}
     public void moveTurretMiddler(){iturret.setPosition("middler");}
     public void moveTurretMiddlest(){iturret.setPosition("middlest");}
     public void moveStartTurret() {iturret.setPosition("start");}
 
-    public void moveTransfer(){iarmr.setPosition("start"); iarml.setPosition("start");iturret.setPosition("middle"); ipivot.setPosition("middle");}
+    public void moveTransfer(){iarmr.setPosition("start"); iarml.setPosition("start"); ipivot.setPosition("middle");}
     public void moveTransfer2(){iarmr.setPosition("transfer"); iarml.setPosition("transfer"); ipivot.setPosition("transfer");}
-    public void moveTransfer3(){ipivot.setPosition("middle");}
+    public void moveTransfer3(){ipivot.setPosition("middle"); iturret.setPosition("start");}
     public void moveStartPivot(){ ipivot.setPosition("start");}
     public void moveTransfer4(){iarmr.setPosition("transfer1"); iarml.setPosition("transfer1");}
 
@@ -108,8 +116,10 @@ public class Intake extends RobotPart {
     public void moveOpen(){ iclaw.setPosition("start"); }
     public void moveClose(){ iclaw.setPosition("close"); }
     public void moveAdjust(){ iclaw.setPosition("adjust"); }
+    public void moveSpecimenPivot(){ipivot.setPosition("transferspecimen");}
 
-
+    public Stage stageSpecimenPivot(double t){return super.customTime(this::moveSpecimenPivot,t);}
+    public Stage stageLinkTransfer(double t){return super.customTime(this::moveLinkTransfer, t);}
     public Stage removeSpecimen(double t){return super.customTime(this::removeSpecimen,t);}
     public Stage stagePivotStart(double t){return super.customTime(this::moveStartPivot, t);}
     public Stage stageTurret(double t){return super.customTime(this::moveTurret, t);}

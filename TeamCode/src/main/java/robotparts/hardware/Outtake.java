@@ -23,19 +23,25 @@ public class Outtake extends RobotPart {
 
         arml.changePosition("start", .8);
         armr.changePosition("start", .8);
-        arml.changePosition("transfer", 1);
-        armr.changePosition("transfer", 1);
+        arml.changePosition("transfer", .97);
+        armr.changePosition("transfer", .97);
 
         arml.changePosition("grab", 0.4);
         armr.changePosition("grab", 0.4);
 
+        arml.changePosition("specimen", 0.3);
+        armr.changePosition("specimen", 0.3);
+
 
         pivot.changePosition("start", 0.05);
-        pivot.changePosition("transfer", 0.1);
+        pivot.changePosition("transfer", 0.05);
+
 
 
         claw.changePosition("start", 0);
-        claw.changePosition("grab", 0.4);
+        claw.changePosition("grab", 0.5);
+        claw.changePosition("specimen", 0.2);
+
 
 //
 
@@ -49,11 +55,15 @@ public class Outtake extends RobotPart {
     public void moveGrab(){ armr.setPosition("grab");arml.setPosition("grab");}
     public void moveOpen(){ claw.setPosition("start");}
     public void moveClose(){ claw.setPosition("grab");}
-    public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer");}
+    public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer"); claw.setPosition("start");}
+
+    public void moveSpecimen(){armr.setPosition("specimen"); arml.setPosition("specimen"); }
 
     //public void moveTest(){ armr.setPower(.3);}
 public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
     public Stage stageClose(double t){return super.customTime(this::moveClose, t);}
+    public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen, t);}
+
     public Stage stageOpen(double t){return super.customTime(this::moveOpen, t);}
 
     public Stage stageStart(double t) {

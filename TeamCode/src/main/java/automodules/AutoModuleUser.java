@@ -6,6 +6,7 @@ import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.robotStatus;
 
 import auton.Auto;
+import elements.Robot;
 import robot.RobotUser;
 import robotparts.RobotPart;
 
@@ -20,22 +21,34 @@ public interface AutoModuleUser extends RobotUser {
 
     );
     AutoModule Specimen = new AutoModule(
-            intake.stageOpen(.1),
-            intake.removeSpecimen(.1),
-            intake.stageTransfer(.1),
-            intake.stagePivotStart(.1),
-            intake.stageStartTurret(.1),
-            intake.stageAdjustClaw(.3),
-            intake.stageDownTurret(.1),
-            RobotPart.pause(.2),
-            intake.stageOpen(.1).attach(outtake.stageOpen(.1))
+            intake.stageOpen(.1).attach(            outtake.stageTransfer(.1)
+                    ),
+            intake.removeSpecimen(.4),
+//            intake.stageStart(.1),
+//            intake.stageDownTurret(.1),
+            intake.stageTransfer4(.4),
+            intake.stageSpecimenPivot(.1),
+            RobotPart.pause(.4),
+            outtake.stageClose(.1),
+            intake.stageClose(.1)
 
+
+    );
+    AutoModule OutSpecimen = new AutoModule(
+            outtake.stageSpecimen(.1).attach(lift.stageLift(1,13)  )
+
+    );
+    AutoModule InSpecimen = new AutoModule(
+            lift.stageLift(1,4 ),
+            outtake.stageOpen(.1),
+            intake.stageStart(.1),
+            outtake.stageStart(.1).attach(lift.stageLift(1,0))
 
     );
 AutoModule PlaceHigh = new AutoModule(
         outtake.stageOpen(.1),
 outtake.stageTransfer(.1),
-  intake.stageTransfer4(.1),
+  intake.stageTransfer4(.1).attach(intake.stageLinkTransfer(.1)),
         RobotPart.pause(.2),
         outtake.stageClose(.1),
         intake.stageClose(.1),
@@ -54,10 +67,9 @@ AutoModule Place = new AutoModule(
 
 AutoModule Intake = new AutoModule(
         intake.stageTransfer(.1),
-        extendo.stageLift(1,25),
+        extendo.stageLift(1,17),
         intake.stageLinkEnd(.1),
         intake.stagePivotStart(.1),
-        intake.stageTurret(.1),
         intake.stageEnd1(.1),
         intake.stageClose(.1)
 
@@ -68,15 +80,15 @@ AutoModule Intake = new AutoModule(
             intake.stageEnd(.1),
             intake.stageOpen(.1),
             intake.stageTransfer2(.1),
-            intake.stageTransfer3(.1),
-            intake.stageTransfer(.1),
+            intake.stageTransfer3(.1).attach(            intake.stageAdjustClaw(.1)),
+            RobotPart.pause(.2),
+            intake.stageOpen(.1),
+
+            intake.stageTransfer(.4),
             intake.stageLinkStart(.1),
             extendo.stageLift(1,0),
-            intake.stagePivotStart(.1),
-            intake.stageStartTurret(.1),
-            intake.stageAdjustClaw(.3),
-            RobotPart.pause(.4),
-            intake.stageOpen(.1).attach(outtake.stageOpen(.1))
+            intake.stagePivotStart(.1).attach(outtake.stageOpen(.1)),
+            intake.stageDownTurret(.1)
 
 
 
