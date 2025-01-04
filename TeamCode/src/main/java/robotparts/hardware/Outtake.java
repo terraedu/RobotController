@@ -58,9 +58,9 @@ public class Outtake extends RobotPart {
 //        claw.changePosition("grab", 0.4);
 
         linkl.changePosition("start", 0.1);
-        linkr.changePosition("start", 0.1);
+        linkr.changePosition("start", 0.12);
         linkl.changePosition("end", 0.45);
-        linkr.changePosition("end", 0.45);
+        linkr.changePosition("end", 0.47);
 
 //
 

@@ -11,6 +11,7 @@ import static global.Modes.TeleStatus.RED;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
 import static teleutil.button.Button.DPAD_DOWN;
+import static teleutil.button.Button.DPAD_RIGHT;
 import static teleutil.button.Button.LEFT_BUMPER;
 import static teleutil.button.Button.LEFT_TRIGGER;
 import static teleutil.button.Button.RIGHT_BUMPER;
@@ -29,7 +30,8 @@ public class TerraOpRed extends Tele {
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
 //
-        gph2.link(RIGHT_TRIGGER, Intake);
+        gph1.link(RIGHT_TRIGGER, Intake);
+        gph1.link(DPAD_RIGHT,()->lift.stageLift(1,20));
         gph1.link(LEFT_TRIGGER, Grab);
         gph1.link(RIGHT_BUMPER, SpecimenReady);
         gph1.link(LEFT_BUMPER, SpecimenDrop);

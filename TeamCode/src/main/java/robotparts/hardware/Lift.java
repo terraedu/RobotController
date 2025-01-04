@@ -26,7 +26,7 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        lir = create("lir", ElectronicType.PMOTOR_REVERSE);
+        lir = create("lir", ElectronicType.PMOTOR_FORWARD);
         // 0.25
         lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
         lir.usePositionHolder(0.1, .1);

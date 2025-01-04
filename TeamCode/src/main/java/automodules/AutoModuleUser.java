@@ -16,7 +16,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule SpecimenReady = new AutoModule(
 outtake.stageClose(.1),
             outtake.stageLinkEnd(.1),
-            lift.stagePivot(.5,2),
+            lift.stagePivot(.5,3),
             outtake.stageStart(.1),
             outtake.stageSpecimen(.1)
 
@@ -24,15 +24,17 @@ outtake.stageClose(.1),
 
         );
     AutoModule OutSpecimen = new AutoModule(
-           lift.stageLift(.7,15)
+           lift.stageLift(1,13).attach(outtake.stageLinkEnd(.1))
 
 
 
     );
     AutoModule InSpecimen = new AutoModule(
+            lift.stagePivot(1,5),
+            lift.stageLift(.7,9),
             outtake.stageOpen(.1),
-            lift.stageLift(.7,0),
-            lift.stagePivot(.5,0).attach(            outtake.stageStart(.1)
+            lift.stageLift(1,0),
+            lift.stagePivot(.8,0).attach(            outtake.stageStart(.1)
             )
 
 
@@ -64,7 +66,7 @@ AutoModule Place = new AutoModule(
 
 
 AutoModule Intake = new AutoModule(
-        lift.stageLift(1, 20).attach(outtake.stageLinkEnd(.1)),
+        lift.stageLift(1, 10).attach(outtake.stageLinkEnd(.1)),
         outtake.stageGrab(.1),
         outtake.stageOpen(.1)
 
