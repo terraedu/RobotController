@@ -21,9 +21,8 @@ public class NewOdometry extends RobotPart {
     public DcMotor yOdo;
     public DcMotor xOdo;
     public DcMotor y2Odo;
-    public final Vector leftOdometryCenterToRobotCenter = new Vector(10.5, 13.0); //TODO EDIT WHEEL POSITIONS
-    // cm
-    public final double wheelDiameter = 7.8; //TODO EDIT WHEEL DIAMETER
+    public final Vector leftOdometryCenterToRobotCenter = new Vector(10.5, 13.0);
+    public final double wheelDiameter = 7.2; // cm
     public final Precision precision = new Precision();
 
     @Override
@@ -93,14 +92,13 @@ public class NewOdometry extends RobotPart {
         y = yo + globalOdometryCenterToRobotCenter.getY();
 
 
-    }
+    }//
 
 
     public double getEncX() { return (xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
-    public double getEncY() { return (yOdo.getCurrentPosition()-startY) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
+    public double getEncY() { return (-yOdo.getCurrentPosition()-startY) * wheelDiameter  * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
     public double getEncY2() { return 1.009*(-y2Odo.getCurrentPosition()-startY2) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV;}
 
-    public double autocorrect() { return (x + 5);}
     public final double getX(){ return x; }
     public final double getY(){ return y; }
     public double getHeading() { return h; }
@@ -118,11 +116,12 @@ public class NewOdometry extends RobotPart {
         x = pose.getX(); y = pose.getY(); h = pose.getAngle(); xo = pose.getX(); yo = pose.getY();
         gyro.reset();
         startX = xOdo.getCurrentPosition();
-        startY = yOdo.getCurrentPosition();
+        startY = -yOdo.getCurrentPosition();
         startY2 = -y2Odo.getCurrentPosition();
         lastX = 0;
         lastY = 0;
         lastY2 = 0;
-
+//        gyro.setHeading(pose.getAngle());
+//        TOD5 FIX set heading
     }
 }

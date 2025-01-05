@@ -28,7 +28,6 @@ import autoutil.reactors.Reactor;
 import autoutil.vision.CaseScanner;
 import autoutil.vision.CaseScannerContours;
 import autoutil.vision.CaseScannerRect;
-import autoutil.vision.PixelScannerIntegrate;
 import autoutil.vision.Scanner;
 //import autoutil.vision.TeamPropScanner;
 import elements.Case;
@@ -71,9 +70,7 @@ public abstract class AutoFramework extends Auto implements AutoUser {
     protected boolean haltCameraAfterInit = true;
     //    public CaseScanner caseScanner;
     protected CaseScannerRect caseScanner;
-
-    protected PixelScannerIntegrate pixelScanner;
-//    protected TeamPropScanner teamPropScanner;
+    //    protected TeamPropScanner teamPropScanner;
     protected Scanner scannerAfterInit;
     protected Case caseDetected = Case.FIRST;
     protected TeamProp propCaseDetected = TeamProp.FIRST;
@@ -83,8 +80,6 @@ public abstract class AutoFramework extends Auto implements AutoUser {
 
     protected Timer timer = new Timer();
     public boolean skipping = false;
-
-    protected String location = "center";
 
     // TOD5 better breakpoint system
 
@@ -109,6 +104,7 @@ public abstract class AutoFramework extends Auto implements AutoUser {
 //        autoPlane.rotate(-90);
 
 
+        // TODO FIX
 //        autoPlane.setStart(startPose);
 
 
@@ -145,26 +141,6 @@ public abstract class AutoFramework extends Auto implements AutoUser {
         caseScanner.start();
     }
 
-    public String getPixelPose(){
-        if(scanning) {
-            while (!isStopRequested()) {
-                location = pixelScanner.getLocation();
-                pixelScanner.log();
-                log.showTelemetry();
-            }
-        }
-//        location = pixelScanner.getLocation();
-        return location;
-    }
-    public void scanPixel(boolean view, String color){
-        scanning = true;
-        pixelScanner = new PixelScannerIntegrate();
-        camera.start(true);
-        camera.setScanner(pixelScanner);
-//        pix.setColor(color);
-        pixelScanner.start();
-    }
-
 //    public void propScanner(boolean view) {
 //        scanning = true;
 //        teamPropScanner = new TeamPropScanner();
@@ -175,14 +151,13 @@ public abstract class AutoFramework extends Auto implements AutoUser {
 
     @Override
     public final void initAuto() {
-//        distanceSensorsNew.start();
         initialize();
         if(scanning){
 //            log.show("yeet");
 //            while (!isStarted() && !isStopRequested()){ propCaseDetected = teamPropScanner.getCase(); teamPropScanner.log(); log.showTelemetry(); }
             while (!isStarted() && !isStopRequested()){ propCaseDetected = caseScanner.getCase(); caseScanner.log(); log.showTelemetry(); }
 
-//            if(haltCameraAfterInit) {camera.halt();} else{ camera.setScanner(scannerAfterInit); }
+            if(haltCameraAfterInit) {camera.halt();} else{ camera.setScanner(scannerAfterInit); }
         }
         setup();
         createSegments();
@@ -309,7 +284,7 @@ public abstract class AutoFramework extends Auto implements AutoUser {
 
     @Override
     public void stopAuto() {
-//        if(scanning && !haltCameraAfterInit){ camera.halt(); }
+        if(scanning && !haltCameraAfterInit){ camera.halt(); }
     }
 
 
