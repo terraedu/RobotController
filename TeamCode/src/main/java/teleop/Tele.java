@@ -2,21 +2,11 @@ package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import androidx.annotation.CallSuper;
 import automodules.AutoModuleUser;
-import autoutil.vision.CaseScannerRect;
-import autoutil.vision.RecorderPipeline;
 import autoutil.vision.SampleScanner;
-import autoutil.vision.Scanner;
-import elements.FieldSide;
 import global.Common;
-import global.General;
 import global.Modes;
 import robot.RobotUser;
-import util.condition.Expectation;
-import util.condition.Magnitude;
-
-import static global.General.*;
 
 import org.openftc.easyopencv.OpenCvPipeline;
 
@@ -54,11 +44,9 @@ public abstract class Tele extends OpMode implements Common, RobotUser, AutoModu
      */
 
     // Scanner Code
-    public OpenCvPipeline Recorder;
     public OpenCvPipeline Scanner;
 
     public void scan(boolean view){
-        Recorder = new RecorderPipeline();
         Scanner = new SampleScanner();
         camera.start(true);
         camera.camera1.setPipeline(Scanner);

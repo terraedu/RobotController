@@ -23,8 +23,6 @@ public class TerraOpBlue extends Tele {
         auto.scan(true);
 
         intake.scanner = (SampleScanner) Scanner;
-        intake.updatePipeline();
-        log.show(intake.scanner.getAngle());
 
         teleStatus.set(BLUEA);
 

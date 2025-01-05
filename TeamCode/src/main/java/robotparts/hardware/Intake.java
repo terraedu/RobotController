@@ -3,20 +3,25 @@ package robotparts.hardware;
 import automodules.AutoModule;
 import automodules.stage.Exit;
 import automodules.stage.Stage;
+import autoutil.vision.SampleScanner;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.continuous.CServo;
 import robotparts.electronics.input.IColor;
 import robotparts.electronics.positional.PServo;
+import util.User;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
+import util.template.Precision;
 
 public class Intake extends RobotPart {
 
 
 
     public PServo iarmr, iarml, ipivot, iturret, iclaw, linkager, linkagel;//, linkager; //linkagel;
+    public SampleScanner scanner;
+
 //    public CServo linkagel;
     @Override
     public void init() {
@@ -86,11 +91,15 @@ public class Intake extends RobotPart {
 
 
 
+        camera.checkAccess(User.ROFU);
+
+
     }
     public void moveStart(){ ipivot.setPosition("start"); iturret.setPosition("start");iclaw.setPosition("start");iarmr.setPosition("start"); iarml.setPosition("start"); linkager.setPosition("start"); linkagel.setPosition("start"); }
     public void moveLinkEnd(){ linkager.setPosition("end"); linkagel.setPosition("end");}
     public void moveLinkStart(){ linkager.setPosition("start"); linkagel.setPosition("start");}
     public void moveEnd(){iarmr.setPosition("end"); iarml.setPosition("end");ipivot.setPosition("end");}
+
 
     public void moveEnd1() {
         iarmr.setPosition("end1");
@@ -144,32 +153,15 @@ public class Intake extends RobotPart {
     public Stage stageTransfer4(double t){return super.customTime(this::moveTransfer4, t);}
 
 
-//    public Stage moveRedSample(double p){
-//        return super.customExit(p,colorSensorsNew.exitRed());
-//    }
-//
-//    public Stage moveBlueSample(double p){
-//        return super.customExit(p,colorSensorsNew.exitBlue());
-//    }
-//
-//    public Stage moveYellowSample(double p){
-//        return super.customExit(p,colorSensorsNew.exitYellow());
-//    }
-
-//    public Stage moveSampleIn(double p){
-//        return super.customExit(p,colorSensorsNew.exitSample());
-//    }
-
-
-
-//    @Override
-//    public Stage moveTime(double p, ReturnCodeSeg<Double> t) { return super.moveTime(p, t); }
-//
-
-//    @Override
-//    public AutoModule MoveTime(double p, double t) {
-//        return super.MoveTime(p, t);
+    public void updatePipeline() {
+        if (scanner.getAngle() == -1) return;
+        iturret.changePosition("angle", Math.round(Precision.calculateWeightedValue(0, 1, (scanner.getAngle() % 179) / 180) * 10) / 10.0);
+        iturret.setPosition("angle");
     }
+
+    public Stage stageAngle(double t){return super.customTime(this::updatePipeline, t);}
+
+}
 //}
 
 

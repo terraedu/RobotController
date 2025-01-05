@@ -8,7 +8,8 @@ import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.RobotStatus.PLACING;
-import static global.Modes.TeleStatus.RED;
+import static global.Modes.TeleStatus.BLUEA;
+import static global.Modes.TeleStatus.REDA;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
 import static teleutil.button.Button.DPAD_DOWN;
@@ -22,12 +23,21 @@ import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
 
+import autoutil.vision.SampleScanner;
+
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
 public class TerraOpRed extends Tele {
 
     @Override
     public void initTele() {
+
+//        Tele auto = this;
+//        auto.scan(true);
+//
+//        intake.scanner = (SampleScanner) Scanner;
+//
+//        teleStatus.set(REDA);
         voltageScale = 1;
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
@@ -48,7 +58,6 @@ public class TerraOpRed extends Tele {
 
 
 //gph1.link(Y, ()-> out()  );
-        teleStatus.set(RED);
     robotStatus.set(DRIVING);
 
     }

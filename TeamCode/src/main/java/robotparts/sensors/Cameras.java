@@ -4,14 +4,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvPipeline;
 
 //import auton.AutonomousDummy;
-import autoutil.vision.RecorderPipeline;
 import autoutil.vision.Scanner;
 import geometry.position.Pose;
 import robotparts.RobotPart;
-import robotparts.electronics.ElectronicType;
 import robotparts.electronics.input.ICamera;
 //import robotparts.electronics.input.ICameraNew;
 
