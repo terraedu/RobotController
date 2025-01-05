@@ -41,9 +41,7 @@ public class Cameras extends RobotPart {
             @Override
             public void onOpened()
             {
-//                OpenCvPipeline recorderPipeline = new RecorderPipeline();
                 camera1.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
-//                camera1.setPipeline(recorderPipeline);
 
             }
             @Override
@@ -51,7 +49,8 @@ public class Cameras extends RobotPart {
             {
                 log.show("CAN'T BE OPENED");
             }
-        });}
+        }
+        );}
 
     public void startAndResume(boolean view){ start(view); resume(); }
     public void pause(){ camera1.pauseViewport(); }

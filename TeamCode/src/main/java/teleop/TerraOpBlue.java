@@ -6,7 +6,9 @@ import static global.General.gph1;
 import static global.General.voltageScale;
 import static global.Modes.TeleStatus.BLUEA;
 import static teleutil.button.Button.B;
+import static global.General.*;
 
+import autoutil.vision.SampleScanner;
 import teleutil.button.Button;
 
 @TeleOp(name = "TerraOpBlue", group = "TeleOp")
@@ -20,7 +22,9 @@ public class TerraOpBlue extends Tele {
         Tele auto = this;
         auto.scan(true);
 
-        gph1.link(B, angleIntake);
+        intake.scanner = (SampleScanner) Scanner;
+        intake.updatePipeline();
+        log.show(intake.scanner.getAngle());
 
         teleStatus.set(BLUEA);
 
@@ -39,6 +43,7 @@ public class TerraOpBlue extends Tele {
     public void loopTele() {
 
 
+        intake.updatePipeline();
         /**
          * Gets Distance
          */

@@ -24,7 +24,7 @@ public class Intake extends RobotPart {
 
     private PServo iarmr, iarml, ipivot, iturret, iclaw, linkager, linkagel;
 
-    private SampleScanner Scanner;
+    public SampleScanner scanner;
 
     @Override
     public void init() {
@@ -46,14 +46,14 @@ public class Intake extends RobotPart {
 //        linkager.changePosition("start", 0);
 //        linkagel.changePosition("start", 0);
 
-        camera.setUser(User.ROFU);
+        //camera.setUser(User.ROFU); ERROR IS IN THIS LINE
         camera.checkAccess(User.ROFU);
 
     }
 
     public void updatePipeline() {
-        if (Scanner.getAngle() == -1) return;
-        iturret.changePosition("angle", Math.round(Precision.calculateWeightedValue(0, 1, (Scanner.getAngle() % 179) / 180) * 10) / 10.0);
+        if (scanner.getAngle() == -1) return;
+        iturret.changePosition("angle", Math.round(Precision.calculateWeightedValue(0, 1, (scanner.getAngle() % 179) / 180) * 10) / 10.0);
         iturret.setPosition("angle");
     }
 
