@@ -19,7 +19,7 @@ public class Configs implements RobotUser{
     /**
      * Used for Into The Deep robot
      */
-    RobotConfig IntoTheDeep = new RobotConfig(lift, outtake, drive); //    gyro, odometry, camera
+    RobotConfig IntoTheDeep = new RobotConfig(lift, outtake, drive, gyro, odometry); //    gyro, odometry, camera
 
     /**
      * Current Config

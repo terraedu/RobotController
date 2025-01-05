@@ -3,6 +3,8 @@ import static global.General.log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import java.text.DecimalFormat;
+
 import automodules.AutoModule;
 import autoutil.AutoFramework;
 import elements.TeamProp;
@@ -37,7 +39,7 @@ public class TerraAutoTestNew extends AutoFramework {
     public void define() {
 //        addAutoModule(Test1);
 //        customCase(() -> {
-//
+addSegment(1, 1, DefaultSP,1,2,3);
 //        }, () -> {
 //
 //

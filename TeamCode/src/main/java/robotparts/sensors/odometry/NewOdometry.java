@@ -118,7 +118,7 @@ public class NewOdometry extends RobotPart {
         x = pose.getX(); y = pose.getY(); h = pose.getAngle(); xo = pose.getX(); yo = pose.getY();
         gyro.reset();
         startX = xOdo.getCurrentPosition();
-        startY = -yOdo.getCurrentPosition();
+        startY = yOdo.getCurrentPosition();
         startY2 = -y2Odo.getCurrentPosition();
         lastX = 0;
         lastY = 0;

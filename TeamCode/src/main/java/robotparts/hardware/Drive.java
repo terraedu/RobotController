@@ -8,6 +8,7 @@ import automodules.stage.Stage;
 import geometry.position.Vector;
 import math.misc.Logistic;
 import math.polynomial.Linear;
+import robot.RobotUser;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
 import robotparts.electronics.continuous.CMotor;
@@ -26,7 +27,7 @@ import static global.Modes.heightMode;
 import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
 
-public class Drive extends RobotPart {
+public class Drive extends RobotPart implements RobotUser {
 
     public CMotor fr, br, fl, bl;
 
@@ -145,6 +146,17 @@ public class Drive extends RobotPart {
     @Override
     public AutoModule MoveTime(double fp, double sp, double tp, double t) {
         return super.MoveTime(fp, sp, tp, t);
+    }
+
+    public double getAntiTippingPower(){
+//        double pitch = gyro.getPitch();
+//        double pitchDerivative = Math.abs(gyro.getPitchDerivative());
+//        if(pitch > -1.5){
+//            return 0;
+//        }else{
+//            return pitch*0.15/(pitchDerivative > 0.7 ? Math.pow(Math.abs(pitchDerivative), 0.5) : 1.0);
+//        }
+        return 0;
     }
 //TODO10 Restore Antitipping power
 

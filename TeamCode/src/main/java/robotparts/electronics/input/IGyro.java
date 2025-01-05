@@ -30,7 +30,7 @@ public class IGyro extends Electronic {
 //        parameters.angleUnit = IMU.AngleUnit.DEGREES;
 //        parameters.accelUnit = IMU.AccelUnit.METERS_PERSEC_PERSEC;
 //        parameters.calibrationDataFile = "IMUCalibration.json";
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 //        this.gyro.initialize(parameters);

@@ -83,7 +83,7 @@ lift.pivotmove(gph2.ly);
         /**
          * odo pose
          */
-//        log.show("pose", odometry.getPose());
+        log.show("pose", odometry.getPose());
 
         /**
          * Outtake Status
