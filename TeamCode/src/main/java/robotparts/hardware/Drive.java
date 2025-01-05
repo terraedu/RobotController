@@ -20,8 +20,10 @@ import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
 import static global.Modes.Height.GROUND;
+import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.driveMode;
 import static global.Modes.heightMode;
+import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
 
 public class Drive extends RobotPart {
@@ -54,10 +56,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        fr = create("fr", ElectronicType.CMOTOR_REVERSE);
-        br = create("br", ElectronicType.CMOTOR_REVERSE);
-        fl = create("fl", ElectronicType.CMOTOR_FORWARD);
-        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
+        fr = create("fr", ElectronicType.CMOTOR_FORWARD);
+        br = create("br", ElectronicType.CMOTOR_FORWARD);
+        fl = create("fl", ElectronicType.CMOTOR_REVERSE);
+        bl = create("bl", ElectronicType.CMOTOR_REVERSE);
 
 
 
@@ -84,21 +86,21 @@ public class Drive extends RobotPart {
 
 
     public void newMove(double f, double s, double t) {
-            if(heightMode.get() == GROUND) {
+            if(robotStatus.get()== DRIVING) {
 
 
-                fl.setPower(f + s + t);
-                bl.setPower(f - s + t);
-                fr.setPower(f - s - t);
-                br.setPower(f + s - t);
+                fl.setPower(-f +s + .55 * t); //fr
+                bl.setPower(f -s + .55 * t);
+                fr.setPower(f + s - .55 * t); //br
+                br.setPower(-f - s - .55 * t); //fl
 
 
             }else{
 
-                fl.setPower(f + s + t);
-                bl.setPower(f - s + t);
-                fr.setPower(f - s - t);
-                br.setPower(f + s - t);
+                fl.setPower(-.3 * f + .3 * s - .2 * t);
+                bl.setPower(.3 * f + .3 * s - .2 * t);
+                fr.setPower(.3 * f + .3 * s + .2 * t);
+                br.setPower(-.3 * f + .3 * s + .2 * t);
             }
 
 
@@ -108,16 +110,6 @@ public class Drive extends RobotPart {
     @Override
     public Stage moveTime(double fp, double sp, double tp, double t) {
         return super.moveTime(fp, sp, tp, t);
-    }
-
-    public Stage smartDrive(double fp, double sp, double tp)
-    {
-        return super.moveCustomExit(fp, sp, tp, distanceSensorsNew.exitClose());
-    }
-
-    public Stage smartSub(double fp, double sp, double tp)
-    {
-        return super.moveCustomExit(fp, sp, tp, distanceSensorsNew.exitSub());
     }
 
     @Override
@@ -154,7 +146,7 @@ public class Drive extends RobotPart {
     public AutoModule MoveTime(double fp, double sp, double tp, double t) {
         return super.MoveTime(fp, sp, tp, t);
     }
-
+//TODO10 Restore Antitipping power
 
 
 }

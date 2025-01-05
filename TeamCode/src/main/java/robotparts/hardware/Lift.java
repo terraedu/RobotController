@@ -16,7 +16,7 @@ import util.codeseg.ReturnCodeSeg;
 
 public class Lift extends RobotPart {
 
-    public PMotor motorRight;
+    public PMotor motorRight, placeHolder;
 
     public static final double maxPosition = 50;
     public final double defaultCutoffPosition = 0;
@@ -26,10 +26,10 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
-        motorRight = create("lir", ElectronicType.PMOTOR_FORWARD);
+        motorRight = create("lir", ElectronicType.PMOTOR_REVERSE);
         // 0.25
-        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 30);
-        motorRight.usePositionHolder(0.1, .1);
+        motorRight.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 15);
+        motorRight.usePositionHolder(0.18, .5);
         adjust = 0;
         globalOffset = 0;
     }
