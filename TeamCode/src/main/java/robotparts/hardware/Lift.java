@@ -16,7 +16,7 @@ import util.codeseg.ReturnCodeSeg;
 
 public class Lift extends RobotPart {
 
-    public PMotor motorRight;
+    public PMotor motorRight, placeHolder;
 
     public static final double maxPosition = 50;
     public final double defaultCutoffPosition = 0;
