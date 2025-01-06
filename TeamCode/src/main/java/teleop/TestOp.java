@@ -27,37 +27,37 @@ public class TestOp extends Tele {
 
 
     }
+//
+//    public boolean isBlueSample(){
+//        if(colorSensorsNew.getRed() <= 30 && colorSensorsNew.getBlue() <= 100 ){// getGreen >= 45
+//            return true;}
+//        return false;
+//    }
+//
+//    public boolean isRedSample(){
+//        if(colorSensorsNew.getRed() <= 40 && colorSensorsNew.getBlue() <= 50 ){ // getGreen >= 50
+//            return true;}
+//        return false;
+//    }
+//
+//    public boolean isYellowSample(){
+//        if(colorSensorsNew.getRed() >= 25 && colorSensorsNew.getGreen() >= 45  && colorSensorsNew.getBlue() >= 40 ){
+//            return true;}
+//        return false;
+//    }
 
-    public boolean isBlueSample(){
-        if(colorSensorsNew.getRed() <= 30 && colorSensorsNew.getBlue() <= 100 ){// getGreen >= 45
-            return true;}
-        return false;
-    }
-
-    public boolean isRedSample(){
-        if(colorSensorsNew.getRed() <= 40 && colorSensorsNew.getBlue() <= 50 ){ // getGreen >= 50
-            return true;}
-        return false;
-    }
-
-    public boolean isYellowSample(){
-        if(colorSensorsNew.getRed() >= 25 && colorSensorsNew.getGreen() >= 45  && colorSensorsNew.getBlue() >= 40 ){
-            return true;}
-        return false;
-    }
-
-    public String isColor(){
-      if (isRedSample() == true){ //&& colorSensorsNew.getGreen() <= 60 && colorSensorsNew.getBlue() <= 60
-            return "SAMPLE IS RED";
-      }
-      if (isBlueSample() == true){ //colorSensorsNew.getRed() >= 35 && colorSensorsNew.getRed() <= 85 && colorSensorsNew.getGreen() >= 80 && colorSensorsNew.getGreen() <= 130 &&
-            return "SAMPLE IS BLUE";
-      }
-      if (isYellowSample() == true){//if (colorSensorsNew.getRed() >= 30 && colorSensorsNew.getRed() <= 45 && colorSensorsNew.getGreen() >= 60 & colorSensorsNew.getGreen() <= 75 && colorSensorsNew.getBlue() >= 50 && colorSensorsNew.getBlue() <= 65){
-            return "SAMPLE IS YELLOW";
-      }
-        return "NO SAMPLE";
-    }
+//    public String isColor(){
+//      if (isRedSample() == true){ //&& colorSensorsNew.getGreen() <= 60 && colorSensorsNew.getBlue() <= 60
+//            return "SAMPLE IS RED";
+//      }
+//      if (isBlueSample() == true){ //colorSensorsNew.getRed() >= 35 && colorSensorsNew.getRed() <= 85 && colorSensorsNew.getGreen() >= 80 && colorSensorsNew.getGreen() <= 130 &&
+//            return "SAMPLE IS BLUE";
+//      }
+//      if (isYellowSample() == true){//if (colorSensorsNew.getRed() >= 30 && colorSensorsNew.getRed() <= 45 && colorSensorsNew.getGreen() >= 60 & colorSensorsNew.getGreen() <= 75 && colorSensorsNew.getBlue() >= 50 && colorSensorsNew.getBlue() <= 65){
+//            return "SAMPLE IS YELLOW";
+//      }
+//        return "NO SAMPLE";
+//    }
 
     @Override
     public void loopTele() {
@@ -66,10 +66,10 @@ public class TestOp extends Tele {
 //        log.show(ColorSensors.colorSensorsNew.isRedSample());
 //        log.show(ColorSensors.colorSensorsNew.isBlueSample());
 //        log.show(ColorSensors.colorSensorsNew.isYellowSample());
-        log.show("red",colorSensorsNew.getRed());
-        log.show("green",colorSensorsNew.getGreen());
-        log.show("blue",colorSensorsNew.getBlue());
-        log.show("color",isColor());
+//        log.show("red",colorSensorsNew.getRed());
+//        log.show("green",colorSensorsNew.getGreen());
+//        log.show("blue",colorSensorsNew.getBlue());
+//        log.show("color",isColor());
 
 //        log.show("SAMPLE", isRed());
 //        log.show("SAMPLE", isGreen());

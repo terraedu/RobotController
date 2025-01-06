@@ -1,7 +1,7 @@
 package robot;
 
 import robotparts.hardware.Extendo;
-import robotparts.sensors.ColorSensors;
+//import robotparts.sensors.ColorSensors;
 import robotparts.sensors.DistanceSensors;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
@@ -33,7 +33,7 @@ public interface RobotUser {
     GyroSensors gyro = new GyroSensors();
     Cameras camera = new Cameras();
     DistanceSensors distanceSensorsNew = new DistanceSensors();
-    ColorSensors colorSensorsNew = new ColorSensors();
+//    ColorSensors colorSensorsNew = new ColorSensors();
 
 //    Odometry odometry = new TwoOdometry();
 //    ThreeOdometry odometry = new ThreeOdometry(); // TOD 5 EXTEND THIS CONCEPT TO ALL ROBOT PARTS

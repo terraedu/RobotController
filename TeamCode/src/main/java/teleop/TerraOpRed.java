@@ -32,12 +32,12 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
 
-//        Tele auto = this;
-//        auto.scan(true);
-//
-//        intake.scanner = (SampleScanner) Scanner;
-//
-//        teleStatus.set(REDA);
+        Tele auto = this;
+        auto.scan(true);
+
+        intake.scanner = (SampleScanner) Scanner;
+
+        teleStatus.set(REDA);
         voltageScale = 1;
         gph1.link(B, PlaceHigh);
         gph1.link(A, Place);
@@ -45,10 +45,8 @@ public class TerraOpRed extends Tele {
         gph1.link(LEFT_BUMPER, InSpecimen);
 
 
-        gph1.link(DPAD_UP, ()-> intake.moveStartTurret());
-        gph1.link(DPAD_RIGHT, ()-> intake.moveTurret());
-        gph1.link(DPAD_LEFT, ()-> intake.moveTurretMiddler());
-        gph1.link(DPAD_DOWN, ()-> intake.moveTurretMiddlest());
+
+        gph1.link(DPAD_DOWN, ()-> intake.updatePipeline());
 
         gph1.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);

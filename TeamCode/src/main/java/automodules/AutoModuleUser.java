@@ -71,12 +71,13 @@ AutoModule Intake = new AutoModule(
         intake.stageLinkEnd(.1),
         intake.stagePivotStart(.1),
         intake.stageEnd1(.1),
-        intake.stageClose(.1)
+        intake.stageClose(.1).attach(intake.stageLinkEnd(.1))
 
 
         ).setStartCode(()->
         robotStatus.set(INTAKING));
     AutoModule Grab = new AutoModule(
+            intake.stageLinkEnd(.1),
             intake.stageEnd(.1),
             intake.stageOpen(.1),
             intake.stageTransfer2(.1),
