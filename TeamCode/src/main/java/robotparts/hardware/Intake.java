@@ -36,6 +36,8 @@ public class Intake extends RobotPart {
 //
         iarml.changePosition("start", .67);
         iarmr.changePosition("start", .67);
+        iarml.changePosition("startrun", .57);
+        iarmr.changePosition("startrun", .57);
         iarml.changePosition("transfer1", 0.61);
         iarmr.changePosition("transfer1", 0.61);
         iarml.changePosition("transferspecimen", 0.7);
@@ -115,7 +117,7 @@ public class Intake extends RobotPart {
     public void moveTurretMiddlest(){iturret.setPosition("middlest");}
     public void moveStartTurret() {iturret.setPosition("start");}
 
-    public void moveTransfer(){iarmr.setPosition("start"); iarml.setPosition("start"); ipivot.setPosition("middle");}
+    public void moveTransfer(){iarmr.setPosition("startrun"); iarml.setPosition("startrun"); ipivot.setPosition("middle");}
     public void moveTransfer2(){iarmr.setPosition("transfer"); iarml.setPosition("transfer"); ipivot.setPosition("transfer");}
     public void moveTransfer3(){ipivot.setPosition("middle"); iturret.setPosition("start");}
     public void moveStartPivot(){ ipivot.setPosition("start");}
@@ -155,7 +157,7 @@ public class Intake extends RobotPart {
 
     public void updatePipeline() {
         if (scanner.getAngle() == -1) return;
-        iturret.changePosition("angle", Math.round(Precision.calculateWeightedValue(0, 1, (scanner.getAngle() % 179) / 180) * 10) / 10.0);
+        iturret.changePosition("angle", Math.round((scanner.getAngle())));
         iturret.setPosition("angle");
     }
 

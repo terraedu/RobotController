@@ -13,7 +13,6 @@ import autoutil.vision.filters.MovingAverageFilter;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
@@ -21,15 +20,16 @@ public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
     public static boolean drawOnScreen = true;
-    public static double sizeThreshold = 70000;
+    public static double bigSizeThreshold = 60000;
+    public static double smallSizeThreshold = 10000;
     public static int win_center_x = 320;
     public static int win_center_y = 240;
     public static double rect_center_x;
     public static double rect_center_y;
     public static double dist_x;
     public static double dist_y;
-    public static double dist_x_in;
-    public static double dist_y_in;
+    public static double dist_x_cm;
+    public static double dist_y_cm;
     public static int sample_length_pixels_4in = 260;
     int counter;
 
@@ -162,15 +162,15 @@ public class SampleScanner extends OpenCvPipeline {
         dist_x = win_center_x - rect_center_x;
         dist_y = win_center_y - rect_center_y;
         // 260 pixels divided by 8.89 cm (sample length) is 29.24
-        dist_x_in = dist_x / 29.2463442; // dividing dist in pixels by pixels that are 1 cm long at 4 inches
-        dist_y_in = dist_y / 29.2463442;
+        dist_x_cm = dist_x / 29.2463442; // dividing dist in pixels by pixels that are 1 cm long at 4 inches
+        dist_y_cm = dist_y / 29.2463442;
 
         if (this.counter > 30) {
-            log.show("x inches", dist_x_in);
-            log.show("y inches", dist_y_in);
+            log.show("x inches", dist_x_cm);
+            log.show("y inches", dist_y_cm);
         }
 
-        if (rotatedRectFitToContour.size.width * rotatedRectFitToContour.size.height < sizeThreshold) {
+        if (rotatedRectFitToContour.size.width * rotatedRectFitToContour.size.height < bigSizeThreshold && rotatedRectFitToContour.size.width * rotatedRectFitToContour.size.height > smallSizeThreshold) {
             //if (drawOnScreen) {
             drawRotatedRect(rotatedRectFitToContour, input, color);
             drawRotatedRect(rotatedRectFitToContour, contoursOnPlainImageMat, color);
