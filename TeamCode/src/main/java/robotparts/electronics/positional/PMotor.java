@@ -111,6 +111,13 @@ public class PMotor extends Electronic {
         ticksToOutput = Precision.invert(outputToTicks);
 
     }
+    public void setToLinearDiff(double ticksPerRev, double radius, double ratio){
+        movementType = MovementType.LINEAR;
+        outputToTicks = distance -> (distance/(2*Math.PI*radius))*ticksPerRev;
+        ticksToOutput = Precision.invert(outputToTicks);
+
+    }
+
 
 
     /**

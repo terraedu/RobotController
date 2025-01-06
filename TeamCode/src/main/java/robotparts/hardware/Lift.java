@@ -18,8 +18,9 @@ public class Lift extends RobotPart {
 
     public PMotor lir, lpivot;
 
-    public static final double maxPosition = 50;
-    public final double defaultCutoffPosition = 0;
+
+    public static final double maxPosition = 100;
+    public final double defaultCutoffPosition = 1000;
     public volatile double currentCutoffPosition = defaultCutoffPosition;
     public int adjust = 0;
     public double globalOffset = 0;
@@ -28,11 +29,11 @@ public class Lift extends RobotPart {
     public void init() {
         lir = create("lir", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 0);
+        lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 1);
         lir.usePositionHolder(0.1, .1);
-        lpivot = create("lpivot", ElectronicType.PMOTOR_REVERSE);
+        lpivot = create("lpivot", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 2, 0);
+        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 2, 1);
         lpivot.usePositionHolder(.5, .3);
 
         adjust = 0;
@@ -47,7 +48,8 @@ public class Lift extends RobotPart {
     }
 
     public CodeSeg pivotmove(double p) {
-        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.2);
+        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1 );
+
         return null;
     }
 //      Old holder target
@@ -100,7 +102,8 @@ public class Lift extends RobotPart {
 //    }
 
     public Stage stagePivot(double power, double target) {
-        return moveTarget(() -> lpivot, power, () -> target).combine(new Initial(() -> currentCutoffPosition = target < 1 ? defaultCutoffPosition : 0));
+        return moveTarget(() -> lpivot, power, () -> target);
+
 
     }
 
@@ -113,7 +116,7 @@ public class Lift extends RobotPart {
     }
 
 
-    public void reset(){ lir.softReset();}
+    public void reset(){ lir.softReset(); lpivot.softReset();}
 
 }
 

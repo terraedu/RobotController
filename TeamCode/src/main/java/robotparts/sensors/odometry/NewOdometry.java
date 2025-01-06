@@ -96,7 +96,7 @@ public class NewOdometry extends RobotPart {
 
 
     public double getEncX() { return (xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
-    public double getEncY() { return (-yOdo.getCurrentPosition()-startY) * wheelDiameter  * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
+    public double getEncY() { return (yOdo.getCurrentPosition()-startY) * wheelDiameter  * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
     public double getEncY2() { return 1.009*(-y2Odo.getCurrentPosition()-startY2) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV;}
 
     public final double getX(){ return x; }
@@ -116,7 +116,7 @@ public class NewOdometry extends RobotPart {
         x = pose.getX(); y = pose.getY(); h = pose.getAngle(); xo = pose.getX(); yo = pose.getY();
         gyro.reset();
         startX = xOdo.getCurrentPosition();
-        startY = -yOdo.getCurrentPosition();
+        startY = yOdo.getCurrentPosition();
         startY2 = -y2Odo.getCurrentPosition();
         lastX = 0;
         lastY = 0;

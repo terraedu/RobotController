@@ -22,6 +22,10 @@ public interface Modes {
     Mode teleStatus = new Mode(TeleStatus.class);
 
 
+    enum TurretStatus implements Mode.ModeType {ANGLE, HALF, FULL}
+    Mode turretStatus = new Mode(TeleStatus.class);
+
+
     enum Height implements Mode.ModeType {GROUND, lowrung, highrung, lowbasket, highbasket, currentHeight}
 
     Mode heightMode = new Mode(Height.class)
