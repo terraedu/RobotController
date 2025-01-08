@@ -25,22 +25,21 @@ import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
 
 
-@TeleOp(name = "TerraOpRed", group = "TeleOp")
+@TeleOp(name = "TerraOp", group = "TeleOp")
 public class TerraOpRed extends Tele {
 
     @Override
     public void initTele() {
         voltageScale = 1;
-//    gph1.link(Y, ()-> outtake.moveLinkEnd());
 //        gph1.link(B, PlaceHigh);
-//        gph1.link(A, Place);
+//        gph1.link(Y, Place);
 //
         gph1.link(RIGHT_TRIGGER, Intake);
         gph1.link(LEFT_TRIGGER, Grab);
-//        gph1.link(RIGHT_BUMPER, SpecimenReady);
-//        gph1.link(LEFT_BUMPER, SpecimenDrop);
-//        gph1.link(Y, OutSpecimen);
-//        gph1.link(X, InSpecimen);
+        gph1.link(LEFT_BUMPER, SpecimenReady);
+        gph1.link(RIGHT_BUMPER, SpecimenDrop);
+        gph1.link(A, OutSpecimen);
+        gph1.link(X, InSpecimen);
         gph1.link(DPAD_UP, Out);
         gph1.link(DPAD_LEFT, ()-> outtake.moveOpen());
         gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
@@ -68,8 +67,12 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(gph1.ry, gph1.rx, gph1.lx);
+drive.newMove(gph1.ly, gph1.lx, gph1.rx);
         lift.move(gph2.lx);
+        lift.pivotmove(gph2.rx);
+
+        log.show(lift.lir.getPower());
+
 
 
         /**

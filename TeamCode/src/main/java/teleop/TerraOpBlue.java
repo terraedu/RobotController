@@ -10,8 +10,7 @@ import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.BLUE;
 import static teleutil.button.Button.RIGHT_TRIGGER;
 
-@TeleOp(name = "TerraOpBlue", group = "TeleOp")
-public class TerraOpBlue extends Tele {
+    public class TerraOpBlue extends Tele {
 
     @Override
     public void initTele() {

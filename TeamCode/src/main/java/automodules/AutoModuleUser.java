@@ -18,30 +18,31 @@ import robotparts.RobotPart;
 public interface AutoModuleUser extends RobotUser {
 
     AutoModule SpecimenReady = new AutoModule(
-outtake.stageClose(.1),
+            outtake.stageOpen(.1),
+            RobotPart.pause(1),
+            outtake.stageGrabSpecimen(.1),
             outtake.stageLinkEnd(.1),
-            lift.stagePivot(.7,-4.5),
-            outtake.stageStart(.1),
-            outtake.stageSpecimen(.1)
+            outtake.stageClose(.1)
+
 
 
 
         );
     AutoModule OutSpecimen = new AutoModule(
-           lift.stageLift(1,13).attach(outtake.stageLinkEnd(.1))
-
+            outtake.stageLinkEnd(.1),
+           lift.stagePivot(.3,-8.1).attach(outtake.stageSpecimen(.1)),
+           lift.stageLift(1,28  )
 
 
     );
     AutoModule Out = new AutoModule(
-            lift.stageLift(1,20).attach(outtake.stageLinkEnd(.1))
+            lift.stageLift(1,15)
 
 
 
     );
     AutoModule InSpecimen = new AutoModule(
-            lift.stagePivot(1,-5),
-            lift.stageLift(.7,9),
+            outtake.stageSpecimen2(.1),
             outtake.stageOpen(.1),
             lift.stageLift(1,0),
             lift.stagePivot(.8,0).attach(            outtake.stageStart(.1)
@@ -51,15 +52,17 @@ outtake.stageClose(.1),
 
     );
         AutoModule SpecimenDrop = new AutoModule(
-    //            outtake.stageClose(.1),
-    //            outtake.stageStart(.1),
-                lift.stagePivot(.3,7.5),  outtake.stageOpen(.1)
+        outtake.stageSpecimen(.1),
+                RobotPart.pause(.2),
+                outtake.stageOpen(.1)
 
-                );
+
+
+        );
     AutoModule PlaceHigh = new AutoModule(
             outtake.stageLinkEnd(.1),
-    lift.stagePivot(.3,-7.5).attach(outtake.stagePlace(.1)),
-        lift.stageLift(1,35)
+    lift.stagePivot(.3,-8.1).attach(outtake.stagePlace(.1)),
+        lift.stageLift(1,34)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
@@ -101,11 +104,13 @@ AutoModule Intake = new AutoModule(
             RobotPart.pause(.2),
             outtake.stageClose(.1),
             outtake.stageStart(.1),
-            lift.stageLift(1,0)
+            lift.stageLift(1,0),
+            lift.stageLift(1,-1.5)
 
 
 
-    ).setStartCode(()->
+
+            ).setStartCode(()->
             robotStatus.set(DRIVING)
     );
 

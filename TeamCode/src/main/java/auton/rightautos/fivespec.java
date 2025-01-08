@@ -17,35 +17,48 @@ public class fivespec extends AutoFramework {
     public void initialize() {
         voltageScale = 1;
         this.setConfig(NonstopConfig);
+        lift.maintain();
         bot.saveLocationOnField();
         outtake.moveLinkStart();
         outtake.moveStart();
 
     }
 
-AutoModule ReadySpecimen = new AutoModule(
-        outtake.stageClose(.1),
-        outtake.stageLinkEnd(.1).attach(        lift.stagePivot(.8,6)),
-        lift.stageLift(1,10).attach(outtake.stageLinkEnd(.1))
+    AutoModule specimenout = new AutoModule(
+            outtake.stageLinkEnd(.1),
+            lift.stagePivot(.3,-8.1),
+            lift.stageLift(1,30  )
 
-);
-    AutoModule PlaceSpecimen = new AutoModule(
-           outtake.stageOpen(.1),
-            lift.stageLift(1,0).attach(outtake.stageStart(.1)),
 
-            lift.stagePivot(.5,0)
+    );
+    AutoModule specimenin = new AutoModule(
+            lift.stageLift(.7,26),
+            outtake.stageOpen(.1),
+            lift.stageLift(1,0),
+            lift.stagePivot(.8,0).attach(            outtake.stageStart(.1)
+            )
+
+
+
     );
     @Override
     public void define() {
-        addSegment(1,1, DefaultSP, 0,-13,0);
-        addAutoModule(ReadySpecimen);
-        addSegment(.5,1, DefaultSP, 0,-23,0);
-        addAutoModule(PlaceSpecimen);
+        addSegment(1,1, DefaultSP, 0,20,0);
+//        addAutoModule(specimenout);
+        addSegment(.2,1, DefaultSP, -4,28,0);
+
+//        addAutoModule(specimenin);
+        addSegment(1,1, DefaultWP, 40,20,90);
+        addSegment(1,1, DefaultSP, 50 ,55,180);
 
 
 
 
 
+
+
+
+        addPause(30);
 
     }
 

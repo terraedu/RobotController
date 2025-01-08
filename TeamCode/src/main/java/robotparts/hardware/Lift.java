@@ -33,7 +33,7 @@ public class Lift extends RobotPart {
         lir.usePositionHolder(0.1, .1);
         lpivot = create("lpivot", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 2, 1);
+        lpivot.setToRotational(Constants.ORBITAL_TICKS_PER_REV, 4);
         lpivot.usePositionHolder(.5, .3);
 
         adjust = 0;
@@ -48,7 +48,7 @@ public class Lift extends RobotPart {
     }
 
     public CodeSeg pivotmove(double p) {
-        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.1 );
+        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.0 );
 
         return null;
     }

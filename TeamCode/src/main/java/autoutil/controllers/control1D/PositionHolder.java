@@ -45,7 +45,6 @@ public class PositionHolder extends Controller1D {
                 double error = (getTarget()-currentPosition.run());
                 extraRestPower = pCoefficient*error;
             } else{
-//                if(!isWithinAccuracyRange() && Math.abs(getCurrentValue()) > velocityThreshold)
                 extraRestPower = 0;
             }
         }
