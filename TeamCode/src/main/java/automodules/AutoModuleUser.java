@@ -10,6 +10,7 @@ import static global.Modes.turretStatus;
 
 import robot.RobotUser;
 import robotparts.RobotPart;
+import robotparts.hardware.Outtake;
 
 //import static global.Modes.Height.HIGH;
 //import static global.Modes.Height.LOW;
@@ -18,35 +19,57 @@ import robotparts.RobotPart;
 public interface AutoModuleUser extends RobotUser {
 
     AutoModule SpecimenReady = new AutoModule(
-            outtake.stageOpen(.1),
-            RobotPart.pause(1),
             outtake.stageGrabSpecimen(.1),
-            outtake.stageLinkEnd(.1),
-            outtake.stageClose(.1)
+            outtake.stageOpen(.1),
+            outtake.stageGrabSpecimen(.1),
+            outtake.stageLinkEnd(.1)
 
 
 
 
-        );
+
+
+            ).setStartCode(()->
+                    robotStatus.set(PLACING)
+    );
+    AutoModule SpecimenLocked = new AutoModule(
+
+            outtake.stageClose(.1),
+            outtake.stageLiftSpecimen(.1)
+
+
+
+
+
+
+    ).setStartCode(()->
+            robotStatus.set(DRIVING));
     AutoModule OutSpecimen = new AutoModule(
             outtake.stageLinkEnd(.1),
-           lift.stagePivot(.3,-8.1).attach(outtake.stageSpecimen(.1)),
-           lift.stageLift(1,28  )
+           lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
+           lift.stageLift(1,45)
 
 
     );
     AutoModule Out = new AutoModule(
-            lift.stageLift(1,15)
+            lift.stageLift(1,22)
 
 
 
     );
     AutoModule InSpecimen = new AutoModule(
-            outtake.stageSpecimen2(.1),
+            lift.stageLift(1,33),
+            outtake.stageStartLink(.1),
+            RobotPart.pause(.2),
             outtake.stageOpen(.1),
+            outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
+            RobotPart.pause(.2),
+            lift.stageLift(1,6),
+            lift.stagePivot(.6,0),
             lift.stageLift(1,0),
-            lift.stagePivot(.8,0).attach(            outtake.stageStart(.1)
-            )
+
+            outtake.stageStart(.1)
+
 
 
 
@@ -61,8 +84,8 @@ public interface AutoModuleUser extends RobotUser {
         );
     AutoModule PlaceHigh = new AutoModule(
             outtake.stageLinkEnd(.1),
-    lift.stagePivot(.3,-8.1).attach(outtake.stagePlace(.1)),
-        lift.stageLift(1,34)
+    lift.stagePivot(.3,-7.9).attach(outtake.stagePlace(.1)),
+        lift.stageLift(1,65)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
@@ -79,8 +102,9 @@ outtake.stageFull(.1)
 
     AutoModule Place = new AutoModule(
   outtake.stageOpen(.1),
-       lift.stageLift(.7,0),
-        lift.stagePivot(.1,0),
+            lift.stageLift(1,6),
+            lift.stagePivot(.6,0),
+            lift.stageLift(1,0),
                 outtake.stageStart(.1)
 
         ).setStartCode(()->
@@ -90,7 +114,7 @@ outtake.stageFull(.1)
 
 
 AutoModule Intake = new AutoModule(
-        lift.stageLift(1, 10).attach(outtake.stageLinkEnd(.1)),
+        lift.stageLift(1, 15).attach(outtake.stageLinkEnd(.1)),
         outtake.stageGrab(.1),
         outtake.stageOpen(.1).attach(outtake.stageFull(.1))
 

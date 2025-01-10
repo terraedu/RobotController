@@ -5,6 +5,7 @@ import automodules.stage.Stage;
 import global.Constants;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
+import robotparts.electronics.continuous.CMotor;
 import robotparts.electronics.positional.PMotor;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
@@ -17,7 +18,7 @@ import util.codeseg.ReturnCodeSeg;
 public class Lift extends RobotPart {
 
     public PMotor lir, lpivot;
-
+    public PMotor hl, hr;
 
     public static final double maxPosition = 100;
     public final double defaultCutoffPosition = 1000;
@@ -27,13 +28,16 @@ public class Lift extends RobotPart {
 
     @Override
     public void init() {
+        hl = create("hl", ElectronicType.PMOTOR_FORWARD);
+        hr = create("hr", ElectronicType.PMOTOR_FORWARD);
+
         lir = create("lir", ElectronicType.PMOTOR_FORWARD);
         // 0.25
         lir.setToLinear(Constants.ORBITAL_TICKS_PER_REV, 1.79, 1, 1);
         lir.usePositionHolder(0.1, .1);
         lpivot = create("lpivot", ElectronicType.PMOTOR_FORWARD);
         // 0.25
-        lpivot.setToRotational(Constants.ORBITAL_TICKS_PER_REV, 4);
+        lpivot.setToLinear(Constants.ORBITAL_TICKS_PER_REV,1.79,2, 1);
         lpivot.usePositionHolder(.5, .3);
 
         adjust = 0;
@@ -47,8 +51,27 @@ public class Lift extends RobotPart {
         return null;
     }
 
+    public CodeSeg moveHang(double p) {
+        hl.moveWithPositionHolder(p, currentCutoffPosition, 0.0);
+        hr.moveWithPositionHolder(p, currentCutoffPosition, 0.0);
+        return null;
+    }
+    public CodeSeg moveHang1(double p) {
+
+        hl.moveWithPositionHolder(p, currentCutoffPosition, 0.0);
+        return null;
+    }
+    public CodeSeg moveHang2(double p) {
+        hr.moveWithPositionHolder(p, currentCutoffPosition, 0.0);
+        return null;
+    }
+
+
     public CodeSeg pivotmove(double p) {
-        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.0 );
+
+                        lpivot.moveWithPositionHolder(p, currentCutoffPosition, 0.0);
+
+//                lpivot.moveWithPositionHolder(.01*(p*Math.cos(lift.lpivot.getPosition()))+  (.05*lift.lir.getPosition()), currentCutoffPosition, 0.0);
 
         return null;
     }

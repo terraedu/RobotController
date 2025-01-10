@@ -31,18 +31,18 @@ public class TerraOpRed extends Tele {
     @Override
     public void initTele() {
         voltageScale = 1;
-//        gph1.link(B, PlaceHigh);
-//        gph1.link(Y, Place);
+        gph2.link(B, PlaceHigh);
+        gph2.link(Y, Place);
 //
-        gph1.link(RIGHT_TRIGGER, Intake);
-        gph1.link(LEFT_TRIGGER, Grab);
-        gph1.link(LEFT_BUMPER, SpecimenReady);
-        gph1.link(RIGHT_BUMPER, SpecimenDrop);
-        gph1.link(A, OutSpecimen);
-        gph1.link(X, InSpecimen);
-        gph1.link(DPAD_UP, Out);
-        gph1.link(DPAD_LEFT, ()-> outtake.moveOpen());
-        gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
+        gph2.link(RIGHT_TRIGGER, Intake);
+        gph2.link(LEFT_TRIGGER, Grab);
+        gph2.link(DPAD_RIGHT, SpecimenReady);
+        gph2.link(RIGHT_BUMPER, SpecimenDrop);
+        gph2.link(LEFT_BUMPER, SpecimenLocked);
+        gph2.link(A, OutSpecimen);
+        gph2.link(X, InSpecimen);
+        gph2.link(DPAD_UP, Out);
+        gph2.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
 
 
 //gph1.link(Y, ()-> out()  );
@@ -69,9 +69,11 @@ public class TerraOpRed extends Tele {
 
 drive.newMove(gph1.ly, gph1.lx, gph1.rx);
         lift.move(gph2.lx);
-        lift.pivotmove(gph2.rx);
+        lift.pivotmove(gph2.lx);
+        lift.moveHang1(gph2.ry);
+        lift.moveHang2(gph2.rx);
 
-        log.show(lift.lir.getPower());
+        log.show(lift.lpivot.getPower());
 
 
 

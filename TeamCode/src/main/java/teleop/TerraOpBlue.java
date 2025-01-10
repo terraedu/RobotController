@@ -8,20 +8,45 @@ import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.BLUE;
+import static global.Modes.TeleStatus.RED;
+import static global.Modes.TurretStatus.ANGLE;
+import static global.Modes.TurretStatus.HALF;
+import static teleutil.button.Button.A;
+import static teleutil.button.Button.B;
+import static teleutil.button.Button.DPAD_DOWN;
+import static teleutil.button.Button.DPAD_RIGHT;
+import static teleutil.button.Button.DPAD_UP;
+import static teleutil.button.Button.LEFT_BUMPER;
+import static teleutil.button.Button.LEFT_TRIGGER;
+import static teleutil.button.Button.RIGHT_BUMPER;
 import static teleutil.button.Button.RIGHT_TRIGGER;
+import static teleutil.button.Button.X;
+import static teleutil.button.Button.Y;
 
-    public class TerraOpBlue extends Tele {
+public class TerraOpBlue extends Tele {
 
     @Override
     public void initTele() {
         voltageScale = 1;
+        gph2.link(B, PlaceHigh);
+        gph2.link(Y, Place);
+//
         gph2.link(RIGHT_TRIGGER, Intake);
+        gph2.link(LEFT_TRIGGER, Grab);
+        gph2.link(DPAD_RIGHT, SpecimenReady);
+        gph2.link(RIGHT_BUMPER, SpecimenDrop);
+        gph2.link(LEFT_BUMPER, SpecimenLocked);
+        gph2.link(A, OutSpecimen);
+        gph2.link(X, InSpecimen);
+        gph2.link(DPAD_UP, Out);
+        gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
 
 
-
-        teleStatus.set(BLUE);
-
+//gph1.link(Y, ()-> out()  );
+        teleStatus.set(RED);
+        turretStatus.set(HALF);
         robotStatus.set(DRIVING);
+
     }
 
     @Override
@@ -29,8 +54,10 @@ import static teleutil.button.Button.RIGHT_TRIGGER;
         /**
          * Start code
          */
+
         outtake.moveLinkStart();
         outtake.moveStart();
+
 
     }
 
@@ -39,6 +66,9 @@ import static teleutil.button.Button.RIGHT_TRIGGER;
         drive.newMove(gph1.ly, gph1.lx, gph1.rx);
         lift.pivotmove(gph2.ly);
         lift.move(gph2.lx);
+        lift.moveHang1(gph2.ry);
+        lift.moveHang2(gph2.rx);
+
 
         /**
          * Gets Distance
