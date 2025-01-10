@@ -35,12 +35,12 @@ public class PIDReact extends MecanumReactor{
         setControllers(new Default2D(xPID, yPID), hPID);
     }
 
-    /* gave an error idk
+//    /* gave an error idk
     @Override
     public void moveToTarget(PoseGen generator) {
         movementController.update(getPose(), generator);
         headingController.update(getPose(), generator);
-        drive.move(movementController.getOutputY(), movementController.getOutputX(), -headingController.getOutput());
+        drive.move(movementController.getOutputY() + drive.getAntiTippingPower(), movementController.getOutputX(), -headingController.getOutput());
     }
-    */
+//    */
 }

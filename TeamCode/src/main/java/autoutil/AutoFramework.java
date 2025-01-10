@@ -126,23 +126,19 @@ public abstract class AutoFramework extends Auto implements AutoUser {
     public void customNumber(int num, ParameterCodeSeg<Integer> one){ for (int i = 0; i < num; i++) { one.run(i); } }
     public void customIf(boolean value, CodeSeg ifTrue, CodeSeg ifFalse){ if(value){ifTrue.run();}else{ifFalse.run();} }
 
-    public void setScannerAfterInit(Scanner scanner){
-        haltCameraAfterInit = false;
-        scannerAfterInit = scanner;
-    }
 
-//    public void propScanner(boolean view) {
-//        scanning = true;
-//        teamPropScanner = new TeamPropScanner();
-//        camera.setScanner(teamPropScanner);
-//        camera.start(view);
-//    }
 
 
     @Override
     public final void initAuto() {
         initialize();
+        if(scanning){
+//            log.show("yeet");
+//            while (!isStarted() && !isStopRequested()){ propCaseDetected = teamPropScanner.getCase(); teamPropScanner.log(); log.showTelemetry(); }
+            while (!isStarted() && !isStopRequested()){ propCaseDetected = caseScanner.getCase(); caseScanner.log(); log.showTelemetry(); }
 
+            if(haltCameraAfterInit) {camera.halt();} else{ camera.setScanner(scannerAfterInit); }
+        }
         setup();
         createSegments();
     }
