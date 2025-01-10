@@ -22,7 +22,7 @@ public class FourBucketAuto extends AutoFramework {
     }
     @Override
     public void define() {
-//        addSegment(.5,1,DefaultSP,0,-20,0);
+        addSegment(.5,1,DefaultSP,0,-20,0);
 //        addSegment(.5,1,DefaultSP,36,-23,-45);
 //        addSegment(.5,1,DefaultSP,23,-67,0);
 //        addSegment(.5,1,DefaultSP,36,-23,-45);
