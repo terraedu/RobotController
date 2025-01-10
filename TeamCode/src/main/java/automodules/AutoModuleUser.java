@@ -1,6 +1,7 @@
 package automodules;
 
 import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TurretStatus.ANGLE;
 import static global.Modes.TurretStatus.FULL;
@@ -50,7 +51,7 @@ public interface AutoModuleUser extends RobotUser {
            lift.stageLift(1,45)
 
 
-    );
+    ).setStartCode(()->robotStatus.set(INTAKING));
     AutoModule Out = new AutoModule(
             lift.stageLift(1,22)
 
@@ -73,7 +74,7 @@ public interface AutoModuleUser extends RobotUser {
 
 
 
-    );
+    ).setStartCode(()->robotStatus.set(DRIVING));
         AutoModule SpecimenDrop = new AutoModule(
         outtake.stageSpecimen(.1),
                 RobotPart.pause(.2),

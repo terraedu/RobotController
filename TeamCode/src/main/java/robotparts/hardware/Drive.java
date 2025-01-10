@@ -19,6 +19,7 @@ import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
 import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.driveMode;
 import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
