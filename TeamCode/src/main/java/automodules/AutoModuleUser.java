@@ -48,7 +48,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule OutSpecimen = new AutoModule(
             outtake.stageLinkEnd(.1),
            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
-           lift.stageLift(1,45)
+           lift.stageLift(1,50)
 
 
     ).setStartCode(()->robotStatus.set(INTAKING));
@@ -76,7 +76,7 @@ public interface AutoModuleUser extends RobotUser {
 
     ).setStartCode(()->robotStatus.set(DRIVING));
         AutoModule SpecimenDrop = new AutoModule(
-        outtake.stageSpecimen(.1),
+        outtake.stageSpecimen(.1).attach(outtake.stageStartLink(.1)),
                 RobotPart.pause(.2),
                 outtake.stageOpen(.1)
 

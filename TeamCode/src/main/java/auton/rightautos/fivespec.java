@@ -29,29 +29,67 @@ public class fivespec extends AutoFramework {
     AutoModule specimenout = new AutoModule(
             outtake.stageLinkEnd(.1),
             lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
-            lift.stageLift(1,45)
+            lift.stageLift(1,50)
 
 
     );
     AutoModule specimenin = new AutoModule(
-            lift.stageLift(1,33),
-            outtake.stageStartLink(.1),
-            RobotPart.pause(.2),
-            outtake.stageOpen(.1),
-            outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
-            RobotPart.pause(.2),
-            lift.stageLift(1,6),
-            lift.stagePivot(.6,0),
-            lift.stageLift(1,0),
+            lift.stageLift(1,27).attach(            outtake.stageStartLink(.1)
+                    ),
+            outtake.stageOpen(.1)
 
-            outtake.stageStart(.1)
 
 
 
 
     );
+    AutoModule SpecimenReady = new AutoModule(
+            outtake.stageGrabSpecimen(.1),
+            outtake.stageOpen(.1),
+            outtake.stageGrabSpecimen(.1),
+            outtake.stageLinkEnd(.1)
+
+
+
+
+
+
+    );
+    AutoModule SpecimenLocked = new AutoModule(
+
+            outtake.stageClose(.1),
+            outtake.stageLiftSpecimen(.1)
+
+
+
+
+
+
+    );
+    AutoModule specimenleave = new AutoModule(
+            outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
+            RobotPart.pause(.2),
+            lift.stageLift(1,6),
+            lift.stagePivot(.6,0),
+            lift.stageLift(1,0).attach( outtake.stageStart(.1))
+
+
+
+
+
+
+
+            );
     AutoModule Intake = new AutoModule(
-            lift.stageLift(1, 15).attach(outtake.stageLinkEnd(.1))
+            outtake.stageLinkEnd(.1)
+
+
+
+    );
+    AutoModule SpecimenDrop = new AutoModule(
+            outtake.stageSpecimen(.1).attach(outtake.stageStartLink(.1)),
+            RobotPart.pause(.4),
+            outtake.stageOpen(.1)
 
 
 
@@ -74,14 +112,68 @@ public class fivespec extends AutoFramework {
     public void define() {
         addConcurrentAutoModule(specimenout);
 
-        addSegment(1,1, DefaultSP, -2,22,0);
+        addSegment(.5,1, DefaultSP, 0,10,0);
+        addSegment(.5,1, DefaultSP, 0,22,0);
 
         addAutoModule(specimenin);
-        addSegment(.5,1, DefaultWP, 40,20,90);
-        addConcurrentAutoModule(Intake);
-        addSegment(.5,1, DefaultSP, 48 ,52,180);
-        addAutoModule(Grab);
-        addConcurrentAutoModule(Grab);
+        addConcurrentAutoModule(specimenleave);
+
+        addSegment(.5,1, DefaultWP, 26 ,5,0);
+//        addConcurrentAutoModule(Intake);
+        addSegment(.5,1, DefaultWP, 26 ,47,0);
+        addSegment(.5,1, DefaultSP, 35 ,47,0);
+        addSegment(.5,1, DefaultWP, 35 ,0,0);
+        addSegment(.5,1, DefaultWP, 38 ,45,0);
+        addSegment(.5,1, DefaultWP, 46 ,45,0);
+        addSegment(.5,1, DefaultWP, 46 ,0,0);
+        addSegment(.5,1, DefaultWP, 48 ,43,0);
+        addSegment(.5,1, DefaultWP, 50 ,43,0);
+
+        addSegment(.5,1, DefaultWP, 50 ,0,0);
+        addConcurrentAutoModule(SpecimenReady);
+        addSegment(.5,1, DefaultWP, 30 ,7,0);
+        addSegment(.5,1, DefaultSP, 30 ,-2,0);
+        addAutoModule(SpecimenLocked);
+        addConcurrentAutoModule(specimenout);
+        addSegment(.5,1, DefaultSP, 4,5,0);
+        addSegment(.5,1, DefaultSP, 4,18,0);
+
+        addAutoModule(specimenin);
+        addConcurrentAutoModule(specimenleave);
+        addSegment(.5,1, DefaultWP, 35 ,7,0);
+        addConcurrentAutoModule(SpecimenReady);
+
+        addSegment(.5,1, DefaultSP, 30 ,-2,0);
+        addAutoModule(SpecimenLocked);
+        addConcurrentAutoModule(specimenout);
+        addSegment(.5,1, DefaultSP, 15,5,0);
+        addSegment(.5,1, DefaultSP, 15,18,0);
+
+        addAutoModule(specimenin);
+        addConcurrentAutoModule(specimenleave);
+        addSegment(.5,1, DefaultWP, 35 ,7,0);
+        addConcurrentAutoModule(SpecimenReady);
+
+        addSegment(.5,1, DefaultSP, 30 ,-2,0);
+        addAutoModule(SpecimenLocked);
+        addConcurrentAutoModule(specimenout);
+        addSegment(.5,1, DefaultSP, 25,5,0);
+        addSegment(.5,1, DefaultSP, 25,18,0);
+
+        addAutoModule(specimenin);
+        addConcurrentAutoModule(specimenleave);
+        addSegment(.5,1, DefaultWP, 35 ,7,0);
+        addConcurrentAutoModule(SpecimenReady);
+
+        addSegment(.5,1, DefaultSP, 30 ,-2,0);
+        addAutoModule(SpecimenLocked);
+        addConcurrentAutoModule(specimenout);
+        addSegment(.5,1, DefaultSP, 35,5,0);
+        addSegment(.5,1, DefaultSP, 35,18,0);
+
+       addAutoModule(specimenin);
+        addConcurrentAutoModule(specimenleave);
+        addSegment(.5,1, DefaultSP, 30 ,15,90);
 
 
 
@@ -90,7 +182,33 @@ public class fivespec extends AutoFramework {
 
 
 
-        addPause(30);
+
+
+
+
+
+//
+//        addAutoModule(Grab);
+//        addConcurrentAutoModule(SpecimenDrop);
+//        addSegment(.5,1, DefaultWP, 52 ,40,180);
+//        addConcurrentAutoModule(Intake);
+//        addSegment(.5,1, DefaultWP, 55 ,50,180);
+//        addSegment(.5,1, DefaultSP, 55 ,62,180);
+//        addAutoModule(Grab);
+//        addConcurrentAutoModule(SpecimenDrop);
+//        addSegment(.5,1, DefaultSP, 58 ,35,180);
+//
+////        addSegment(.5,1, DefaultSP, 64 ,45,180);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
     }
 

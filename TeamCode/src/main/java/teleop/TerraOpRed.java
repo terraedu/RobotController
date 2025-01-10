@@ -42,7 +42,7 @@ public class TerraOpRed extends Tele {
         gph2.link(A, OutSpecimen);
         gph2.link(X, InSpecimen);
         gph2.link(DPAD_UP, Out);
-        gph2.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
+        gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
 
 
 //gph1.link(Y, ()-> out()  );
