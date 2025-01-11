@@ -1,11 +1,16 @@
 package automodules;
 
+import static global.Modes.Height.out1;
+import static global.Modes.Height.out2;
+import static global.Modes.Height.out3;
+import static global.Modes.Height.out4;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.RobotStatus.PLACING;
 import static global.Modes.TurretStatus.ANGLE;
 import static global.Modes.TurretStatus.FULL;
 import static global.Modes.TurretStatus.HALF;
+import static global.Modes.heightMode;
 import static global.Modes.robotStatus;
 import static global.Modes.turretStatus;
 
@@ -46,7 +51,7 @@ public interface AutoModuleUser extends RobotUser {
     ).setStartCode(()->
             robotStatus.set(DRIVING));
     AutoModule OutSpecimen = new AutoModule(
-            outtake.stageLinkEnd(.1),
+            outtake.stageLinkEnd(.1).attach(outtake.stageSpecimenTurret(.1)),
            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
            lift.stageLift(1,50)
 
@@ -57,19 +62,31 @@ public interface AutoModuleUser extends RobotUser {
 
 
 
-    );
+    ).setStartCode(heightMode.setTo(out2));
+
+    AutoModule Out2 = new AutoModule(
+            lift.stageLift(1,28)
+
+
+
+    ).setStartCode(heightMode.setTo(out3));
+    AutoModule Out3 = new AutoModule(
+            lift.stageLift(1,34)
+
+
+
+    ).setStartCode(heightMode.setTo(out1));
     AutoModule InSpecimen = new AutoModule(
-            lift.stageLift(1,33),
-            outtake.stageStartLink(.1),
-            RobotPart.pause(.2),
+            lift.stageLift(1,30).attach(            outtake.stageStartLink(.1)
+            ),
             outtake.stageOpen(.1),
             outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
             RobotPart.pause(.2),
             lift.stageLift(1,6),
             lift.stagePivot(.6,0),
-            lift.stageLift(1,0),
+            lift.stageLift(1,0).attach( outtake.stageStart(.1))
 
-            outtake.stageStart(.1)
+
 
 
 
@@ -85,8 +102,9 @@ public interface AutoModuleUser extends RobotUser {
         );
     AutoModule PlaceHigh = new AutoModule(
             outtake.stageLinkEnd(.1),
+
     lift.stagePivot(.3,-7.9).attach(outtake.stagePlace(.1)),
-        lift.stageLift(1,65)
+        lift.stageLift(1,50)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
@@ -103,6 +121,7 @@ outtake.stageFull(.1)
 
     AutoModule Place = new AutoModule(
   outtake.stageOpen(.1),
+            outtake.stagePlacePivot(.1),
             lift.stageLift(1,6),
             lift.stagePivot(.6,0),
             lift.stageLift(1,0),

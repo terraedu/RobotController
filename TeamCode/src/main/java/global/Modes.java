@@ -26,21 +26,8 @@ public interface Modes {
     Mode turretStatus = new Mode(TeleStatus.class);
 
 
-    enum Height implements Mode.ModeType {GROUND, lowrung, highrung, lowbasket, highbasket, currentHeight}
-
-    Mode heightMode = new Mode(Height.class)
-
-
-            .set(Height.GROUND, 0)
-            .set(Height.lowrung, 10)
-            .set(Height.highrung, 20)
-            .set(Height.lowbasket, 30)
-            .set(Height.highbasket, 40);
-
-
-
-    Mode current = new Mode(Height.class)
-            .set(Height.currentHeight, heightMode.getValue(heightMode.get()));
+    enum Height implements Mode.ModeType {out1, out2, out3, out4}
+    Mode heightMode = new Mode(Height.class);
 
 
 

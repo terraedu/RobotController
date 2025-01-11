@@ -6,6 +6,10 @@ import static global.General.gph1;
 import static global.General.gph2;
 import static global.General.log;
 import static global.General.voltageScale;
+import static global.Modes.Height.out1;
+import static global.Modes.Height.out2;
+import static global.Modes.Height.out3;
+import static global.Modes.Height.out4;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.RED;
 import static global.Modes.TurretStatus.ANGLE;
@@ -41,11 +45,12 @@ public class TerraOpRed extends Tele {
         gph2.link(LEFT_BUMPER, SpecimenLocked);
         gph2.link(A, OutSpecimen);
         gph2.link(X, InSpecimen);
-        gph2.link(DPAD_UP, Out);
+        gph1.link(DPAD_RIGHT, ()-> heightMode.get()==out2, Out2,  ()-> heightMode.get()==out3, Out3, Out);
         gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
 
 
 //gph1.link(Y, ()-> out()  );
+        heightMode.set(out1);
         teleStatus.set(RED);
         turretStatus.set(HALF);
     robotStatus.set(DRIVING);
@@ -68,12 +73,11 @@ public class TerraOpRed extends Tele {
     public void loopTele() {
 
 drive.newMove(gph1.ly, gph1.lx, gph1.rx);
-        lift.move(gph2.lx);
-        lift.pivotmove(gph2.lx);
-        lift.moveHang1(gph2.ry);
-        lift.moveHang2(gph2.rx);
+        lift.move(gph2.ly*.3);
+        lift.pivotmove(gph2.lx*.3);
 
-        log.show(lift.lpivot.getPower());
+
+//        log.show(lift.lpivot.getPower());
 
 
 

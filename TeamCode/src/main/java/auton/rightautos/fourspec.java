@@ -2,16 +2,17 @@ package auton.rightautos;
 
 import static global.General.bot;
 import static global.General.voltageScale;
-import static global.Modes.RobotStatus.PLACING;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import automodules.AutoModule;
-import auton.Auto;
 import autoutil.AutoFramework;
 import robotparts.RobotPart;
+import util.Timer;
 
-public class fivespec extends AutoFramework {
+@Autonomous(name= "FourSpecimen", group = "auto")
+public class fourspec extends AutoFramework {
+    Timer timer2 = new Timer();
 
 
     @Override
@@ -23,17 +24,19 @@ public class fivespec extends AutoFramework {
         outtake.moveLinkStart();
         outtake.moveStart();
 
+
     }
 
     AutoModule specimenout = new AutoModule(
-            outtake.stageLinkEnd(.1),
-            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
+            outtake.stageLinkEnd(.1).attach(outtake.stagePlaceSpecimen(.1)),
+            lift.stagePivot(.3,-7.9).attach(outtake.stageSpecimenTurret(.1)),
             lift.stageLift(1,50)
+
 
 
     );
     AutoModule specimenin = new AutoModule(
-            lift.stageLift(1,27).attach(            outtake.stageStartLink(.1)
+            lift.stageLift(1,30).attach(            outtake.stageStartLink(.1)
                     ),
             outtake.stageOpen(.1)
 
@@ -109,70 +112,63 @@ public class fivespec extends AutoFramework {
     );
     @Override
     public void define() {
-        addConcurrentAutoModule(specimenout);
-
+        timer2.set(0);
         addSegment(.5,1, DefaultSP, 0,10,0);
-        addSegment(.5,1, DefaultSP, 0,22,0);
+
+        addAutoModule(specimenout);
+        addBreakpoint(()-> timer2.seconds()>27);
+
+        addSegment(.5,1, DefaultSP, 0,21,0);
+
 
         addAutoModule(specimenin);
+
         addConcurrentAutoModule(specimenleave);
+        addBreakpoint(()-> timer2.seconds()>27);
+
 
         addSegment(.5,1, DefaultWP, 26 ,5,0);
+
 //        addConcurrentAutoModule(Intake);
         addSegment(.5,1, DefaultWP, 26 ,47,0);
-        addSegment(.5,1, DefaultSP, 35 ,47,0);
-        addSegment(.5,1, DefaultWP, 35 ,0,0);
+
+        addSegment(.5,1, DefaultSP, 37 ,47,0);
+
+        addSegment(.5,1, DefaultWP, 37 ,0,0);
+
         addSegment(.5,1, DefaultWP, 38 ,45,0);
+
         addSegment(.5,1, DefaultWP, 46 ,45,0);
+
+
         addSegment(.5,1, DefaultWP, 46 ,0,0);
-        addSegment(.5,1, DefaultWP, 48 ,43,0);
-        addSegment(.5,1, DefaultWP, 50 ,43,0);
-
-        addSegment(.5,1, DefaultWP, 50 ,0,0);
         addConcurrentAutoModule(SpecimenReady);
-        addSegment(.5,1, DefaultWP, 30 ,7,0);
-        addSegment(.5,1, DefaultSP, 30 ,-2,0);
+
+addSegment(1,1, DefaultSP, 30 ,8,0);
+
+
+        addSegment(1,1, DefaultSP, 30 ,.5,0);
         addAutoModule(SpecimenLocked);
+
+
         addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, 4,5,0);
-        addSegment(.5,1, DefaultSP, 4,18,0);
+
+        addSegment(1,1, DefaultWP, -4,10,0);
+
+
+        addSegment(1,1, DefaultSP, -4,12,0);
+
+        addBreakpoint(()-> timer2.seconds()>27);
+
+        addSegment(1,1, DefaultSP, -4,17.5,0);
+
+
 
         addAutoModule(specimenin);
         addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultWP, 35 ,7,0);
-        addConcurrentAutoModule(SpecimenReady);
 
-        addSegment(.5,1, DefaultSP, 30 ,-2,0);
-        addAutoModule(SpecimenLocked);
-        addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, 15,5,0);
-        addSegment(.5,1, DefaultSP, 15,18,0);
 
-        addAutoModule(specimenin);
-        addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultWP, 35 ,7,0);
-        addConcurrentAutoModule(SpecimenReady);
-
-        addSegment(.5,1, DefaultSP, 30 ,-2,0);
-        addAutoModule(SpecimenLocked);
-        addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, 25,5,0);
-        addSegment(.5,1, DefaultSP, 25,18,0);
-
-        addAutoModule(specimenin);
-        addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultWP, 35 ,7,0);
-        addConcurrentAutoModule(SpecimenReady);
-
-        addSegment(.5,1, DefaultSP, 30 ,-2,0);
-        addAutoModule(SpecimenLocked);
-        addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, 35,5,0);
-        addSegment(.5,1, DefaultSP, 35,18,0);
-
-       addAutoModule(specimenin);
-        addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultSP, 30 ,15,90);
+        addSegment(.5,1, DefaultSP, 60 ,10,90);
 
 
 
