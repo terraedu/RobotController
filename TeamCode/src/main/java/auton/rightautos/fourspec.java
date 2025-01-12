@@ -116,7 +116,6 @@ public class fourspec extends AutoFramework {
         addSegment(.5,1, DefaultSP, 0,10,0);
 
         addAutoModule(specimenout);
-        addBreakpoint(()-> timer2.seconds()>27);
 
         addSegment(.5,1, DefaultSP, 0,21,0);
 
@@ -124,7 +123,7 @@ public class fourspec extends AutoFramework {
         addAutoModule(specimenin);
 
         addConcurrentAutoModule(specimenleave);
-        addBreakpoint(()-> timer2.seconds()>27);
+
 
 
         addSegment(.5,1, DefaultWP, 26 ,5,0);
@@ -158,7 +157,6 @@ addSegment(1,1, DefaultSP, 30 ,8,0);
 
         addSegment(1,1, DefaultSP, -4,12,0);
 
-        addBreakpoint(()-> timer2.seconds()>27);
 
         addSegment(1,1, DefaultSP, -4,17.5,0);
 
