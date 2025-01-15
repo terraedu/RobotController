@@ -53,7 +53,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule OutSpecimen = new AutoModule(
             outtake.stageLinkEnd(.1).attach(outtake.stageSpecimenTurret(.1)),
            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
-           lift.stageLift(1,17)
+           lift.stageLift(1,21)
 
 
     ).setStartCode(()->robotStatus.set(INTAKING));
