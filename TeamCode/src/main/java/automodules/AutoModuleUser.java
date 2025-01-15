@@ -53,31 +53,31 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule OutSpecimen = new AutoModule(
             outtake.stageLinkEnd(.1).attach(outtake.stageSpecimenTurret(.1)),
            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
-           lift.stageLift(1,50)
+           lift.stageLift(1,17)
 
 
     ).setStartCode(()->robotStatus.set(INTAKING));
     AutoModule Out = new AutoModule(
-            lift.stageLift(1,22)
+            lift.stageLift(1,10)
 
 
 
     ).setStartCode(heightMode.setTo(out2));
 
     AutoModule Out2 = new AutoModule(
-            lift.stageLift(1,28)
+            lift.stageLift(1,15)
 
 
 
     ).setStartCode(heightMode.setTo(out3));
     AutoModule Out3 = new AutoModule(
-            lift.stageLift(1,34)
+            lift.stageLift(1,20)
 
 
 
     ).setStartCode(heightMode.setTo(out1));
     AutoModule InSpecimen = new AutoModule(
-            lift.stageLift(1,30).attach(            outtake.stageStartLink(.1)
+            lift.stageLift(1,12).attach(            outtake.stageStartLink(.1)
             ),
             outtake.stageOpen(.1),
             outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
@@ -104,7 +104,7 @@ public interface AutoModuleUser extends RobotUser {
             outtake.stageLinkEnd(.1),
 
     lift.stagePivot(.3,-7.9).attach(outtake.stagePlace(.1)),
-        lift.stageLift(1,50)
+        lift.stageLift(1,24)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
@@ -134,7 +134,7 @@ outtake.stageFull(.1)
 
 
 AutoModule Intake = new AutoModule(
-        lift.stageLift(1, 15).attach(outtake.stageLinkEnd(.1)),
+        lift.stageLift(1, 7).attach(outtake.stageLinkEnd(.1)),
         outtake.stageGrab(.1),
         outtake.stageOpen(.1).attach(outtake.stageFull(.1))
 
@@ -148,8 +148,7 @@ AutoModule Intake = new AutoModule(
             RobotPart.pause(.2),
             outtake.stageClose(.1),
             outtake.stageStart(.1),
-            lift.stageLift(1,0),
-            lift.stageLift(1,-1.5)
+            lift.stageLift(1,0)
 
 
 
