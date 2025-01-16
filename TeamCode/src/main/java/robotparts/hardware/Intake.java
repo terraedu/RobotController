@@ -30,6 +30,7 @@ public class Intake extends RobotPart {
         ipivot = create("ipivot", ElectronicType.PSERVO_FORWARD);
         iturret = create("iturret", ElectronicType.PSERVO_FORWARD);
 
+
         iclaw = create("iclaw", ElectronicType.PSERVO_FORWARD);
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
@@ -53,11 +54,11 @@ public class Intake extends RobotPart {
         iarml.changePosition("removespecimen", 0.5);
         iarmr.changePosition("removespecimen", 0.5);
 
-        ipivot.changePosition("start", .8);
+        ipivot.changePosition("start", .9);
         ipivot.changePosition("end", 1);
 
-        ipivot.changePosition("transfer", .85);
-        ipivot.changePosition("transferspecimen", .88);
+        ipivot.changePosition("transfer", .95);
+        ipivot.changePosition("transferspecimen", .98);
 
         ipivot.changePosition("specimen", 0.0);
 
