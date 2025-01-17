@@ -66,11 +66,11 @@ AutoModule Place = new AutoModule(
 
 
 AutoModule Intake = new AutoModule(
-        intake.stageTransfer(.1)
-//        extendo.stageLift(1,17),
-//        intake.stagePivotStart(.1),
-//        intake.stageEnd1(.1),
-//        intake.stageClose(.1)
+        intake.stageTransfer(.1),
+        extendo.stageLift(1,20),
+        intake.stagePivotStart(.1),
+        intake.stageEnd1(.1),
+        intake.stageClose(.1)
 
         ).setStartCode(()->
         robotStatus.set(INTAKING));
@@ -79,12 +79,15 @@ AutoModule Intake = new AutoModule(
             intake.stageEnd(.1),
             intake.stageOpen(.1),
             intake.stageTransfer2(.1),
-            intake.stageTransfer3(.1).attach(            intake.stageAdjustClaw(.1)),
+            intake.stageTransfer3(.1).attach(intake.stageAdjustClaw(.1)),
             RobotPart.pause(.2),
             intake.stageOpen(.1),
 
             intake.stageTransfer(.4),
+            RobotPart.pause(.2),
+
             intake.stageLinkStart(.1),
+
             extendo.stageLift(1,0),
             intake.stagePivotStart(.1).attach(outtake.stageOpen(.1)),
             intake.stageDownTurret(.1)
