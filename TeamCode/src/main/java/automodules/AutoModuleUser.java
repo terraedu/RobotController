@@ -104,7 +104,7 @@ public interface AutoModuleUser extends RobotUser {
             outtake.stageLinkEnd(.1),
 
     lift.stagePivot(.3,-7.9).attach(outtake.stagePlace(.1)),
-        lift.stageLift(1,30)
+        lift.stageLift(1,28)
 ).setStartCode(()->
         robotStatus.set(PLACING)
         );
