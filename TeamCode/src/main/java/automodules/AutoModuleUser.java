@@ -119,8 +119,10 @@ outtake.stageFull(.1)
     ).setStartCode(()-> turretStatus.set(HALF));
 
     AutoModule Place = new AutoModule(
-  outtake.stageOpen(.1),
             outtake.stagePlacePivot(.1),
+
+            outtake.stageOpen(.1),
+            RobotPart.pause(.5),
             lift.stageLift(1,6),
             lift.stagePivot(.6,0),
             lift.stageLift(1,0),

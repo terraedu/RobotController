@@ -73,8 +73,49 @@ public class TerraOpRed extends Tele {
     public void loopTele() {
 
 drive.newMove(gph1.ly, -gph1.lx, gph1.rx);
-        lift.move(gph2.ly*.3);
-        lift.pivotmove(gph2.lx*.3);
+        lift.move(gph2.ly*.7);
+        lift.pivotmove(gph2.lx*.7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        );
 
 
 //        log.show(lift.lpivot.getPower());
