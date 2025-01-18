@@ -123,6 +123,8 @@ public class Outtake extends RobotPart {
 
     public Stage stageSpecimen2(double t){return super.customTime(this::moveSpecimen2,t);}
 
+
+
     //public void moveTest(){ armr.setPower(.3);}
 public Stage stageGrab(double t){return super.customTime(this::moveIntake, t);}
     public Stage stageClose(double t){return super.customTime(this::moveClose, t);}

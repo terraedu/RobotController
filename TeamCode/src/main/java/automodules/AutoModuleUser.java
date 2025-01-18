@@ -53,7 +53,7 @@ public interface AutoModuleUser extends RobotUser {
     AutoModule OutSpecimen = new AutoModule(
             outtake.stageLinkEnd(.1).attach(outtake.stageSpecimenTurret(.1)),
            lift.stagePivot(.3,-7.9).attach(outtake.stagePlaceSpecimen(.1)),
-           lift.stageLift(1,24)
+           lift.stageLift(1,22)
 
 
     ).setStartCode(()->robotStatus.set(INTAKING));
@@ -77,14 +77,13 @@ public interface AutoModuleUser extends RobotUser {
 
     ).setStartCode(heightMode.setTo(out1));
     AutoModule InSpecimen = new AutoModule(
-            lift.stageLift(1,12).attach(            outtake.stageStartLink(.1)
+            lift.stageLift(1,15).attach(            outtake.stageStartLink(.1)
             ),
             outtake.stageOpen(.1),
             outtake.stageLinkEnd(.1).attach(outtake.stageFull(.1)),
             RobotPart.pause(.2),
             lift.stageLift(1,6),
-            lift.stagePivot(.6,0),
-            lift.stageLift(1,0).attach( outtake.stageStart(.1))
+            lift.stagePivot(.6,0).attach(lift.stageLift(1,0))
 
 
 
