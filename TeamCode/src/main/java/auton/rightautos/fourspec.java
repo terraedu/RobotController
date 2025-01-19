@@ -34,7 +34,7 @@ public class fourspec extends AutoFramework {
     AutoModule specimenout = new AutoModule(
             outtake.stageLinkEnd(.1).attach(outtake.stagePlaceSpecimen(.1)),
             lift.stagePivot(.3,-7.9).attach(outtake.stageSpecimenTurret(.1)),
-            lift.stageLift(1,22)
+            lift.stageLift(1,23)
 
 
 
@@ -120,14 +120,11 @@ public class fourspec extends AutoFramework {
 //        addSegment(1,1, DefaultSP,-5,0,0);
 //
         timer2.set(0);
-        addSegment(1, 1, DefaultSP, 0, 7, 0);
+        addSegment(1, 1, DefaultSP, 0, 10, 0);
 
-        addConcurrentAutoModule(specimenout);
+        addAutoModule(specimenout);
 
-       addSegment(1, 1, DefaultSP, 1, 14, 0);
-       addPause(1);
-        addSegment(1, 1, DefaultSP, 1, 22, 0);
-
+       addSegment(1, 1, DefaultSP, 1, 23, 0);
 
 
 
@@ -136,25 +133,27 @@ public class fourspec extends AutoFramework {
         addConcurrentAutoModule(specimenleave);
 
 
-        addSegment(1, 1, DefaultWP, -26, 5, 0);
+        addSegment(1, 1, DefaultWP, -30, 5, 0);
 
         addConcurrentAutoModule(Intake);
-        addSegment(1,1, DefaultWP, -26 ,47,0);
+        addSegment(1,1, DefaultWP, -30,47,0);
 
-             addSegment(1,1, DefaultSP, -37 ,45,0);
+             addSegment(1,1, DefaultSP, -40 ,47,0);
 
-          addSegment(1,1, DefaultWP, -47 ,5,0);
+          addSegment(1,1, DefaultWP, -40 ,7,0);
 
-           addSegment(1,1, DefaultWP, -48,45,0);
+           addSegment(1,1, DefaultWP, -40 ,45,0);
 
-          addSegment(1,1, DefaultWP, -56 ,45,0);
+          addSegment(1,1, DefaultWP, -52,45,0);
 
 
-          addSegment(1,1, DefaultWP, -46 ,13,0);
+          addSegment(1,1, DefaultWP, -52,7,0);
           addConcurrentAutoModule(SpecimenReady);
 
+        addSegment(1,1, DefaultSP, -37 ,10,0);
 
-          addSegment(1,1, DefaultSP, -30 ,2.5,0);
+
+          addSegment(1,1, DefaultSP, -37 ,2,0);
           addAutoModule(SpecimenLocked);
 
 
@@ -166,40 +165,19 @@ public class fourspec extends AutoFramework {
         addSegment(1,1, DefaultSP, 4,12,0);
 
 
-        addSegment(1,1, DefaultSP, 4,17.5,0);
+        addSegment(1,1, DefaultSP, 4,24,0);
 
 
 
         addAutoModule(specimenin);
         addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultSP, -30 ,-2,0);
-        addAutoModule(SpecimenLocked);
-        addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, -15,5,0);
-        addSegment(.5,1, DefaultSP, -15,18,0);
+        addSegment(1,1, DefaultSP, 4,15,0);
 
-        addAutoModule(specimenin);
-        addConcurrentAutoModule(specimenleave);
-        addSegment(.5,1, DefaultWP, -37 ,4,0);
-        addConcurrentAutoModule(SpecimenReady);
-
-        addSegment(.5,1, DefaultSP, -30 ,-2,0);
-        addAutoModule(SpecimenLocked);
-        addConcurrentAutoModule(specimenout);
-        addSegment(.5,1, DefaultSP, -25,5,0);
-        addSegment(.5,1, DefaultSP, -25,18,0);
-
-        addAutoModule(specimenin);
-        addConcurrentAutoModule(specimenleave);
+        addSegment(1,1, DefaultSP, -30,15,0);
 
 
-
-
-        addSegment(1,1, DefaultSP, -60 ,10,90);
-
-
-
-
+        addSegment(1,1, DefaultSP, 0 ,35,90);
+        addSegment(1,1, DefaultSP, 30 ,35,90);
 
 
 

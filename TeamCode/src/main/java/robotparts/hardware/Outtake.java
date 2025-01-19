@@ -30,8 +30,8 @@ public class Outtake extends RobotPart {
         armr.changePosition("dropspecimen", 1);
         arml.changePosition("placespecimen", .7);
         armr.changePosition("placespecimen", .7);
-        arml.changePosition("grabspecimen", 0.88);
-        armr.changePosition("grabspecimen", 0.88);
+        arml.changePosition("grabspecimen", 0.84);
+        armr.changePosition("grabspecimen", 0.84);
         arml.changePosition("liftspecimen", 0.96);
         armr.changePosition("liftspecimen", 0.96);
 
@@ -65,7 +65,7 @@ public class Outtake extends RobotPart {
 
 
 
-        claw.changePosition("start", 0.2);
+        claw.changePosition("start", 0.4);
         claw.changePosition("half", 0.4);
         claw.changePosition("open", 0);
 //        claw.changePosition("grab", 0.4);
@@ -105,6 +105,7 @@ public class Outtake extends RobotPart {
     public void moveHalf(){turret.setPosition("half");}
     public void moveFull(){turret.setPosition("start");}
     public void moveAngle(){turret.setPosition("angle");}
+    public void moveSlam(){turret.setPosition("start"); claw.setPosition("start");armr.setPosition("dropspecimen");arml.setPosition("dropspecimen");pivot.setPosition("grab");}
     public void moveGrabSpecimen(){claw.setPosition("open");pivot.setPosition("specimen");armr.setPosition("grabspecimen");arml.setPosition("grabspecimen");}
 
     public Stage stageSpecimenTurret(double t){return super.customTime(this::moveSpecimenTurret, t);}
@@ -120,7 +121,7 @@ public class Outtake extends RobotPart {
     public Stage stageSpecimenPivot(double t){return super.customTime(this::moveSpecimenPivot, t);}
     public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen,t);}
     public Stage stagePlaceSpecimen(double t){return super.customTime(this::moveSpecimen3,t);}
-
+    public Stage stageSlam(double t){return super.customTime(this::moveSlam, t);}
     public Stage stageSpecimen2(double t){return super.customTime(this::moveSpecimen2,t);}
 
 
