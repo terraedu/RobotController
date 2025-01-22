@@ -22,6 +22,7 @@ import static teleutil.button.Button.RIGHT_BUMPER;
 import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
+@TeleOp(name = "TerraOpRight", group = "TeleOp")
 
 public class TerraOpBlue extends Tele {
 
@@ -63,16 +64,17 @@ public class TerraOpBlue extends Tele {
 
     @Override
     public void loopTele() {
-        drive.newMove(gph1.ly, gph1.lx, gph1.rx);
-        lift.pivotmove(gph2.ly);
-        lift.move(gph2.lx);
-        lift.moveHang1(gph2.ry);
-        lift.moveHang2(gph2.rx);
+
+        drive.newMove(gph1.ry, -gph1.rx, gph1.lx);
+        lift.move(gph2.ly*.7);
+        lift.pivotmove(gph2.lx*.7);
 
 
-        /**
-         * Gets Distance
-         */
+
+
+                /**
+                 * Gets Distance
+                 */
 
 //        log.show("right distance (cm)", distanceSensorsNew.getCMDistanceRight());
 //        log.show("left distance (cm)", distanceSensorsNew.getCMDistanceLeft());
