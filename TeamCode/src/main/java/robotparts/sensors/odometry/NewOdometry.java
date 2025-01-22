@@ -60,7 +60,6 @@ public class NewOdometry extends RobotPart {
 
 
 
-//        gyro.update();
 //        setHeading(gyro.getHeading());
 
 
@@ -95,7 +94,7 @@ public class NewOdometry extends RobotPart {
     }//
 
 
-    public double getEncX() { return (xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
+    public double getEncX() { return (-xOdo.getCurrentPosition()-startX) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
     public double getEncY() { return (yOdo.getCurrentPosition()-startY) * wheelDiameter  * Math.PI / Constants.ENCODER_TICKS_PER_REV; }
     public double getEncY2() { return 1.009*(-y2Odo.getCurrentPosition()-startY2) * wheelDiameter * Math.PI / Constants.ENCODER_TICKS_PER_REV;}
 

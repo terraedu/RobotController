@@ -35,8 +35,8 @@ public class Intake extends RobotPart {
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
 //
-        iarml.changePosition("start", .67);
-        iarmr.changePosition("start", .67);
+        iarml.changePosition("start", .55);
+        iarmr.changePosition("start", .55);
         iarml.changePosition("startrun", .57);
         iarmr.changePosition("startrun", .57);
         iarml.changePosition("transfer1", 0.64);

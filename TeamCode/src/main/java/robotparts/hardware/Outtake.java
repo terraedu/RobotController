@@ -29,8 +29,11 @@ public class Outtake extends RobotPart {
         arml.changePosition("grab", 0.4);
         armr.changePosition("grab", 0.4);
 
-        arml.changePosition("specimen", 0.3);
-        armr.changePosition("specimen", 0.3);
+        arml.changePosition("specimen", 0.5);
+        armr.changePosition("specimen", 0.5);
+
+        arml.changePosition("specimenplace", 0.65);
+        armr.changePosition("specimenplace", 0.65);
 
 
         pivot.changePosition("start", 0.05);
@@ -56,8 +59,8 @@ public class Outtake extends RobotPart {
     public void moveOpen(){ claw.setPosition("start");}
     public void moveClose(){ claw.setPosition("grab");}
     public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer"); claw.setPosition("start");}
-
-    public void moveSpecimen(){armr.setPosition("specimen"); arml.setPosition("specimen"); }
+    public void movePlaceSpecimen(){armr.setPosition("specimenplace"); arml.setPosition("specimenplace");}
+    public void moveSpecimen(){armr.setPosition("specimen"); arml.setPosition("specimen"); claw.setPosition("grab"); pivot.setPosition("start");}
 
     //public void moveTest(){ armr.setPower(.3);}
 public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}

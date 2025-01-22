@@ -131,18 +131,18 @@ public class Drive extends RobotPart {
         if(robotStatus.get()== DRIVING) {
 
 
-            fl.setPower(-f +s + .55 * t); //fr
-            bl.setPower(f -s + .55 * t);
-            fr.setPower(f + s - .55 * t); //br
-            br.setPower(-f - s - .55 * t); //fl
+            fl.setPower(f -s - .55 * t); //fr
+            bl.setPower(f +s - .55 * t);
+            fr.setPower(f - s + .55 * t); //br
+            br.setPower(f + s + .55 * t); //fl
 
 
         }else{
 
-            fl.setPower(-.3 * f + .3 * s - .2 * t);
+            fl.setPower(.3 * f + .3 * s - .2 * t);
             bl.setPower(.3 * f + .3 * s - .2 * t);
             fr.setPower(.3 * f + .3 * s + .2 * t);
-            br.setPower(-.3 * f + .3 * s + .2 * t);
+            br.setPower(.3 * f + .3 * s + .2 * t);
         }
 
 

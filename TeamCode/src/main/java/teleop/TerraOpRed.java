@@ -76,7 +76,7 @@ public class TerraOpRed extends Tele {
     @Override
     public void loopTele() {
 
-drive.newMove(gph1.ly, -gph1.lx, gph1.rx);
+drive.newMove(-gph1.ly, -gph1.lx, gph1.rx);
 lift.move(gph2.ly);
 
 
