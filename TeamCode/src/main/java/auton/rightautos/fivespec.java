@@ -66,8 +66,7 @@ public class fivespec extends AutoFramework {
         addConcurrentAutoModule(retract);
         addSegment(.5,.6,DefaultWP,0,40,0);
 
-        addSegment(.5,.6,DefaultWP,85,60,0);
-
+        addSegment(.5,.6,DefaultWP,90,60,-45);
 
 
 
