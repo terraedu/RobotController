@@ -1,6 +1,6 @@
 package unittests.tele.hardware;
 
-import autoutil.vision.CaseScanner;
+import autoutil.vision.old.CaseScanner;
 import unittests.tele.TeleUnitTest;
 
 import static global.General.log;

@@ -7,15 +7,10 @@ import static global.General.gph2;
 import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
-import static global.Modes.RobotStatus.PLACING;
-import static global.Modes.TeleStatus.BLUEA;
 import static global.Modes.TeleStatus.REDA;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
 import static teleutil.button.Button.DPAD_DOWN;
-import static teleutil.button.Button.DPAD_LEFT;
-import static teleutil.button.Button.DPAD_RIGHT;
-import static teleutil.button.Button.DPAD_UP;
 import static teleutil.button.Button.LEFT_BUMPER;
 import static teleutil.button.Button.LEFT_TRIGGER;
 import static teleutil.button.Button.RIGHT_BUMPER;
@@ -24,6 +19,7 @@ import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
 
 import autoutil.vision.SampleScanner;
+import autoutil.vision.yolovision.YoloScanner;
 
 
 @TeleOp(name = "TerraOpRed", group = "TeleOp")
@@ -35,23 +31,24 @@ public class TerraOpRed extends Tele {
         Tele auto = this;
         auto.scan(true);
 
-        intake.scanner = (SampleScanner) Scanner;
+        intake.yoloScanner = (YoloScanner) yoloScanner;
+        intake.sampleScanner = (SampleScanner) sampleScanner;
 
         teleStatus.set(REDA);
         voltageScale = 1;
-        gph1.link(B, PlaceHigh);
-        gph1.link(A, Place);
-        gph1.link(RIGHT_BUMPER, OutSpecimen);
-        gph1.link(LEFT_BUMPER, InSpecimen);
+        gph2.link(B, PlaceHigh);
+        gph2.link(A, Place);
+        gph2.link(RIGHT_BUMPER, OutSpecimen);
+        gph2.link(LEFT_BUMPER, InSpecimen);
 
 
 
-        gph1.link(DPAD_DOWN, ()-> intake.updatePipeline());
+        gph2.link(DPAD_DOWN, ()-> intake.updatePipeline());
 
-        gph1.link(RIGHT_TRIGGER, Intake);
-        gph1.link(LEFT_TRIGGER, Grab);
-        gph1.link(Y, SpecimenReady);
-        gph1.link(X, Specimen);
+        gph2.link(RIGHT_TRIGGER, Intake);
+        gph2.link(LEFT_TRIGGER, Grab);
+        gph2.link(Y, SpecimenReady);
+        gph2.link(X, Specimen);
 
 
 
@@ -68,16 +65,14 @@ public class TerraOpRed extends Tele {
         intake.moveStart();
         outtake.moveStart();
 
-
-
-
     }
 
     @Override
     public void loopTele() {
 
 drive.newMove(-gph1.ly, gph1.rx, gph1.lx);
-lift.move(gph2.ly);
+lift.move(gph2.ly*.7);
+        extendo.move(gph2.lx*.7);
 
 
         /**

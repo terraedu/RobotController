@@ -1,9 +1,12 @@
 package teleop;
 
+import android.graphics.Path;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import automodules.AutoModuleUser;
 import autoutil.vision.SampleScanner;
+import autoutil.vision.yolovision.YoloScanner;
 import global.Common;
 import global.Modes;
 import robot.RobotUser;
@@ -44,12 +47,14 @@ public abstract class Tele extends OpMode implements Common, RobotUser, AutoModu
      */
 
     // Scanner Code
-    public OpenCvPipeline Scanner;
+    public OpenCvPipeline yoloScanner;
+    public OpenCvPipeline sampleScanner;
 
     public void scan(boolean view){
-        Scanner = new SampleScanner();
+        yoloScanner = new YoloScanner();
+        sampleScanner = new SampleScanner();
         camera.start(true);
-        camera.camera1.setPipeline(Scanner);
+        camera.camera1.setPipeline(sampleScanner);
     }
 
     @Override

@@ -16,22 +16,20 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
+
 public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
     public static boolean drawOnScreen = true;
-    public static double bigSizeThreshold = 60000;
-    public static double smallSizeThreshold = 10000;
-    public static int win_center_x = 320;
-    public static int win_center_y = 240;
+    public static double BIGTHRESH = 60000;
+    public static double SMALLTHRESH = 13000;
+    public static int win_bottom_x = 320;
+    public static int win_bottom_y = 480;
     public static double rect_center_x;
     public static double rect_center_y;
     public static double dist_x;
     public static double dist_y;
-    public static double dist_x_cm;
-    public static double dist_y_cm;
     public static int sample_length_pixels_4in = 260;
-    int counter;
 
     Mat ycrcbMat = new Mat();
     Mat crMat = new Mat();
@@ -52,10 +50,9 @@ public class SampleScanner extends OpenCvPipeline {
     /*
      * Threshold values
      */
-    public static int YELLOW_MASK_THRESHOLD = 80;
+    public static int YELLOW_MASK_THRESHOLD = 90;
     public static int BLUE_MASK_THRESHOLD = 150;
     public static int RED_MASK_THRESHOLD = 170;
-    public static int MAX_THRESHOLD = 6000;
 
     /*
      * Elements for noise reduction
@@ -83,7 +80,6 @@ public class SampleScanner extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat input) {
         internalStoneList.clear();
-        counter++;
         findContours(input);
         clientStoneList = new ArrayList<>(internalStoneList);
         return input;
@@ -91,6 +87,7 @@ public class SampleScanner extends OpenCvPipeline {
 
 
     void findContours(Mat input) {
+
 
         Imgproc.cvtColor(input, ycrcbMat, Imgproc.COLOR_RGB2YCrCb);
         Core.extractChannel(ycrcbMat, cbMat, 2);
@@ -137,8 +134,60 @@ public class SampleScanner extends OpenCvPipeline {
         ArrayList<MatOfPoint> contoursList = new ArrayList<>();
 
         Imgproc.findContours(morphedMat, contoursList, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+
+        int cnt = 0;
+        int size = contoursList.size();
+        double minDist = 0;
+        double dist;
+        RotatedRect smallDistBox = null;
+
         for (MatOfPoint contour : contoursList) {
-            analyzeContour(contour, input, teamColor);
+            RotatedRect rotatedRectFitToContour = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
+
+            Imgproc.circle(input, new Point(win_bottom_x, win_bottom_y), 1, RED, 20);
+
+            rect_center_x = rotatedRectFitToContour.center.x;
+            rect_center_y = rotatedRectFitToContour.center.y;
+
+            dist_x = win_bottom_x - rect_center_x;
+            dist_y = win_bottom_y - rect_center_y;
+
+            double area = rotatedRectFitToContour.size.height * rotatedRectFitToContour.size.width;
+            dist = Math.pow((Math.pow(dist_x, 2) + Math.pow(dist_y, 2)), 0.5);
+            log.show("x " + rotatedRectFitToContour.center.x);
+            log.show("y " + rotatedRectFitToContour.center.y);
+            log.show("dist " + dist);
+
+            // 260 pixels divided by 8.89 cm (sample length) is 29.24
+//        dist_x_cm = dist_x / 29.2463442; // dividing dist in pixels by pixels that are 1 cm long at 4 inches
+//        dist_y_cm = dist_y / 29.2463442;
+
+            if (minDist == 0 || dist < minDist)  {
+                if (rect_center_x != 0 && rect_center_y != 0 && area < BIGTHRESH && area > SMALLTHRESH) {
+                    minDist = dist;
+                    smallDistBox = rotatedRectFitToContour;
+                }
+            }
+
+            if (++cnt == size) {
+                if (smallDistBox != null) {
+                    drawRotatedRect(smallDistBox, input, teamColor);
+                    drawRotatedRect(smallDistBox, contoursOnPlainImageMat, teamColor);
+
+                    double rotRectAngle = smallDistBox.angle;
+                    if (smallDistBox.size.width < smallDistBox.size.height) {
+                        rotRectAngle += 90;
+                    }
+                    double angle = -(rotRectAngle - 180);
+                    Imgproc.line(input, smallDistBox.center, new Point(win_bottom_x, win_bottom_y), YELLOW);
+
+                    AnalyzedStone analyzedStone = new AnalyzedStone();
+                    analyzedStone.angle = Math.round(angle);
+                    analyzedStone.color = teamColor;
+                    analyzedStone.center = smallDistBox.center;
+                    internalStoneList.add(analyzedStone);
+                }
+            }
         }
     }
 
@@ -149,52 +198,11 @@ public class SampleScanner extends OpenCvPipeline {
         Imgproc.dilate(output, output, dilateElement);
     }
 
-    void analyzeContour(MatOfPoint contour, Mat input, String color) {
-
-        Point[] points = contour.toArray();
-        MatOfPoint2f contour2f = new MatOfPoint2f(points);
-
-        RotatedRect rotatedRectFitToContour = Imgproc.minAreaRect(contour2f);
-
-
-        rect_center_x = rotatedRectFitToContour.center.x;
-        rect_center_y = rotatedRectFitToContour.center.y;
-        dist_x = win_center_x - rect_center_x;
-        dist_y = win_center_y - rect_center_y;
-        // 260 pixels divided by 8.89 cm (sample length) is 29.24
-        dist_x_cm = dist_x / 29.2463442; // dividing dist in pixels by pixels that are 1 cm long at 4 inches
-        dist_y_cm = dist_y / 29.2463442;
-
-        if (this.counter > 30) {
-            log.show("x inches", dist_x_cm);
-            log.show("y inches", dist_y_cm);
-        }
-
-        if (rotatedRectFitToContour.size.width * rotatedRectFitToContour.size.height < bigSizeThreshold && rotatedRectFitToContour.size.width * rotatedRectFitToContour.size.height > smallSizeThreshold) {
-            //if (drawOnScreen) {
-            drawRotatedRect(rotatedRectFitToContour, input, color);
-            drawRotatedRect(rotatedRectFitToContour, contoursOnPlainImageMat, color);
-            //}
-            double rotRectAngle = rotatedRectFitToContour.angle;
-            if (rotatedRectFitToContour.size.width < rotatedRectFitToContour.size.height) {
-                rotRectAngle += 90;
-            }
-            double angle = -(rotRectAngle - 180);
-            if (drawOnScreen) {
-                drawTagText(rotatedRectFitToContour, (int) Math.round(angle) + " deg", input, color);
-            }
-            AnalyzedStone analyzedStone = new AnalyzedStone();
-            analyzedStone.angle = Math.round(angle);
-            analyzedStone.color = color;
-            analyzedStone.center = rotatedRectFitToContour.center;
-//            log.show("sample angle:", analyzedStone.angle);
-//            log.show("sample color:", analyzedStone.color);
-            internalStoneList.add(analyzedStone);
-//            log.show("analyzed stone added to internal list");
-        }
+    void analyzeContour(MatOfPoint contour, Mat input, String color, boolean isLast) {
     }
 
-    static void drawTagText(RotatedRect rect, String text, Mat mat, String color) {
+    static void drawTagText(RotatedRect rect, String text, Mat mat, String color)
+    {
         Scalar colorScalar = getColorScalar(color);
 
         Imgproc.putText(
@@ -231,9 +239,7 @@ public class SampleScanner extends OpenCvPipeline {
                 return RED;
         }
     }
-    public ArrayList<AnalyzedStone> getDetectedStones() {
-        return clientStoneList;
-    }
+
     public double getAngle() {
         if (clientStoneList.isEmpty()) {
             return -1;
@@ -285,5 +291,4 @@ public class SampleScanner extends OpenCvPipeline {
 //             */
 //            phoneCam.stopRecordingPipeline();
 //        }
-//    }
 }

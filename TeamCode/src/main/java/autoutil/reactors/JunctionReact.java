@@ -1,7 +1,7 @@
 package autoutil.reactors;
 
 import autoutil.generators.PoseGen;
-import autoutil.vision.JunctionScanner;
+import autoutil.vision.old.JunctionScanner;
 import geometry.circles.Circle;
 import geometry.framework.Point;
 import geometry.position.Line;

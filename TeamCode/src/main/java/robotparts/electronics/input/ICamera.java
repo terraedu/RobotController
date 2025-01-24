@@ -1,37 +1,26 @@
 package robotparts.electronics.input;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 //import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 //import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 //import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 //import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.opencv.core.Scalar;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import autoutil.generators.Generator;
-import autoutil.vision.Scanner;
+import autoutil.vision.old.Scanner;
 import elements.Field;
 import geometry.framework.Point;
 import geometry.position.Pose;
-import global.General;
 import robotparts.Electronic;
-import util.template.Iterator;
 
-import static global.Constants.VUFORIA_KEY;
 import static global.Constants.VUFORIA_TARGET_HEIGHT_CM;
 import static global.General.cameraMonitorViewId;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XZY;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 

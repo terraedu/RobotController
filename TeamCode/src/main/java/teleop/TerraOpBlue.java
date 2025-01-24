@@ -2,14 +2,10 @@ package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static global.General.gph1;
 import static global.General.voltageScale;
 import static global.Modes.TeleStatus.BLUEA;
-import static teleutil.button.Button.B;
-import static global.General.*;
 
-import autoutil.vision.SampleScanner;
-import teleutil.button.Button;
+import autoutil.vision.yolovision.YoloScanner;
 
 @TeleOp(name = "TerraOpBlue", group = "TeleOp")
 public class TerraOpBlue extends Tele {
@@ -22,7 +18,7 @@ public class TerraOpBlue extends Tele {
         Tele auto = this;
         auto.scan(true);
 
-        intake.scanner = (SampleScanner) Scanner;
+        intake.yoloScanner = (YoloScanner) yoloScanner;
 
         teleStatus.set(BLUEA);
 

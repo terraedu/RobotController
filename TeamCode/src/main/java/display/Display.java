@@ -29,7 +29,10 @@
 //        Vector v = new Vector(1.0,0);
 //        v.rotate(90);
 //        Vector v2 = v.getRotated(90);
-//        System.out.println(v);
+//        System.out.println(
+//
+//
+//        v);
 //        System.out.println(v2);
 //
 ////        Circle circle = new Circle(new Point(3,4), 5);

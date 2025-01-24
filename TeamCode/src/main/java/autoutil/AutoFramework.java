@@ -4,14 +4,8 @@ package autoutil;
 import static global.General.fault;
 import static global.General.fieldPlacement;
 import static global.General.fieldSide;
-import static global.General.log;
 
 import androidx.annotation.NonNull;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +19,8 @@ import autoutil.generators.BreakpointGenerator;
 import autoutil.generators.Generator;
 import autoutil.generators.PauseGenerator;
 import autoutil.reactors.Reactor;
-import autoutil.vision.CaseScanner;
-import autoutil.vision.CaseScannerContours;
-import autoutil.vision.CaseScannerRect;
-import autoutil.vision.Scanner;
+import autoutil.vision.old.CaseScannerRect;
+import autoutil.vision.old.Scanner;
 //import autoutil.vision.TeamPropScanner;
 import elements.Case;
 import elements.FieldPlacement;

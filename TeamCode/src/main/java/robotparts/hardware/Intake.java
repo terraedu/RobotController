@@ -30,32 +30,31 @@ public class Intake extends RobotPart {
         ipivot = create("ipivot", ElectronicType.PSERVO_FORWARD);
         iturret = create("iturret", ElectronicType.PSERVO_FORWARD);
 
-
         iclaw = create("iclaw", ElectronicType.PSERVO_FORWARD);
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
 //
-        iarml.changePosition("start", .55);
-        iarmr.changePosition("start", .55);
+        iarml.changePosition("start", .67);
+        iarmr.changePosition("start", .67);
         iarml.changePosition("startrun", .57);
         iarmr.changePosition("startrun", .57);
-        iarml.changePosition("transfer1", 0.64);
-        iarmr.changePosition("transfer1", 0.64);
+        iarml.changePosition("transfer1", 0.61);
+        iarmr.changePosition("transfer1", 0.61);
         iarml.changePosition("transferspecimen", 0.7);
         iarmr.changePosition("transferspecimen", 0.7);
         iarml.changePosition("specimen", 0.52);
         iarmr.changePosition("specimen", 0.52);
         iarml.changePosition("transfer", 0.2);
         iarmr.changePosition("transfer", 0.2);
-        iarml.changePosition("end", 0.1);
-        iarmr.changePosition("end", 0.1);
-        iarml.changePosition("end1", 0.14);
-        iarmr.changePosition("end1", 0.14);
+        iarml.changePosition("end", 0);
+        iarmr.changePosition("end", 0);
+        iarml.changePosition("end1", 0.18);
+        iarmr.changePosition("end1", 0.18);
         iarml.changePosition("removespecimen", 0.5);
         iarmr.changePosition("removespecimen", 0.5);
 
-        ipivot.changePosition("start", .84);
-        ipivot.changePosition("end", .9);
+        ipivot.changePosition("start", .8);
+        ipivot.changePosition("end", 1);
 
         ipivot.changePosition("transfer", .85);
         ipivot.changePosition("transferspecimen", .88);
@@ -63,7 +62,7 @@ public class Intake extends RobotPart {
         ipivot.changePosition("specimen", 0.0);
 
 
-        ipivot.changePosition("middle", 0);
+        ipivot.changePosition("middle", 0.2);
 //
         iclaw.changePosition("start", .31);
         iclaw.changePosition("adjust", 0.27);

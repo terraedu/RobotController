@@ -1,8 +1,6 @@
 package autoutil;
 
-import autoutil.reactors.Reactor;
-import autoutil.vision.CaseScanner;
-import util.codeseg.ReturnCodeSeg;
+import autoutil.vision.old.CaseScanner;
 
 public class AutoConfig {
     private final AutoSegment<?,?> getWaypointSegment, getSetpointSegment;
