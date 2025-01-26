@@ -54,8 +54,8 @@ public class Intake extends RobotPart {
         iarmr.changePosition("transfer", 0.2);
         iarml.changePosition("end", 0.06);
         iarmr.changePosition("end", 0.06);
-        iarml.changePosition("end1", 0.21);
-        iarmr.changePosition("end1", 0.21);
+        iarml.changePosition("end1", 0.26);
+        iarmr.changePosition("end1", 0.26);
         iarml.changePosition("removespecimen", 0.5);
         iarmr.changePosition("removespecimen", 0.5);
 
@@ -63,6 +63,7 @@ public class Intake extends RobotPart {
         ipivot.changePosition("specimen2", .96);
 
         ipivot.changePosition("end", .57);
+        ipivot.changePosition("end1", .4);
 
         ipivot.changePosition("transfer", .85);
         ipivot.changePosition("transferspecimen", .57);
@@ -71,7 +72,7 @@ public class Intake extends RobotPart {
 
 
         ipivot.changePosition("middle", 0.2);
-//
+
         iclaw.changePosition("start", .38);
         iclaw.changePosition("adjust", 0.32);
 
@@ -112,6 +113,7 @@ public class Intake extends RobotPart {
     public void moveEnd1() {
         iarmr.setPosition("end1");
         iarml.setPosition("end1");
+        ipivot.setPosition("end1");
         iclaw.setPosition("start");
     }
     public void moveSpecimen(){ipivot.setPosition("specimen"); iclaw.setPosition("close");iarmr.setPosition("specimen"); iarml.setPosition("specimen"); }
