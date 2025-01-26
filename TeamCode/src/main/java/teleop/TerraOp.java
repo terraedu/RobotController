@@ -22,39 +22,37 @@ import autoutil.vision.SampleScanner;
 import autoutil.vision.yolovision.YoloScanner;
 
 
-@TeleOp(name = "TerraOpRed", group = "TeleOp")
-public class TerraOpRed extends Tele {
+@TeleOp(name = "TerraOp", group = "TeleOp")
+public class TerraOp extends Tele {
 
     @Override
     public void initTele() {
 
-        Tele auto = this;
-        auto.scan(true);
+        teleStatus.set(REDA);
+        voltageScale = 1;
+
+//        Tele auto = this;
+//        auto.scan(true);
 
         intake.yoloScanner = (YoloScanner) yoloScanner;
         intake.sampleScanner = (SampleScanner) sampleScanner;
 
-        teleStatus.set(REDA);
-        voltageScale = 1;
+        gph1.link(LEFT_BUMPER, () -> intake.moveStartTurret()); // mid
+        gph1.link(LEFT_TRIGGER, () -> intake.moveTurret()); // 45 left
+        gph1.link(RIGHT_BUMPER, () -> intake.moveTurretSideways()); // 90
+        gph1.link(RIGHT_TRIGGER, () -> intake.moveTurretMiddler()); // 45 right
+
         gph2.link(B, PlaceHigh);
         gph2.link(A, Place);
         gph2.link(RIGHT_BUMPER, OutSpecimen);
         gph2.link(LEFT_BUMPER, InSpecimen);
-
-
-
-        gph2.link(DPAD_DOWN, ()-> intake.updatePipeline());
-
+        gph2.link(DPAD_DOWN,drop);
         gph2.link(RIGHT_TRIGGER, Intake);
         gph2.link(LEFT_TRIGGER, Grab);
         gph2.link(Y, SpecimenReady);
         gph2.link(X, Specimen);
 
-
-
-//gph1.link(Y, ()-> out()  );
     robotStatus.set(DRIVING);
-
     }
 
     @Override

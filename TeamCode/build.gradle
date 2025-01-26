@@ -18,7 +18,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'org.team11260:fast-load-plugin:{version}'
+        classpath 'org.team11260:fast-load-plugin:0.1.2'
     }
 }
 
@@ -43,5 +43,5 @@ repositories {
 
 dependencies {
     implementation project(':FtcRobotController')
-    implementation 'org.team11260:fast-load:{version}'
+    implementation 'org.team11260:fast-load:0.1.2'
 }

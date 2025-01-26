@@ -139,10 +139,10 @@ public class Drive extends RobotPart {
 
         }else{
 
-            fl.setPower(.3 * f + .3 * s - .2 * t);
-            bl.setPower(.3 * f + .3 * s - .2 * t);
-            fr.setPower(.3 * f + .3 * s + .2 * t);
-            br.setPower(.3 * f + .3 * s + .2 * t);
+            fl.setPower(.5 * f - .3 * s + .5 * t);
+            bl.setPower(.5 * f + .3 * s - .5 * t);
+            fr.setPower(.5 * f - .3 * s - .5 * t);
+            br.setPower(.5 * f + .3 * s + .5 * t);
         }
 
 

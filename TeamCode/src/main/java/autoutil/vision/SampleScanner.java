@@ -20,16 +20,17 @@ import java.util.ArrayList;
 public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
-    public static boolean drawOnScreen = true;
     public static double BIGTHRESH = 60000;
-    public static double SMALLTHRESH = 13000;
-    public static int win_bottom_x = 320;
+    public static double SMALLTHRESH = 9000;
+    public static int win_half_x = 320;
+    public static int win_half_y = 240;
     public static int win_bottom_y = 480;
     public static double rect_center_x;
     public static double rect_center_y;
     public static double dist_x;
     public static double dist_y;
-    public static int sample_length_pixels_4in = 260;
+
+    public static boolean isCenter;
 
     Mat ycrcbMat = new Mat();
     Mat crMat = new Mat();
@@ -57,7 +58,6 @@ public class SampleScanner extends OpenCvPipeline {
     /*
      * Elements for noise reduction
      */
-
     Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
     Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
 
@@ -87,43 +87,17 @@ public class SampleScanner extends OpenCvPipeline {
 
 
     void findContours(Mat input) {
-
-
         Imgproc.cvtColor(input, ycrcbMat, Imgproc.COLOR_RGB2YCrCb);
         Core.extractChannel(ycrcbMat, cbMat, 2);
         Core.extractChannel(ycrcbMat, crMat, 1);
 
         contoursOnPlainImageMat = Mat.zeros(input.size(), input.type());
-//        Imgproc.threshold(cbMat, yellowThresholdMat, YELLOW_MASK_THRESHOLD, 255, Imgproc.THRESH_BINARY_INV);
-//        morphMask(yellowThresholdMat, morphedYellowThreshold);
-//        ArrayList<MatOfPoint> yellowContoursList = new ArrayList<>();
-//
-//        Imgproc.findContours(morphedYellowThreshold, yellowContoursList, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-//        for (MatOfPoint contour : yellowContoursList) {
-//            analyzeContour(contour, input, "Yellow");
-//        }
         contours(input, cbMat, yellowThresholdMat, morphedYellowThreshold, YELLOW_MASK_THRESHOLD, Imgproc.THRESH_BINARY_INV, "Yellow");
 
         if (teleStatus.modeIs(BLUEA)) {
-//            Imgproc.threshold(cbMat, blueThresholdMat, BLUE_MASK_THRESHOLD, 255, Imgproc.THRESH_BINARY);
-//            morphMask(blueThresholdMat, morphedBlueThreshold);
-//            ArrayList<MatOfPoint> blueContoursList = new ArrayList<>();
-//            Imgproc.findContours(morphedBlueThreshold, blueContoursList, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-//            for (MatOfPoint contour : blueContoursList) {
-//                analyzeContour(contour, input, "Blue");
-//            }
             contours(input, cbMat, blueThresholdMat, morphedBlueThreshold, BLUE_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Blue");
-
         } else {
-//            Imgproc.threshold(crMat, redThresholdMat, RED_MASK_THRESHOLD, 255, Imgproc.THRESH_BINARY);
-//            morphMask(redThresholdMat, morphedRedThreshold);
-//            ArrayList<MatOfPoint> redContoursList = new ArrayList<>();
-//            Imgproc.findContours(morphedRedThreshold, redContoursList, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
-//            for (MatOfPoint contour : redContoursList) {
-//                analyzeContour(contour, input, "Red");
-//            }
             contours(input, crMat, redThresholdMat, morphedRedThreshold, RED_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Red");
-
         }
     }
 
@@ -144,12 +118,12 @@ public class SampleScanner extends OpenCvPipeline {
         for (MatOfPoint contour : contoursList) {
             RotatedRect rotatedRectFitToContour = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
 
-            Imgproc.circle(input, new Point(win_bottom_x, win_bottom_y), 1, RED, 20);
+            Imgproc.circle(input, new Point(win_half_x, win_bottom_y), 1, RED, 20);
 
             rect_center_x = rotatedRectFitToContour.center.x;
             rect_center_y = rotatedRectFitToContour.center.y;
 
-            dist_x = win_bottom_x - rect_center_x;
+            dist_x = win_half_x - rect_center_x;
             dist_y = win_bottom_y - rect_center_y;
 
             double area = rotatedRectFitToContour.size.height * rotatedRectFitToContour.size.width;
@@ -158,9 +132,10 @@ public class SampleScanner extends OpenCvPipeline {
             log.show("y " + rotatedRectFitToContour.center.y);
             log.show("dist " + dist);
 
-            // 260 pixels divided by 8.89 cm (sample length) is 29.24
-//        dist_x_cm = dist_x / 29.2463442; // dividing dist in pixels by pixels that are 1 cm long at 4 inches
-//        dist_y_cm = dist_y / 29.2463442;
+//            if (rect_center_x >)
+//            boolean in_center_x
+//
+//            if (rect_center_x )
 
             if (minDist == 0 || dist < minDist)  {
                 if (rect_center_x != 0 && rect_center_y != 0 && area < BIGTHRESH && area > SMALLTHRESH) {
@@ -179,7 +154,7 @@ public class SampleScanner extends OpenCvPipeline {
                         rotRectAngle += 90;
                     }
                     double angle = -(rotRectAngle - 180);
-                    Imgproc.line(input, smallDistBox.center, new Point(win_bottom_x, win_bottom_y), YELLOW);
+                    Imgproc.line(input, smallDistBox.center, new Point(win_half_x, win_bottom_y), YELLOW);
 
                     AnalyzedStone analyzedStone = new AnalyzedStone();
                     analyzedStone.angle = Math.round(angle);

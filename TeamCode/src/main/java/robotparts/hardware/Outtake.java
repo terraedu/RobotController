@@ -23,31 +23,24 @@ public class Outtake extends RobotPart {
 
         arml.changePosition("start", .8);
         armr.changePosition("start", .8);
-        arml.changePosition("transfer", .97);
-        armr.changePosition("transfer", .97);
+        arml.changePosition("transfer", 1);
+        armr.changePosition("transfer", 1);
 
         arml.changePosition("grab", 0.4);
         armr.changePosition("grab", 0.4);
 
-        arml.changePosition("specimen", 0.5);
-        armr.changePosition("specimen", 0.5);
+        arml.changePosition("specimen", 0.32);
+        armr.changePosition("specimen", 0.32);
 
         arml.changePosition("specimenplace", 0.65);
         armr.changePosition("specimenplace", 0.65);
 
-
         pivot.changePosition("start", 0.05);
         pivot.changePosition("transfer", 0.05);
 
-
-
         claw.changePosition("start", 0);
-        claw.changePosition("grab", 0.5);
+        claw.changePosition("grab", 0.7);
         claw.changePosition("specimen", 0.2);
-
-
-//
-
 
         robotStatus.set(DRIVING);
     }
@@ -63,7 +56,7 @@ public class Outtake extends RobotPart {
     public void moveSpecimen(){armr.setPosition("specimen"); arml.setPosition("specimen"); claw.setPosition("grab"); pivot.setPosition("start");}
 
     //public void moveTest(){ armr.setPower(.3);}
-public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
+    public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
     public Stage stageClose(double t){return super.customTime(this::moveClose, t);}
     public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen, t);}
 

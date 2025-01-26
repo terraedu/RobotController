@@ -4,6 +4,7 @@ package autoutil;
 import static global.General.fault;
 import static global.General.fieldPlacement;
 import static global.General.fieldSide;
+import static global.General.log;
 
 import androidx.annotation.NonNull;
 
