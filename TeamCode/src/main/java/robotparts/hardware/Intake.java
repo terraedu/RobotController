@@ -63,7 +63,7 @@ public class Intake extends RobotPart {
         ipivot.changePosition("specimen2", .96);
 
         ipivot.changePosition("end", .57);
-        ipivot.changePosition("end1", .4);
+        ipivot.changePosition("end1", .9);
 
         ipivot.changePosition("transfer", .85);
         ipivot.changePosition("transferspecimen", .57);
@@ -76,7 +76,7 @@ public class Intake extends RobotPart {
         iclaw.changePosition("start", .38);
         iclaw.changePosition("adjust", 0.32);
 
-        iclaw.changePosition("close", .23);
+        iclaw.changePosition("close", .18);
 
 
         iturret.changePosition("start", 0.02);
