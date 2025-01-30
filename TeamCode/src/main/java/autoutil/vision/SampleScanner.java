@@ -1,15 +1,11 @@
 package autoutil.vision;
 
-//import com.acmerobotics.dashboard.config.Config;
 import static global.General.log;
 import static global.Modes.TeleStatus.BLUEA;
 import static global.Modes.teleStatus;
 
+import automodules.stage.Exit;
 import autoutil.vision.filters.MovingAverageFilter;
-
-//import org.firstinspires.ftc.teamcode.opencv.eocvtest.SamplePipeline;
-//import org.firstinspires.ftc.teamcode.opmode.BaseOpMode;
-//import autoutil.vision.subsystem.IntakeClawSys;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -20,22 +16,13 @@ import java.util.ArrayList;
 public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
-    public static double BIGTHRESH = 60000;
-    public static double SMALLTHRESH = 9000;
-    public static int win_half_x = 320;
-    public static int win_half_y = 240;
-    public static int win_bottom_y = 480;
-    public static double rect_center_x;
-    public static double rect_center_y;
-    public static double dist_x;
-    public static double dist_y;
 
-    public static boolean isCenter;
-
+    Size frameSize = new Size(320, 240);
     Mat ycrcbMat = new Mat();
     Mat crMat = new Mat();
     Mat cbMat = new Mat();
 
+    Mat contoursOnPlainImageMat = new Mat();
     Mat blueThresholdMat = new Mat();
     Mat redThresholdMat = new Mat();
     Mat yellowThresholdMat = new Mat();
@@ -43,36 +30,30 @@ public class SampleScanner extends OpenCvPipeline {
     Mat morphedBlueThreshold = new Mat();
     Mat morphedRedThreshold = new Mat();
     Mat morphedYellowThreshold = new Mat();
-
-    Mat contoursOnPlainImageMat = new Mat();
-
-    Size frameSize = new Size(320, 240);
-
-    /*
-     * Threshold values
-     */
-    public static int YELLOW_MASK_THRESHOLD = 90;
-    public static int BLUE_MASK_THRESHOLD = 150;
-    public static int RED_MASK_THRESHOLD = 170;
-
-    /*
-     * Elements for noise reduction
-     */
     Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
     Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
 
-    /*
-     * Colors
-     */
+    double BIGTHRESH = 60000;
+    double SMALLTHRESH = 9000;
+
+    int isCenter;
+    int win_half_x = 320;
+    int win_half_y = 240;
+    int win_bottom_y = 480;
+
+    double rect_center_x;
+    double rect_center_y;
+    double dist_x;
+    double dist_y;
+    public static double servoPos;
+
+    int YELLOW_MASK_THRESHOLD = 90;
+    int BLUE_MASK_THRESHOLD = 150;
+    int RED_MASK_THRESHOLD = 170;
+
     static final Scalar RED = new Scalar(255, 0, 0);
     static final Scalar BLUE = new Scalar(0, 0, 255);
     static final Scalar YELLOW = new Scalar(255, 255, 0);
-
-    static class AnalyzedStone {
-        double angle;
-        String color;
-        Point center;
-    }
 
     ArrayList<AnalyzedStone> internalStoneList = new ArrayList<>();
     volatile ArrayList<AnalyzedStone> clientStoneList = new ArrayList<>();
@@ -84,7 +65,6 @@ public class SampleScanner extends OpenCvPipeline {
         clientStoneList = new ArrayList<>(internalStoneList);
         return input;
     }
-
 
     void findContours(Mat input) {
         Imgproc.cvtColor(input, ycrcbMat, Imgproc.COLOR_RGB2YCrCb);
@@ -101,8 +81,7 @@ public class SampleScanner extends OpenCvPipeline {
         }
     }
 
-    void contours(Mat input, Mat color, Mat thresholdMat, Mat morphedMat, int threshold, int type, String teamColor)
-    {
+    void contours(Mat input, Mat color, Mat thresholdMat, Mat morphedMat, int threshold, int type, String teamColor) {
         Imgproc.threshold(color, thresholdMat, threshold, 255, type);
         morphMask(thresholdMat, morphedMat);
         ArrayList<MatOfPoint> contoursList = new ArrayList<>();
@@ -118,7 +97,7 @@ public class SampleScanner extends OpenCvPipeline {
         for (MatOfPoint contour : contoursList) {
             RotatedRect rotatedRectFitToContour = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
 
-            Imgproc.circle(input, new Point(win_half_x, win_bottom_y), 1, RED, 20);
+            Imgproc.circle(input, new Point(win_half_x, win_bottom_y), 1, RED, 5);
 
             rect_center_x = rotatedRectFitToContour.center.x;
             rect_center_y = rotatedRectFitToContour.center.y;
@@ -128,14 +107,12 @@ public class SampleScanner extends OpenCvPipeline {
 
             double area = rotatedRectFitToContour.size.height * rotatedRectFitToContour.size.width;
             dist = Math.pow((Math.pow(dist_x, 2) + Math.pow(dist_y, 2)), 0.5);
-            log.show("x " + rotatedRectFitToContour.center.x);
-            log.show("y " + rotatedRectFitToContour.center.y);
-            log.show("dist " + dist);
 
-//            if (rect_center_x >)
-//            boolean in_center_x
-//
-//            if (rect_center_x )
+            if (rect_center_x > win_half_x) {
+                isCenter = 1;
+            } else {
+                isCenter = -1;
+            }
 
             if (minDist == 0 || dist < minDist)  {
                 if (rect_center_x != 0 && rect_center_y != 0 && area < BIGTHRESH && area > SMALLTHRESH) {
@@ -146,14 +123,14 @@ public class SampleScanner extends OpenCvPipeline {
 
             if (++cnt == size) {
                 if (smallDistBox != null) {
-                    drawRotatedRect(smallDistBox, input, teamColor);
-                    drawRotatedRect(smallDistBox, contoursOnPlainImageMat, teamColor);
-
                     double rotRectAngle = smallDistBox.angle;
                     if (smallDistBox.size.width < smallDistBox.size.height) {
                         rotRectAngle += 90;
                     }
                     double angle = -(rotRectAngle - 180);
+                    String degrees = (int) Math.round(angle) + " deg";
+
+                    drawItems(input, smallDistBox, degrees, teamColor);
                     Imgproc.line(input, smallDistBox.center, new Point(win_half_x, win_bottom_y), YELLOW);
 
                     AnalyzedStone analyzedStone = new AnalyzedStone();
@@ -161,27 +138,25 @@ public class SampleScanner extends OpenCvPipeline {
                     analyzedStone.color = teamColor;
                     analyzedStone.center = smallDistBox.center;
                     internalStoneList.add(analyzedStone);
+
+                    servoPos = (angle * 0.5) / 180;
+                    log.show("servo position ", servoPos);
                 }
             }
         }
     }
 
-    void morphMask(Mat input, Mat output) {
-        Imgproc.erode(input, output, erodeElement);
-        Imgproc.erode(output, output, erodeElement);
-        Imgproc.dilate(output, output, dilateElement);
-        Imgproc.dilate(output, output, dilateElement);
-    }
-
-    void analyzeContour(MatOfPoint contour, Mat input, String color, boolean isLast) {
-    }
-
-    static void drawTagText(RotatedRect rect, String text, Mat mat, String color)
-    {
+    static void drawItems(Mat input, RotatedRect rect, String text, String color) {
+        Point[] points = new Point[4];
+        rect.points(points);
         Scalar colorScalar = getColorScalar(color);
 
+        for (int i = 0; i < 4; ++i) {
+            Imgproc.line(input, points[i], points[(i + 1) % 4], colorScalar, 2);
+        }
+
         Imgproc.putText(
-                mat,
+                input,
                 text,
                 new Point(
                         rect.center.x - 50,
@@ -193,14 +168,6 @@ public class SampleScanner extends OpenCvPipeline {
     }
 
     static void drawRotatedRect(RotatedRect rect, Mat drawOn, String color) {
-        Point[] points = new Point[4];
-        rect.points(points);
-
-        Scalar colorScalar = getColorScalar(color);
-
-        for (int i = 0; i < 4; ++i) {
-            Imgproc.line(drawOn, points[i], points[(i + 1) % 4], colorScalar, 2);
-        }
 //        log.show("rotated rect drawn");
     }
 
@@ -239,31 +206,21 @@ public class SampleScanner extends OpenCvPipeline {
         }
     }
 
+    void morphMask(Mat input, Mat output) {
+        Imgproc.erode(input, output, erodeElement);
+        Imgproc.erode(output, output, erodeElement);
+        Imgproc.dilate(output, output, dilateElement);
+        Imgproc.dilate(output, output, dilateElement);
+    }
 
-//    @Override
-//    public void onViewportTapped() {
-//        toggleRecording = !toggleRecording;
-//
-//        if(toggleRecording)
-//        {
-//            /*
-//             * This is all you need to do to start recording.
-//             */
-//            phoneCam.startRecordingPipeline(
-//                    new PipelineRecordingParameters.Builder()
-//                            .setBitrate(4, PipelineRecordingParameters.BitrateUnits.Mbps)
-//                            .setEncoder(PipelineRecordingParameters.Encoder.H264)
-//                            .setOutputFormat(PipelineRecordingParameters.OutputFormat.MPEG_4)
-//                            .setFrameRate(30)
-//                            .setPath("/sdcard/pipeline_rec.mp4")
-//                            .build());
-//        }
-//        else
-//        {
-//            /*
-//             * Note: if you don't stop recording by yourself, it will be automatically
-//             * stopped for you at the end of your OpMode
-//             */
-//            phoneCam.stopRecordingPipeline();
-//        }
+    public boolean centerLeft() {
+        boolean centered = false;
+        if (isCenter > 0) {
+            centered = true;
+        }
+
+        return centered;
+    }
+
+    public Exit centered(){return new Exit(this::centerLeft);}
 }

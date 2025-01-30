@@ -85,33 +85,33 @@
 //        }
 //
 //    }
-////
-////    public GameElement isredSample(){
-////        if (teleStatus.equals((BLUE)))
-////            return GameElement.WRONGCOLOR;
-////        if (teleStatus.equals(RED) && cso1.green() <= 80 && cso1.red() <= 60) {
-////            return GameElement.REDSAMPLE;
-////        }else{
-////            return GameElement.NONE;
-////        }
+//
+//    public GameElement isredSample(){
+//        if (teleStatus.equals((BLUE)))
+//            return GameElement.WRONGCOLOR;
+//        if (teleStatus.equals(RED) && cso1.green() <= 80 && cso1.red() <= 60) {
+//            return GameElement.REDSAMPLE;
+//        }else{
+//            return GameElement.NONE;
+//        }
 //    }
 //
-////    public GameElement isblueSample(){
-////        if (teleStatus.equals((RED)))
-////            return GameElement.WRONGCOLOR;
-////        if (teleStatus.equals(BLUE) && cso1.blue() <= 255 && cso1.blue() >= 200){
-////            return GameElement.BLUESAMPLE;
-////        }else{
-////            return GameElement.NONE;
-////        }
-////    }
-////
-////    public GameElement isyellowSample(){
-////        if (cso1.red() >= 65 && cso1.green() >= 80){
-////            return GameElement.YELLOWSAMPLE;
-////        }else{
-////            return GameElement.NONE;
-////        }
+//    public GameElement isblueSample(){
+//        if (teleStatus.equals((RED)))
+//            return GameElement.WRONGCOLOR;
+//        if (teleStatus.equals(BLUE) && cso1.blue() <= 255 && cso1.blue() >= 200){
+//            return GameElement.BLUESAMPLE;
+//        }else{
+//            return GameElement.NONE;
+//        }
+//    }
+//
+//    public GameElement isyellowSample(){
+//        if (cso1.red() >= 65 && cso1.green() >= 80){
+//            return GameElement.YELLOWSAMPLE;
+//        }else{
+//            return GameElement.NONE;
+//        }
 //    }
 //
 //    public GameElement sampleIn(){

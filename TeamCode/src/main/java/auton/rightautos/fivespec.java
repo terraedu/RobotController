@@ -71,6 +71,7 @@ public class fivespec extends AutoFramework {
 
     @Override
     public void define() {
+        addPause(10);
         addConcurrentAutoModule(extend);
 
         // specimen

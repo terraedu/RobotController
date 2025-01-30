@@ -1,12 +1,10 @@
 package teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import static global.General.gph1;
 import static global.General.gph2;
-import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.TeleStatus.BLUEA;
 import static global.Modes.TeleStatus.REDA;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
@@ -18,79 +16,56 @@ import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
 
-import autoutil.vision.SampleScanner;
-import autoutil.vision.yolovision.YoloScanner;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-
-@TeleOp(name = "TerraOp", group = "TeleOp")
-public class TerraOp extends Tele {
+@TeleOp(name = "TerraBlue", group = "TeleOp")
+public class TerraBlue extends Tele {
 
     @Override
     public void initTele() {
-
-        teleStatus.set(REDA);
+        teleStatus.set(BLUEA);
         voltageScale = 1;
 
-//        Tele auto = this;
-//        auto.scan(true);
+        Tele auto = this;
+        auto.scan(true);
 
-        intake.yoloScanner = (YoloScanner) yoloScanner;
-        intake.sampleScanner = (SampleScanner) sampleScanner;
+//        intake.yoloScanner = (YoloScanner) yoloScanner;
+        intake.sampleScanner = sampleScanner;
 
-        gph1.link(LEFT_BUMPER, () -> intake.moveStartTurret()); // mid
-        gph1.link(LEFT_TRIGGER, () -> intake.moveTurret()); // 45 left
-        gph1.link(RIGHT_BUMPER, () -> intake.moveTurretSideways()); // 90
-        gph1.link(RIGHT_TRIGGER, () -> intake.moveTurretMiddler()); // 45 right
+        gph1.link(LEFT_BUMPER, () -> intake.turretLeft());
+        gph1.link(RIGHT_BUMPER, () -> intake.turretRight());
+        gph1.link(DPAD_DOWN, () -> intake.updatePipeline(20));
 
         gph2.link(B, PlaceHigh);
         gph2.link(A, Place);
         gph2.link(RIGHT_BUMPER, OutSpecimen);
         gph2.link(LEFT_BUMPER, InSpecimen);
-        gph2.link(DPAD_DOWN,drop);
+        gph2.link(DPAD_DOWN, Drop);
         gph2.link(RIGHT_TRIGGER, Intake);
         gph2.link(LEFT_TRIGGER, Grab);
         gph2.link(Y, SpecimenReady);
         gph2.link(X, Specimen);
 
-    robotStatus.set(DRIVING);
+        robotStatus.set(DRIVING);
     }
 
     @Override
     public void startTele() {
-        /**
-         * Start code
-         */
-        intake.moveStart();
-        outtake.moveStart();
-
+//        intake.turretReset();
+//        outtake.moveStart();
     }
 
     @Override
     public void loopTele() {
 
-drive.newMove(-gph1.ly, gph1.rx, gph1.lx);
-lift.move(gph2.ly*.7);
-        extendo.move(gph2.lx*.7);
-
-
-        /**
-         * Gets Distance
-         */
-
-//        log.show("right distance (cm)", distanceSensorsNew.getCMDistanceRight());
-//        log.show("left distance (cm)", distanceSensorsNew.getCMDistanceLeft());
-
-        /**
-         * Gets light of color sensor
-         */
-//        log.show("light 1", colorSensorsNew.getLight1());
-//        log.show("light 2", colorSensorsNew.getLight2());
-
+//        drive.newMove(-gph1.ly, gph1.rx, gph1.lx);
+//        lift.move(gph2.ly*.7);
+//        extendo.move(gph2.lx*.7);
 
         /**
          * odo pose
          */
-        log.show("pose", odometry.getPose());
+//        log.show("pose", odometry.getPose());
 
         /**
          * Outtake Status
@@ -106,7 +81,7 @@ lift.move(gph2.ly*.7);
         /**
          * lift encoder positions
          */
-        log.show("Right", lift.motorRight.getPosition());
+//        log.show("Right", lift.motorRight.getPosition());
 
 
         /**
