@@ -34,12 +34,12 @@ public class TerraOpBlue extends Tele {
         gph2.link(RIGHT_TRIGGER, Intake);
         gph2.link(LEFT_TRIGGER, Grab);
         gph2.link(DPAD_RIGHT, SpecimenReady);
-        gph2.link(RIGHT_BUMPER, SpecimenDrop);
-        gph2.link(LEFT_BUMPER, SpecimenLocked);
-        gph2.link(A, OutSpecimen);
-        gph2.link(X, InSpecimen);
-        gph2.link(DPAD_UP, Out);
-        gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
+//        gph2.link(RIGHT_BUMPER, SpecimenDrop);
+//        gph2.link(LEFT_BUMPER, SpecimenLocked);
+//        gph2.link(A, OutSpecimen);
+//        gph2.link(X, InSpecimen);
+//        gph2.link(DPAD_UP, Out);
+//        gph1.link(DPAD_DOWN, ()-> turretStatus.get()==HALF, moveHalf,  ()-> turretStatus.get()==ANGLE, moveAngle, moveFull);
 
 
 //gph1.link(Y, ()-> out()  );
@@ -55,8 +55,7 @@ public class TerraOpBlue extends Tele {
          * Start code
          */
 
-        outtake.moveLinkStart();
-        outtake.moveStart();
+
 
 
     }
