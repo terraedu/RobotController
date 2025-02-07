@@ -17,6 +17,8 @@ import static teleutil.button.Button.RIGHT_TRIGGER;
 import static teleutil.button.Button.X;
 import static teleutil.button.Button.Y;
 
+import org.opencv.core.Size;
+
 @TeleOp(name = "TerraRed", group = "TeleOp")
 public class TerraRed extends Tele {
 
@@ -35,75 +37,29 @@ public class TerraRed extends Tele {
         gph1.link(RIGHT_BUMPER, () -> intake.turretRight());
         gph1.link(DPAD_DOWN, () -> intake.updatePipeline(20));
 
-        gph2.link(B, PlaceHigh);
-        gph2.link(A, Place);
-        gph2.link(RIGHT_BUMPER, OutSpecimen);
-        gph2.link(LEFT_BUMPER, InSpecimen);
-        gph2.link(DPAD_DOWN, Drop);
-        gph2.link(RIGHT_TRIGGER, Intake);
-        gph2.link(LEFT_TRIGGER, Grab);
-        gph2.link(Y, SpecimenReady);
-        gph2.link(X, Specimen);
+        gph2.link(B, placeHigh);
+        gph2.link(A, place);
+        gph2.link(RIGHT_BUMPER, outSpecimen);
+        gph2.link(LEFT_BUMPER, inSpecimen);
+        gph2.link(DPAD_DOWN, drop);
+        gph2.link(RIGHT_TRIGGER, goIntake);
+        gph2.link(LEFT_TRIGGER, grab);
+        gph2.link(Y, specimenReady);
+        gph2.link(X, specimen);
 
         robotStatus.set(DRIVING);
     }
 
     @Override
     public void startTele() {
-//        intake.turretReset();
-//        outtake.moveStart();
+        intake.moveStart();
+        outtake.moveStart();
     }
 
     @Override
     public void loopTele() {
-        intake.updatePipeline(20);
-//        drive.newMove(-gph1.ly, gph1.rx, gph1.lx);
-//        lift.move(gph2.ly*.7);
-//        extendo.move(gph2.lx*.7);
-
-        /**
-         * odo pose
-         */
-//        log.show("pose", odometry.getPose());
-
-        /**
-         * Outtake Status
-         */
-//        log.show("OuttakeStatus", outtakeStatus.get());
-
-        /**
-         * Heading
-         */
-//        log.show("heading", gyro.getHeading());
-
-
-        /**
-         * lift encoder positions
-         */
-//        log.show("Right", lift.motorRight.getPosition());
-
-
-        /**
-         * extendo encoder positions
-         */
-//        log.show("left", extendo.motorLeft.getPosition());
-
-        /**
-         * drive mode
-         */
-//        log.show("DriveMode", driveMode.get());
-
-        /**
-         * outtake status
-         */
-//                log.show("outske", outtakeStatus.get());
-        /**
-         * heights
-         */
-//        log.show("current height", current.getValue(currentHeight));
 
     }
-
 }
 
 

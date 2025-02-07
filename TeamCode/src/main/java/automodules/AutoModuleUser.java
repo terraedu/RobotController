@@ -9,15 +9,14 @@ import robot.RobotUser;
 import robotparts.RobotPart;
 
 public interface AutoModuleUser extends RobotUser {
-
-    AutoModule SpecimenReady = new AutoModule(
+    AutoModule specimenReady = new AutoModule(
             intake.stageStart(.1),
             intake.stageSpecimen(.1),
             intake.stageClose(0.1)
     ).setStartCode(()->
             robotStatus.set(INTAKING));
 
-    AutoModule Specimen = new AutoModule(
+    AutoModule specimen = new AutoModule(
             intake.stageOpen(0.1),
             outtake.stageTransfer(0.1),
             RobotPart.pause(.1),
@@ -31,18 +30,18 @@ public interface AutoModuleUser extends RobotUser {
     ).setStartCode(()->
             robotStatus.set(DRIVING));
 
-    AutoModule OutSpecimen = new AutoModule(
+    AutoModule outSpecimen = new AutoModule(
             outtake.stageSpecimen(.1).attach(lift.stageLift(1,10)  )
     );
 
-    AutoModule InSpecimen = new AutoModule(
+    AutoModule inSpecimen = new AutoModule(
             lift.stageLift(1,5),
             outtake.stageOpen(.1),
             intake.stageStart(.1),
             outtake.stageStart(.1).attach(lift.stageLift(1,0))
     );
 
-    AutoModule PlaceHigh = new AutoModule(
+    AutoModule placeHigh = new AutoModule(
             intake.stageOpen(0.1),
             outtake.stageTransfer(0.1),
             intake.stageSpecimenPivot(.1),
@@ -54,14 +53,14 @@ public interface AutoModuleUser extends RobotUser {
             robotStatus.set(PLACING)
             );
 
-    AutoModule Place = new AutoModule(
+    AutoModule place = new AutoModule(
             outtake.stageOpen(.1),
             intake.stageStart(.1),
             outtake.stageStart(.1).attach(lift.stageLift(1,0))
     ).setStartCode(()->
             robotStatus.set(DRIVING));;
 
-    AutoModule Intake = new AutoModule(
+    AutoModule goIntake = new AutoModule(
             outtake.stageStart(0.1),
             intake.stageTransfer(.1),
             extendo.stageLift(1,17),
@@ -73,7 +72,7 @@ public interface AutoModuleUser extends RobotUser {
     ).setStartCode(()->
             robotStatus.set(INTAKING));
 
-    AutoModule Grab = new AutoModule(
+    AutoModule grab = new AutoModule(
             intake.stageEnd(.2),
             intake.stageOpen(.2),
             RobotPart.pause(0.1),
@@ -90,13 +89,14 @@ public interface AutoModuleUser extends RobotUser {
     ).setStartCode(()->
             robotStatus.set(DRIVING));;
 
-    AutoModule Drop = new AutoModule(
+    AutoModule drop = new AutoModule(
             intake.stageTransfer(.1),
             intake.stageClose(.1),
             intake.stageStart(.1)
     );
 
-//    AutoModule SampleAlign = new AutoModule (
-//            drive.sampleHorCenter()
-//    );
+    AutoModule sampleAlign = new AutoModule (
+            drive.alignSampleRight(0, -0.5, 0),
+            drive.alignSampleLeft(0, 0.5, 0)
+    );
 }

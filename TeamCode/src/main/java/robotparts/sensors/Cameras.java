@@ -1,6 +1,7 @@
 package robotparts.sensors;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.opencv.core.Size;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -16,7 +17,7 @@ public class Cameras extends RobotPart {
 
     @Override
     public void init() {}
-    public void start(boolean view) {
+    public void start(boolean view, Size frameSize) {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "ecam");
         log.show("got cam");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -26,7 +27,7 @@ public class Cameras extends RobotPart {
             camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
             @Override
             public void onOpened() {
-                camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming((int) frameSize.width, (int) frameSize.height, OpenCvCameraRotation.UPRIGHT);
                 log.show("camera opened");
             }
             @Override

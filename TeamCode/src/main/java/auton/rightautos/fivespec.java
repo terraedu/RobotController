@@ -39,7 +39,7 @@ public class fivespec extends AutoFramework {
             lift.stageLift(1,0).attach(outtake.stageStart(.1))
     );
 
-    AutoModule Intake = new AutoModule(
+    AutoModule doIntake = new AutoModule(
             outtake.stageStart(0.1),
             intake.stageTransfer(.1),
             extendo.stageLift(1,17),
@@ -69,17 +69,13 @@ public class fivespec extends AutoFramework {
             intake.stageClose(.1)
     );
 
+    AutoModule sampleAlign = new AutoModule (
+            drive.alignSampleRight(0, -0.5, 0),
+            drive.alignSampleLeft(0, 0.5, 0)
+    );
+
     @Override
     public void define() {
-        addPause(10);
-        addConcurrentAutoModule(extend);
-
-        // specimen
-        addSegment(1,.5,DefaultWP,0,84,0);
-        addAutoModule(lock);
-        addConcurrentAutoModule(retract);
-        // recede and samples
-        addSegment(1,.5, DefaultWP,0, 34,215);
-        addSegment(1,.5, DefaultWP,130, 5,215);
+        addAutoModule(sampleAlign);
     }
 }

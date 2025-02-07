@@ -6,18 +6,22 @@ import static global.Modes.teleStatus;
 
 import automodules.stage.Exit;
 import autoutil.vision.filters.MovingAverageFilter;
+import global.Modes;
+import teleop.Tele;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
 
-    Size frameSize = new Size(320, 240);
+    Size frameSize = Tele.frameSize;
     Mat ycrcbMat = new Mat();
     Mat crMat = new Mat();
     Mat cbMat = new Mat();
@@ -33,14 +37,13 @@ public class SampleScanner extends OpenCvPipeline {
     Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
     Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3.5, 3.5));
 
-    double BIGTHRESH = 60000;
+    double BIGTHRESH = 40000;
     double SMALLTHRESH = 9000;
 
     int isCenter;
-    int win_half_x = 320;
-    int win_half_y = 240;
-    int win_bottom_y = 480;
 
+    double win_half_x = frameSize.width / 2;
+    double win_bottom_y = frameSize.height;
     double rect_center_x;
     double rect_center_y;
     double dist_x;
@@ -51,6 +54,7 @@ public class SampleScanner extends OpenCvPipeline {
     int BLUE_MASK_THRESHOLD = 150;
     int RED_MASK_THRESHOLD = 170;
 
+    // RGB
     static final Scalar RED = new Scalar(255, 0, 0);
     static final Scalar BLUE = new Scalar(0, 0, 255);
     static final Scalar YELLOW = new Scalar(255, 255, 0);
@@ -71,13 +75,71 @@ public class SampleScanner extends OpenCvPipeline {
         Core.extractChannel(ycrcbMat, cbMat, 2);
         Core.extractChannel(ycrcbMat, crMat, 1);
 
+        int colNum = 0;
+
         contoursOnPlainImageMat = Mat.zeros(input.size(), input.type());
         contours(input, cbMat, yellowThresholdMat, morphedYellowThreshold, YELLOW_MASK_THRESHOLD, Imgproc.THRESH_BINARY_INV, "Yellow");
 
         if (teleStatus.modeIs(BLUEA)) {
             contours(input, cbMat, blueThresholdMat, morphedBlueThreshold, BLUE_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Blue");
+//            colNum = subScan(input, BLUEA);
         } else {
             contours(input, crMat, redThresholdMat, morphedRedThreshold, RED_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Red");
+//            colNum = subScan(input, BLUEA);
+        }
+//        log.show("col", colNum);
+    }
+
+    int subScan(Mat input, Modes.TeleStatus teamColor) {
+        double frameWidth = frameSize.width;
+        double frameHeight = frameSize.height;
+        Map<Integer, Integer> columnPixelsRed = new HashMap<>();
+        Map<Integer, Integer> columnPixelsBlue = new HashMap<>();
+        int colNum = 0;
+        double[] pixelColor;
+
+        for (int n = 0; n < 3; n++) {
+            int red = 0;
+            int blue = 0;
+
+            int x = (int) (frameWidth / 3) * n;
+            log.show("x:", x);
+            int y = 0;
+            int width = (int) frameWidth / 3;
+            int height = (int) frameHeight;
+
+            for (int i = x; i < x + width; i++) {
+                for (int j = y; j < y + height; j++) {
+                    pixelColor = input.get(i, j);
+                    log.show("pixel colors: ", pixelColor[0]);
+                    if (pixelColor[0] > pixelColor[2]) {red++;} else {blue++;} // if more red or blue in pixel
+                }
+            }
+            columnPixelsRed.put(n, red);
+            columnPixelsBlue.put(n, blue);
+        }
+
+        int bigCol = 0;
+        if (teamColor == BLUEA) {
+            Map.Entry<Integer, Integer> maxEntry = null;
+            for (Map.Entry<Integer, Integer> entry : columnPixelsBlue.entrySet()) {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                    maxEntry = entry;
+                    bigCol = maxEntry.getKey();
+                }
+            }
+            log.show("bigCol: ", bigCol);
+            return bigCol;
+        } else {
+            Map.Entry<Integer, Integer> maxEntry = null;
+            for (Map.Entry<Integer, Integer> entry : columnPixelsRed.entrySet()) {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                    maxEntry = entry;
+                    bigCol = maxEntry.getKey();
+                }
+            }
+            log.show("bigCol: ", bigCol);
+            return bigCol;
         }
     }
 
@@ -167,10 +229,6 @@ public class SampleScanner extends OpenCvPipeline {
                 1);
     }
 
-    static void drawRotatedRect(RotatedRect rect, Mat drawOn, String color) {
-//        log.show("rotated rect drawn");
-    }
-
     static Scalar getColorScalar(String color) {
         switch (color) {
             case "Blue":
@@ -213,14 +271,9 @@ public class SampleScanner extends OpenCvPipeline {
         Imgproc.dilate(output, output, dilateElement);
     }
 
-    public boolean centerLeft() {
-        boolean centered = false;
-        if (isCenter > 0) {
-            centered = true;
-        }
+    public boolean notLeft() {return isCenter >= 0;}
+    public boolean notRight() {return isCenter <= 0;}
 
-        return centered;
-    }
-
-    public Exit centered(){return new Exit(this::centerLeft);}
+    public Exit centerLeft(){return new Exit(this::notLeft);}
+    public Exit centerRight(){return new Exit(this::notRight);}
 }

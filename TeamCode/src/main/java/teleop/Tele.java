@@ -2,6 +2,8 @@ package teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.opencv.core.Size;
+
 import automodules.AutoModuleUser;
 import autoutil.vision.SampleScanner;
 import global.Common;
@@ -44,9 +46,10 @@ public abstract class Tele extends OpMode implements Common, RobotUser, AutoModu
     // Scanner Code
 //    public YoloScanner yoloScanner;
     public SampleScanner sampleScanner = new SampleScanner();
+    public static Size frameSize = new Size(640, 480);
 
     public void scan(boolean view){
-        camera.start(view);
+        camera.start(view, frameSize);
         camera.camera.setPipeline(sampleScanner);
     }
 
