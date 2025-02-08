@@ -3,12 +3,33 @@
 This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season.
 
 ## Welcome!
-This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
+This is a fork of the offical FTC SDK for the 24-25 season. It includes the source code for the FTC SDK, as well as the driver for the goBILDA Pinpoint Odometry Computer: https://www.gobilda.com/pinpoint-odometry-computer-imu-sensor-fusion-for-2-wheel-odometry/
+
+This repo includes the FTC Driver, and example Opmodes showing how to use the goBILDA® Pinpoint Odometry Computer.
+The goBILDA Odometry Computer is a device designed to solve the Pose Exponential calculation
+commonly associated with Dead Wheel Odometry systems. It reads two encoders, and an integrated
+system of sensors to determine the robot's current heading, X position, and Y position.
+
+## How to use? 
+If you are already an Android Studio team, and are using git, you can add this repo as a git remote, and this will allow you to easily pull just the two files which this repo adds to the SDK. GoBildaPinpointDriver and SensorGoBildaPinpointExample. You can add a remote to Android Studio by going to Git, then Manage Remotes in the navigation bar. Once you've added this Remote, click on the branch icon near the name of your curent project and find the new remote. There should be a branch called "goBILDA-Odometry-Driver", select that, and select "Pull into (yourbranch) using merge". There may be a conflict with the readme file, just accept your's. And you'll be off to the races!
+
+If you do not already have a github project for your team/season, you can clone this repository. Just make sure to note that only the branch titled "goBILDA-Odometry-Driver" has the driver and example file.
+
+If you would like to just download the driver files and example code, you can find them here: just click the download button in the top right and put those two files in your teamcode folder.
+
+### Direct link to driver and example files:
+https://github.com/goBILDA-Official/goBILDA-Pinpoint-Odometry-Computer-FTC-Driver/tree/goBILDA-Odometry-Driver/TeamCode/src/main/java/org/firstinspires/ftc/teamcode
+
+
+### User guide:
+We also have a PDF user guide that goes over calibration, tuning, and common issues which can be found here:
+https://www.gobilda.com/content/user_manuals/3110-0002-0001_user-guide.pdf
 
 ## Requirements
-To use this Android Studio project, you will need Android Studio 2021.2 (codename Chipmunk) or later.
+To use this Android Studio project, you will need Android Studio Ladybug (2024.2) or later.
 
 To program your robot in Blocks or OnBot Java, you do not need Android Studio.
+
 
 ## Getting Started
 If you are new to robotics or new to the *FIRST* Tech Challenge, then you should consider reviewing the [FTC Blocks Tutorial](https://ftc-docs.firstinspires.org/programming_resources/blocks/Blocks-Tutorial.html) to get familiar with how to use the control system:
@@ -58,6 +79,37 @@ Samples Folder: &nbsp;&nbsp; [/FtcRobotController/src/main/java/org/firstinspire
 The readme.md file located in the [/TeamCode/src/main/java/org/firstinspires/ftc/teamcode](TeamCode/src/main/java/org/firstinspires/ftc/teamcode) folder contains an explanation of the sample naming convention, and instructions on how to copy them to your own project space.
 
 # Release Information
+
+## Version 10.2 (20250121-174034)
+
+### Enhancements
+* Add ability to upload the pipeline for Limelight3A which allows teams to version control their limelight pipelines.
+
+
+### Bug Fixes
+
+* Fix an internal bug where if the RUN_TO_POSITION run mode was specified before a target position, recovery would require a power cycle. A side effect of this fix is that a stack trace identifying the location of the error is always produced in the log. Fixes issue [1345](https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/1345).
+* Throws a helpful exception if region of interest is set to null when building a PredominantColorProcessor. Also sets the default RoI to the full frame. Addresses issue [1076](FIRST-Tech-Challenge/FtcRobotController#1076)
+* Throws a helpful exception if user tries to construct an ImageRegion with malformed boundaries.  Addresses issue [1078](FIRST-Tech-Challenge/FtcRobotController#1078)
+
+## Version 10.1.1 (20241102-092223)
+
+### Breaking Changes
+
+* Support for Android Studio Ladybug.  Requires Android Studio Ladybug.  
+
+### Known Issues
+
+* Android Studio Ladybug's bundled JDK is version 21.  JDK 21 has deprecated support for Java 1.8, and Ladybug will warn on this deprecation.
+  OnBotJava only supports Java 1.8, therefore, in order to ensure that software developed using Android Studio will 
+  run within the OnBotJava environment, the targetCompatibility and sourceCompatibility versions for the SDK have been left at VERSION_1_8.
+  FIRST has decided that until it can devote the resources to migrating OnBotJava to a newer version of Java, the deprecation is the 
+  lesser of two non-optimal situations.
+
+### Enhancements
+
+* Added `toString()` method to Pose2D
+* Added `toString()` method to SparkFunOTOS.Pose2D
 
 ## Version 10.1 (20240919-122750)
 
