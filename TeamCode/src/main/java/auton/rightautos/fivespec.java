@@ -19,7 +19,6 @@ public class fivespec extends AutoFramework {
         lift.maintain();
         extendo.maintain();
         odometry.reset();
-        gyro.reset();
         bot.saveLocationOnField();
         outtake.moveStart();
         intake.moveStartAuto();

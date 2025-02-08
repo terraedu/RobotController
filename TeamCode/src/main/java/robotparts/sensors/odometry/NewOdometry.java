@@ -37,7 +37,7 @@ public class NewOdometry extends RobotPart {
 
     public void update(){
 
-
+        odo.update();
         h = cookery(odo.getHeading());
         x = odo.getPosX();
         y = odo.getPosY();
@@ -48,6 +48,10 @@ public class NewOdometry extends RobotPart {
 
     private double lastAngle = 0;
 
+
+    public double getEncX(){ return odo.getEncoderX();}
+    public double getEncY(){ return odo.getEncoderY();}
+    //cookery
     private double cookery(double angle) {
         if (Double.isNaN(angle)) {
             return lastAngle;

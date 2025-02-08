@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static global.General.gph1;
 import static global.General.gph2;
+import static global.General.log;
 import static global.General.voltageScale;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.TeleStatus.BLUEA;
@@ -58,6 +59,12 @@ public class TerraBlue extends Tele {
 
     @Override
     public void loopTele() {
+        drive.newMove(gph1.ly,gph1.lx,gph1.rx);
+
+        log.show("X Encoder", odometry.getEncX());
+        log.show("Y Encoder", odometry.getEncY());
+
+
 
     }
 

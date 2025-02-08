@@ -58,6 +58,7 @@ public class TerraRed extends Tele {
 
     @Override
     public void loopTele() {
+        drive.newMove(gph1.ly,gph1.lx,gph1.rx);
 
     }
 }

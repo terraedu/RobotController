@@ -71,7 +71,21 @@ public class Drive extends RobotPart {
         bl.setPower(f + s + t);
     }
 
-    public Stage alignSampleRight(double f, double s, double t) {
+    public void newMove(double f, double s, double t) {
+        if (robotStatus.get() == DRIVING) {
+            fl.setPower(f - .75 * s + t); //fr
+            bl.setPower(f + .75 * s - t);
+            fr.setPower(f - .75 * s - t); //br
+            br.setPower(f + .75 * s + t); //fl
+        } else {
+            fl.setPower(.3 * f - .3 * s + .3 * t);
+            bl.setPower(.3 * f + .3 * s - .3 * t);
+            fr.setPower(.3 * f - .3 * s - .3 * t);
+            br.setPower(.3 * f + .3 * s + .3 * t);
+        }
+
+    }
+        public Stage alignSampleRight(double f, double s, double t) {
         return super.moveCustomExit(f, s, t, intake.sampleScanner.centerRight());
     }
 
