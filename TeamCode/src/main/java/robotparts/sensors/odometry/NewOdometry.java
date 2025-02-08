@@ -45,6 +45,7 @@ public class NewOdometry extends RobotPart {
 
 
     }
+
     private double lastAngle = 0;
 
     private double cookery(double angle) {
@@ -59,7 +60,7 @@ public class NewOdometry extends RobotPart {
     public final double getX(){ return x; }
     public final double getY(){ return y; }
     public double getHeading() { return h; }
-    public Pose2D getPose() { return odo.getPosition(); }
+    public Pose getPose() { return new Pose(x,y,h); }
 
 
     public void reset(){

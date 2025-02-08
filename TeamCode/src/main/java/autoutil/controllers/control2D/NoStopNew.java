@@ -26,9 +26,11 @@ public class NoStopNew extends Controller2DNew {
 
             }
         };
+
         rvController.setProcessVariable(() -> 0.0);
         rvController.setMinimumTime(0.05);
         rvController.setAccuracy(accuracy);
+
     }
 
 
