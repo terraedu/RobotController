@@ -21,6 +21,7 @@ public class NewOdometry extends RobotPart {
 
     public double x, y, h;
 
+//    public final ExceptionCodeSeg<RuntimeException> odometryUpdateCode = this::update;
     public GoBildaPinpointDriver odo;
 
 
@@ -32,6 +33,7 @@ public class NewOdometry extends RobotPart {
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         odo.resetPosAndIMU();
 
+//        odometryThread.setExecutionCode(odometryUpdateCode);
         reset();
     }
 

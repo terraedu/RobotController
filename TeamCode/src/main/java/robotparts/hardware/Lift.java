@@ -37,7 +37,7 @@ public class Lift extends RobotPart {
 
     @Override
     public CodeSeg move(double p) {
-        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0.05);
+        motorRight.moveWithPositionHolder(p, currentCutoffPosition, 0);
         return null;
     }
 

@@ -20,12 +20,12 @@ public class fivespec extends AutoFramework {
         extendo.maintain();
         odometry.reset();
         bot.saveLocationOnField();
-        outtake.moveStart();
-        intake.moveStartAuto();
+        outtake.moveInit();
+        intake.moveInit();
     }
 
     AutoModule extend = new AutoModule(
-            outtake.stageSpecimen(.1).attach(lift.stageLift(1,10)  )
+//            outtake.stageSpecimen(.1).attach(lift.stageLift(1,10)  )
     );
 
     AutoModule lock = new AutoModule(
@@ -33,39 +33,21 @@ public class fivespec extends AutoFramework {
     );
 
     AutoModule retract = new AutoModule(
-            outtake.stageOpen(.1),
+//            outtake.stageOpen(.1),
 
-            lift.stageLift(1,0).attach(outtake.stageStart(.1))
+//            lift.stageLift(1,0).attach(outtake.stageStart(.1))
     );
 
     AutoModule doIntake = new AutoModule(
-            outtake.stageStart(0.1),
-            intake.stageTransfer(.1),
-            extendo.stageLift(1,17),
-            intake.stagePivotStart(.1),
-            intake.stageEnd1(.1),
-            RobotPart.pause(.2),
-            intake.stageClose(.1),
-            intake.stageLinkEnd(.1)
+
     );
 
     AutoModule grab = new AutoModule(
-            intake.stageEnd(.1),
-            intake.stageOpen(.1),
-            intake.stageTransfer2(.1),
-            intake.stageTransfer3(.1),
-            intake.stageTransfer(.4),
-            RobotPart.pause(0.2),
-            intake.stageAdjustClaw(.1),
-            intake.stageOpen(.1),
-            intake.stageLinkStart(.1),
-            extendo.stageLift(1,0),
-            intake.stagePivotStart(.1).attach(outtake.stageOpen(.1)),
-            intake.stageDownTurret(.1)
+
     );
 
     AutoModule open = new AutoModule(
-            intake.stageClose(.1)
+
     );
 
     AutoModule sampleAlign = new AutoModule (
@@ -75,6 +57,6 @@ public class fivespec extends AutoFramework {
 
     @Override
     public void define() {
-        addAutoModule(sampleAlign);
+
     }
 }

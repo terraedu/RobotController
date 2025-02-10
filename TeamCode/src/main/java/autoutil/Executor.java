@@ -1,5 +1,7 @@
 package autoutil;
 
+import static robot.RobotUser.odometry;
+
 import automodules.stage.Stage;
 import autoutil.generators.Generator;
 import autoutil.reactors.Reactor;
@@ -21,6 +23,7 @@ public class Executor implements Iterator {
         Stage stage = generator.getStage(reactor);
         stage.start();
         whileActive(() -> !stage.shouldStop(), stage::loop);
+        odometry.getPose();
         stage.runOnStop();
     }
 
