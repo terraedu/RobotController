@@ -20,7 +20,7 @@ public class Intake extends RobotPart {
         iarmr = create("iarmr", ElectronicType.PSERVO_FORWARD);
         iarml = create("iarml", ElectronicType.PSERVO_REVERSE);
         ipivot = create("ipivot", ElectronicType.PSERVO_FORWARD);
-        iturret = create("iturret", ElectronicType.PSERVO_FORWARD);
+        iturret = create("iturret", ElectronicType.PSERVO_FORWARD   );
         iclaw = create("iclaw", ElectronicType.PSERVO_FORWARD);
         linkager = create("linkager", ElectronicType.PSERVO_REVERSE);
         linkagel = create("linkagel", ElectronicType.PSERVO_FORWARD);
