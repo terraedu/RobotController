@@ -27,18 +27,18 @@ public class Intake extends RobotPart {
 
         iarmr.changePosition("init", 1);
         iarml.changePosition("init", 1);
-        iarmr.changePosition("specimenready", 0.79);
-        iarml.changePosition("specimenready", 0.79);
-        iarmr.changePosition("specimen", 0.93);
-        iarml.changePosition("specimen", 0.93);
-        iarmr.changePosition("transferspecimen", 0.86);
-        iarml.changePosition("transferspecimen", 0.86);
-        iarmr.changePosition("stagetransfer", 0.9);
-        iarml.changePosition("stagetransfer", 0.9);
-        iarmr.changePosition("seek", 0.52);
-        iarml.changePosition("seek", 0.52);
-        iarmr.changePosition("grab", 0.41);
-        iarml.changePosition("grab", 0.41);
+        iarmr.changePosition("specimenready", 0.83);
+        iarml.changePosition("specimenready", 0.83);
+        iarmr.changePosition("specimen", 0.97);
+        iarml.changePosition("specimen", 0.97);
+        iarmr.changePosition("transferspecimen", 0.9);
+        iarml.changePosition("transferspecimen", 0.9);
+        iarmr.changePosition("stagetransfer", 0.94);
+        iarml.changePosition("stagetransfer", 0.94);
+        iarmr.changePosition("seek", 0.56);
+        iarml.changePosition("seek", 0.56);
+        iarmr.changePosition("grab", 0.45);
+        iarml.changePosition("grab", 0.45);
 
         ipivot.changePosition("init", 0.8);
         ipivot.changePosition("specimenready", 0);
@@ -47,11 +47,11 @@ public class Intake extends RobotPart {
         ipivot.changePosition("grab", 0.79);
         ipivot.changePosition("drop", 0.15);
 
-        iturret.changePosition("start", 0.8);
+        iturret.changePosition("start", 1);
         iturret.changePosition("horizontal", 0.43);
         iturret.changePosition("left", 0.125);
         iturret.changePosition("right", 0.375);
-        iturret.changePosition("switcharoo", 0.05);
+        iturret.changePosition("switcharoo", 1);
 
         iclaw.changePosition("close", 0.5);
         iclaw.changePosition("start", 0.45);

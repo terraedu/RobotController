@@ -50,9 +50,7 @@ public interface AutoModuleUser extends RobotUser {
             RobotPart.pause(0.35),
             outtake.grabSpecimen(0.1),
             RobotPart.pause(0.3),
-            intake.clawRelease(0.1),
-            RobotPart.pause(0.3),
-            intake.init(0.1)
+            intake.clawRelease(0.1)
     ).setStartCode(()->
             robotStatus.set(DRIVING));
 
