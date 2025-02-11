@@ -6,6 +6,7 @@ import static global.Modes.robotStatus;
 import automodules.stage.Stage;
 import robotparts.RobotPart;
 import robotparts.electronics.ElectronicType;
+import robotparts.electronics.continuous.CServo;
 import robotparts.electronics.positional.PServo;
 
 public class Outtake extends RobotPart {
@@ -20,75 +21,63 @@ public class Outtake extends RobotPart {
         pivot = create("pivot", ElectronicType.PSERVO_FORWARD);
         claw = create("claw", ElectronicType.PSERVO_REVERSE);
 
-        armr.changePosition("init", 0);
-        arml.changePosition("init", 0);
-        armr.changePosition("specimenready", 0.2);
-        arml.changePosition("specimenready", 0.2);
-        armr.changePosition("place", 0.83);
-        arml.changePosition("place", 0.83);
-        armr.changePosition("switcharoo", 0);
-        arml.changePosition("switcharoo", 0);
+        arml.changePosition("start", .8);
+        armr.changePosition("start", .8);
+        arml.changePosition("transfer", 1);
+        armr.changePosition("transfer", 1);
 
-        pivot.changePosition("init", 0);
-        pivot.changePosition("specimenready", 0.8);
-        pivot.changePosition("place", 0.25);
-        pivot.changePosition("switcharoo", 0.42);
+        arml.changePosition("grab", 0.35);
+        armr.changePosition("grab", 0.35);
 
-        claw.changePosition("start", 1);
-        claw.changePosition("open", 0.6);
+        arml.changePosition("specimen", 0.32);
+        armr.changePosition("specimen", 0.32);
+
+        arml.changePosition("specimenplace", 0.65);
+        armr.changePosition("specimenplace", 0.65);
+
+        pivot.changePosition("start", 0.05);
+        pivot.changePosition("transfer", 0.05);
+
+        claw.changePosition("start", 0);
+        claw.changePosition("grab", 0.7);
+        claw.changePosition("specimen", 0.2);
 
         robotStatus.set(DRIVING);
     }
 
-    public void moveInit() {
-        armr.setPosition("init");
-        arml.setPosition("init");
-        pivot.setPosition("init");
-        claw.setPosition("start");
+
+
+    public void moveStart(){ armr.setPosition("start"); arml.setPosition("start"); claw.setPosition("grab");pivot.setPosition("start");}
+    public void moveGrab(){ armr.setPosition("grab");arml.setPosition("grab");}
+    public void moveOpen(){ claw.setPosition("start");}
+    public void moveClose(){ claw.setPosition("grab");}
+    public void moveTransfer(){armr.setPosition("transfer"); armr.setPosition("transfer"); pivot.setPosition("transfer"); claw.setPosition("start");}
+    public void movePlaceSpecimen(){armr.setPosition("specimenplace"); arml.setPosition("specimenplace");}
+    public void moveSpecimen(){armr.setPosition("specimen"); arml.setPosition("specimen"); claw.setPosition("grab"); pivot.setPosition("start");}
+
+    //public void moveTest(){ armr.setPower(.3);}
+    public Stage stageGrab(double t){return super.customTime(this::moveGrab, t);}
+    public Stage stageClose(double t){return super.customTime(this::moveClose, t);}
+    public Stage stageSpecimen(double t){return super.customTime(this::moveSpecimen, t);}
+
+    public Stage stageOpen(double t){return super.customTime(this::moveOpen, t);}
+
+    public Stage stageStart(double t) {
+        return super.customTime(this::moveStart, t);
     }
-
-    public void specimenReady() {
-        armr.setPosition("specimenready");
-        arml.setPosition("specimenready");
-        pivot.setPosition("specimenready");
-        claw.setPosition("open");
-    }
-
-    public void grabSpecimen() {
-        claw.setPosition("start");
-    }
-
-    public void upSpecimen() {
-        armr.setPosition("place");
-        arml.setPosition("place");
-        pivot.setPosition("place");
-    }
-
-    public void downSpecimen() {
-        armr.setPosition("init");
-        arml.setPosition("init");
-        pivot.setPosition("init");
-    }
-
-    public void switcharooReady() {
-        armr.setPosition("switcharoo");
-        arml.setPosition("switcharoo");
-        pivot.setPosition("switcharoo");
-        claw.setPosition("open");
-    }
-
-    public void clawRelease() {claw.setPosition("open");}
-    public void upForIntake() {armr.setPosition("specimenready"); arml.setPosition("specimenready");}
+    public Stage stageTransfer(double t){return super.customTime(this::moveTransfer, t);}
 
 
 
-    public Stage init(double t) {return super.customTime(this::moveInit, t);}
-    public Stage specimenReady(double t) {return super.customTime(this::specimenReady, t);}
-    public Stage grabSpecimen(double t) {return super.customTime(this::grabSpecimen, t);}
-    public Stage upSpecimen(double t) {return super.customTime(this::upSpecimen, t);}
-    public Stage downSpecimen(double t) {return super.customTime(this::downSpecimen, t);}
-    public Stage switcharooReady(double t) {return super.customTime(this::switcharooReady, t);}
 
-    public Stage clawRelease(double t) {return super.customTime(this::clawRelease, t);}
-    public Stage upForIntake(double t) {return super.customTime(this::upForIntake, t);}
+
+
+
+
+
+
+
+
+
 }
+
