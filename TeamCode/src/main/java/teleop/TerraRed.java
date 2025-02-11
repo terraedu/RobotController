@@ -37,11 +37,12 @@ public class TerraRed extends Tele {
 //        gph1.link(DPAD_DOWN, () -> intake.updatePipeline(20));++
 //
         gph2.link(RIGHT_BUMPER, upSpecimen);
-        gph2.link(LEFT_BUMPER, downSpecimen);
+        gph2.link(LEFT_BUMPER, down);
         gph2.link(RIGHT_TRIGGER, intakeOut);
         gph2.link(LEFT_TRIGGER, intakeIn);
         gph2.link(DPAD_DOWN, drop);
         gph2.link(A, switcharoo);
+        gph2.link(B, high);
         gph2.link(Y, specimenReady);
         gph2.link(X, grabSpecimen);
 //
@@ -60,6 +61,7 @@ public class TerraRed extends Tele {
         log.show("y encoder", odometry.odo.getPosY());
         log.show("heading", odometry.odo.getHeading());
         log.show("extendo position", extendo.motorLeft.getPosition());
+        log.show("lift position", lift.motorRight.getPosition());
     }
 }
 

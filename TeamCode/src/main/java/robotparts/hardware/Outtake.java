@@ -26,13 +26,16 @@ public class Outtake extends RobotPart {
         arml.changePosition("specimenready", 0.2);
         armr.changePosition("place", 0.83);
         arml.changePosition("place", 0.83);
-        armr.changePosition("switcharoo", 0);
-        arml.changePosition("switcharoo", 0);
+        armr.changePosition("switcharoo", 0.055);
+        arml.changePosition("switcharoo", 0.055);
+        armr.changePosition("basket", 0.5);
+        arml.changePosition("basket", 0.5);
 
         pivot.changePosition("init", 0);
         pivot.changePosition("specimenready", 0.8);
         pivot.changePosition("place", 0.25);
-        pivot.changePosition("switcharoo", 0.42);
+        pivot.changePosition("switcharoo", 0.49);
+        pivot.changePosition("basket", 0.3);
 
         claw.changePosition("start", 1);
         claw.changePosition("open", 0.6);
@@ -54,20 +57,10 @@ public class Outtake extends RobotPart {
         claw.setPosition("open");
     }
 
-    public void grabSpecimen() {
-        claw.setPosition("start");
-    }
-
     public void upSpecimen() {
         armr.setPosition("place");
         arml.setPosition("place");
         pivot.setPosition("place");
-    }
-
-    public void downSpecimen() {
-        armr.setPosition("init");
-        arml.setPosition("init");
-        pivot.setPosition("init");
     }
 
     public void switcharooReady() {
@@ -77,18 +70,25 @@ public class Outtake extends RobotPart {
         claw.setPosition("open");
     }
 
-    public void clawRelease() {claw.setPosition("open");}
+    public void placeHigh() {
+        armr.setPosition("basket");
+        arml.setPosition("basket");
+        pivot.setPosition("basket");
+    }
+
     public void upForIntake() {armr.setPosition("specimenready"); arml.setPosition("specimenready");}
 
-
+    public void clawGrab() {claw.setPosition("start");}
+    public void clawRelease() {claw.setPosition("open");}
 
     public Stage init(double t) {return super.customTime(this::moveInit, t);}
     public Stage specimenReady(double t) {return super.customTime(this::specimenReady, t);}
-    public Stage grabSpecimen(double t) {return super.customTime(this::grabSpecimen, t);}
     public Stage upSpecimen(double t) {return super.customTime(this::upSpecimen, t);}
-    public Stage downSpecimen(double t) {return super.customTime(this::downSpecimen, t);}
     public Stage switcharooReady(double t) {return super.customTime(this::switcharooReady, t);}
+    public Stage placeHigh(double t) {return super.customTime(this::placeHigh, t);}
 
-    public Stage clawRelease(double t) {return super.customTime(this::clawRelease, t);}
     public Stage upForIntake(double t) {return super.customTime(this::upForIntake, t);}
+
+    public Stage clawGrab(double t) {return super.customTime(this::clawGrab, t);}
+    public Stage clawRelease(double t) {return super.customTime(this::clawRelease, t);}
 }

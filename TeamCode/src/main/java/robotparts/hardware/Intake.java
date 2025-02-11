@@ -27,18 +27,18 @@ public class Intake extends RobotPart {
 
         iarmr.changePosition("init", 1);
         iarml.changePosition("init", 1);
-        iarmr.changePosition("specimenready", 0.83);
-        iarml.changePosition("specimenready", 0.83);
-        iarmr.changePosition("specimen", 0.97);
-        iarml.changePosition("specimen", 0.97);
-        iarmr.changePosition("transferspecimen", 0.9);
-        iarml.changePosition("transferspecimen", 0.9);
-        iarmr.changePosition("stagetransfer", 0.94);
-        iarml.changePosition("stagetransfer", 0.94);
-        iarmr.changePosition("seek", 0.56);
-        iarml.changePosition("seek", 0.56);
-        iarmr.changePosition("grab", 0.45);
-        iarml.changePosition("grab", 0.45);
+        iarmr.changePosition("specimenready", 0.81);
+        iarml.changePosition("specimenready", 0.81);
+        iarmr.changePosition("specimen", 0.95);
+        iarml.changePosition("specimen", 0.95);
+        iarmr.changePosition("transferspecimen", 0.88);
+        iarml.changePosition("transferspecimen", 0.88);
+        iarmr.changePosition("stagetransfer", 0.92);
+        iarml.changePosition("stagetransfer", 0.92);
+        iarmr.changePosition("seek", 0.54);
+        iarml.changePosition("seek", 0.54);
+        iarmr.changePosition("grab", 0.43);
+        iarml.changePosition("grab", 0.43);
 
         ipivot.changePosition("init", 0.8);
         ipivot.changePosition("specimenready", 0);
@@ -47,11 +47,11 @@ public class Intake extends RobotPart {
         ipivot.changePosition("grab", 0.79);
         ipivot.changePosition("drop", 0.15);
 
-        iturret.changePosition("start", 1);
-        iturret.changePosition("horizontal", 0.43);
-        iturret.changePosition("left", 0.125);
-        iturret.changePosition("right", 0.375);
-        iturret.changePosition("switcharoo", 1);
+        iturret.changePosition("start", 0.97);
+        iturret.changePosition("horizontal", 0.6);
+        iturret.changePosition("left", 0);
+        iturret.changePosition("right", 0);
+        iturret.changePosition("switcharoo", 0.21);
 
         iclaw.changePosition("close", 0.5);
         iclaw.changePosition("start", 0.45);
@@ -66,8 +66,8 @@ public class Intake extends RobotPart {
         linkagel.changePosition("end", 0.06);
         linkager.changePosition("specimen", 0.21);
         linkagel.changePosition("specimen", 0.21);
-        linkager.changePosition("transferspecimen", 0.2);
-        linkagel.changePosition("transferspecimen", 0.2);
+        linkager.changePosition("transferspecimen", 0.15);
+        linkagel.changePosition("transferspecimen", 0.15);
         linkager.changePosition("seek", 0.23);
         linkagel.changePosition("seek", 0.23);
         linkager.changePosition("switcharoo", 0.14);

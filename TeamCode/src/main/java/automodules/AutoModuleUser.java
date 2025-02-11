@@ -4,7 +4,6 @@ import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.robotStatus;
 
-import auton.Auto;
 import robot.RobotUser;
 import robotparts.RobotPart;
 
@@ -48,7 +47,7 @@ public interface AutoModuleUser extends RobotUser {
             RobotPart.pause(0.3),
             intake.transferSpecimen(0.1),
             RobotPart.pause(0.35),
-            outtake.grabSpecimen(0.1),
+            outtake.clawGrab(0.1),
             RobotPart.pause(0.3),
             intake.clawRelease(0.1)
     ).setStartCode(()->
@@ -58,21 +57,28 @@ public interface AutoModuleUser extends RobotUser {
             lift.stageLift(1, 26).attach(outtake.upSpecimen(0.1))
     );
 
-    AutoModule downSpecimen = new AutoModule(
+    AutoModule switcharoo = new AutoModule(
+            outtake.switcharooReady(0.1).attach(intake.turretSwitcharoo(0.1)),
+            RobotPart.pause(0.1),
+            intake.switcharooReady(0.1),
+            outtake.clawGrab(0.1),
+            intake.clawRelease(0.1)
+    );
+
+    AutoModule high = new AutoModule(
+            lift.stageLift(1, 40).attach(outtake.placeHigh(0.1))
+    );
+
+    AutoModule down = new AutoModule(
             outtake.clawRelease(0.1),
             RobotPart.pause(0.2),
-            lift.stageLift(1, 0).attach(outtake.downSpecimen(0.1))
+            lift.stageLift(1, 0).attach(outtake.init(0.1)),
+            intake.init(0.1)
     );
 
     AutoModule drop = new AutoModule(
             intake.drop(0.1).attach(intake.clawRelease(0.1)),
             intake.init(0.1)
-    );
-
-    AutoModule switcharoo = new AutoModule(
-            outtake.switcharooReady(0.1).attach(intake.turretSwitcharoo(0.1)),
-            RobotPart.pause(0.1),
-            intake.switcharooReady(0.1)
     );
 
 //    AutoModule sampleAlign = new AutoModule (
