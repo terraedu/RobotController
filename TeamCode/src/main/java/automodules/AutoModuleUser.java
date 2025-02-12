@@ -33,11 +33,20 @@ public interface AutoModuleUser extends RobotUser {
             RobotPart.pause(0.2),
             intake.init(0.1)
     ).setStartCode(()->
-            robotStatus.set(INTAKING));
+            robotStatus.set(DRIVING));
 
     AutoModule specimenReady = new AutoModule(
             intake.specimenReady(0.1),
-            outtake.specimenReady(0.1)
+            outtake.specimenReady(0.1),
+                // clingy claw :) - comment out
+                outtake.clawRelease(0.01),
+                outtake.clawGrab(0.01),
+                outtake.clawRelease(0.01),
+                outtake.clawGrab(0.01),
+                outtake.clawRelease(0.01),
+                outtake.clawGrab(0.01),
+                outtake.clawRelease(0.01),
+                outtake.clawGrab(0.01)
     ).setStartCode(()->
             robotStatus.set(INTAKING));
 
@@ -66,13 +75,15 @@ public interface AutoModuleUser extends RobotUser {
     );
 
     AutoModule high = new AutoModule(
-            lift.stageLift(1, 40).attach(outtake.placeHigh(0.1))
+            lift.stageLift(1, 41).attach(outtake.placeHigh(0.1)),
+            outtake.zestyFlick(0.05),
+            outtake.placeHigh(0.1)
     );
 
     AutoModule down = new AutoModule(
             outtake.clawRelease(0.1),
             RobotPart.pause(0.2),
-            lift.stageLift(1, 0).attach(outtake.init(0.1)),
+            outtake.init(0.1).attach(lift.stageLift(1, 0)),
             intake.init(0.1)
     );
 

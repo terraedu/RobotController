@@ -22,11 +22,9 @@ public class Executor implements Iterator {
         reactor.setTarget(generator.getTarget());
         Stage stage = generator.getStage(reactor);
         stage.start();
-        whileActive(() -> !stage.shouldStop(), stage::loop);
-        odometry.getPose();
+        whileActive(() -> !stage.shouldStop(), ()-> {stage.loop(); odometry.update();});
         stage.runOnStop();
     }
 
     @Override
-    public boolean condition() { return auto.condition(); }
-}
+    public boolean condition() {return auto.condition();}}

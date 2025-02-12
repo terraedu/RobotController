@@ -33,12 +33,12 @@ public class Intake extends RobotPart {
         iarml.changePosition("specimen", 0.95);
         iarmr.changePosition("transferspecimen", 0.88);
         iarml.changePosition("transferspecimen", 0.88);
-        iarmr.changePosition("stagetransfer", 0.92);
-        iarml.changePosition("stagetransfer", 0.92);
+        iarmr.changePosition("stagetransfer", 0.91);
+        iarml.changePosition("stagetransfer", 0.91);
         iarmr.changePosition("seek", 0.54);
         iarml.changePosition("seek", 0.54);
-        iarmr.changePosition("grab", 0.43);
-        iarml.changePosition("grab", 0.43);
+        iarmr.changePosition("grab", 0.41);
+        iarml.changePosition("grab", 0.41);
 
         ipivot.changePosition("init", 0.8);
         ipivot.changePosition("specimenready", 0);
@@ -53,23 +53,23 @@ public class Intake extends RobotPart {
         iturret.changePosition("right", 0);
         iturret.changePosition("switcharoo", 0.21);
 
-        iclaw.changePosition("close", 0.5);
+        iclaw.changePosition("close", 0.45);
         iclaw.changePosition("start", 0.45);
-        iclaw.changePosition("adjust", 0.38);
+        iclaw.changePosition("adjust", 0.43);
         iclaw.changePosition("open", 0.28);
 
         linkager.changePosition("start", 0.31);
         linkagel.changePosition("start", 0.31);
-        linkager.changePosition("init", 0.25);
-        linkagel.changePosition("init", 0.25);
+        linkager.changePosition("init", 0.22);
+        linkagel.changePosition("init", 0.22);
         linkager.changePosition("end", 0.06);
         linkagel.changePosition("end", 0.06);
         linkager.changePosition("specimen", 0.21);
         linkagel.changePosition("specimen", 0.21);
         linkager.changePosition("transferspecimen", 0.15);
         linkagel.changePosition("transferspecimen", 0.15);
-        linkager.changePosition("seek", 0.23);
-        linkagel.changePosition("seek", 0.23);
+        linkager.changePosition("seek", 0.18);
+        linkagel.changePosition("seek", 0.18);
         linkager.changePosition("switcharoo", 0.14);
         linkagel.changePosition("switcharoo", 0.14);
 
@@ -79,31 +79,31 @@ public class Intake extends RobotPart {
     public void moveInit() {
         iarmr.setPosition("init");
         iarml.setPosition("init");
-        ipivot.setPosition("init");
         iturret.setPosition("start");
         iclaw.setPosition("start");
         linkager.setPosition("init");
         linkagel.setPosition("init");
+        ipivot.setPosition("init");
     }
 
-    public void iSpecimenReady() {
+    void iSpecimenReady() {
+        ipivot.setPosition("specimenready");
         iarmr.setPosition("specimenready");
         iarml.setPosition("specimenready");
-        ipivot.setPosition("specimenready");
         iturret.setPosition("start");
         iclaw.setPosition("open");
         linkager.setPosition("start");
         linkagel.setPosition("start");
     }
 
-    public void yoinkSpecimen() {
+    void yoinkSpecimen() {
         iarmr.setPosition("specimen");
         iarml.setPosition("specimen");
         linkager.setPosition("specimen");
         linkagel.setPosition("specimen");
     }
 
-    public void transferSpecimen() {
+    void transferSpecimen() {
         iarmr.setPosition("transferspecimen");
         iarml.setPosition("transferspecimen");
         ipivot.setPosition("transferspecimen");
@@ -111,14 +111,14 @@ public class Intake extends RobotPart {
         linkagel.setPosition("transferspecimen");
     }
 
-    public void stageTransfer() {
+    void stageTransfer() {
         iarmr.setPosition("stagetransfer");
         iarml.setPosition("stagetransfer");
         ipivot.setPosition("specimenready");
         iclaw.setPosition("adjust");
     }
 
-    public void intakeSeek() {
+    void intakeSeek() {
         iarmr.setPosition("seek");
         iarml.setPosition("seek");
         ipivot.setPosition("seek");
@@ -128,7 +128,7 @@ public class Intake extends RobotPart {
         linkagel.setPosition("seek");
     }
 
-    public void intake() {
+    void intake() {
         linkager.setPosition("end");
         linkagel.setPosition("end");
         ipivot.setPosition("grab");
@@ -136,11 +136,11 @@ public class Intake extends RobotPart {
         iarml.setPosition("grab");
     }
 
-    public void drop() {
+    void drop() {
         ipivot.setPosition("drop");
     }
 
-    public void switcharooReady() {
+    void switcharooReady() {
         linkager.setPosition("start");
         linkagel.setPosition("start");
         iarmr.setPosition("specimen");

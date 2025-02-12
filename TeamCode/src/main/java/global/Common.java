@@ -15,6 +15,7 @@ import util.User;
 import util.store.Storage;
 
 import static global.General.*;
+import static robot.RobotUser.odometry;
 
 public interface Common{
     /**
@@ -95,6 +96,7 @@ public interface Common{
      */
     default void update(boolean showTelemetry){
         bot.update();
+        odometry.update();
         gph1.run();
         gph2.run();
         sync.update();

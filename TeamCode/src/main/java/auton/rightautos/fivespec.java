@@ -24,36 +24,10 @@ public class fivespec extends AutoFramework {
         intake.moveInit();
     }
 
-    AutoModule extend = new AutoModule(
-//            outtake.stageSpecimen(.1).attach(lift.stageLift(1,10)  )
-    );
-
-    AutoModule lock = new AutoModule(
-            lift.stageLift(1,2)
-    );
-
-    AutoModule retract = new AutoModule(
-//            outtake.stageOpen(.1),
-
-//            lift.stageLift(1,0).attach(outtake.stageStart(.1))
-    );
-
-    AutoModule doIntake = new AutoModule(
-
-    );
-
-    AutoModule grab = new AutoModule(
-
-    );
-
-    AutoModule open = new AutoModule(
-
-    );
-
-    AutoModule sampleAlign = new AutoModule (
-            drive.alignSampleRight(0, -0.5, 0),
-            drive.alignSampleLeft(0, 0.5, 0)
-    );
+//    AutoModule sampleAlign = new AutoModule (
+//            drive.alignSampleRight(0, -0.5, 0),
+//            drive.alignSampleLeft(0, 0.5, 0)
+//    );
 
     @Override
     public void define() {

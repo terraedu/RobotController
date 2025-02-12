@@ -3,10 +3,11 @@ package autoutil.vision;
 import static global.General.log;
 import static global.Modes.TeleStatus.BLUEA;
 import static global.Modes.teleStatus;
+import static robot.RobotUser.drive;
+import static robot.RobotUser.lift;
 
 import automodules.stage.Exit;
 import autoutil.vision.filters.MovingAverageFilter;
-import global.Modes;
 import teleop.Tele;
 
 import org.opencv.core.*;
@@ -14,14 +15,13 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SampleScanner extends OpenCvPipeline {
 
     public final MovingAverageFilter angleFilter = new MovingAverageFilter(35);
 
     Size frameSize = Tele.frameSize;
+
     Mat ycrcbMat = new Mat();
     Mat crMat = new Mat();
     Mat cbMat = new Mat();
@@ -42,14 +42,15 @@ public class SampleScanner extends OpenCvPipeline {
 
     int isCenter;
 
-    double win_half_x = frameSize.width / 2;
-    double win_bottom_y = frameSize.height;
+    double focus_x = frameSize.width / 2;
+    double focus_y = 370;
     double rect_center_x;
     double rect_center_y;
     double dist_x;
     double dist_y;
     public static double servoPos;
 
+    // thresholds
     int YELLOW_MASK_THRESHOLD = 90;
     int BLUE_MASK_THRESHOLD = 150;
     int RED_MASK_THRESHOLD = 170;
@@ -82,64 +83,8 @@ public class SampleScanner extends OpenCvPipeline {
 
         if (teleStatus.modeIs(BLUEA)) {
             contours(input, cbMat, blueThresholdMat, morphedBlueThreshold, BLUE_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Blue");
-//            colNum = subScan(input, BLUEA);
         } else {
             contours(input, crMat, redThresholdMat, morphedRedThreshold, RED_MASK_THRESHOLD, Imgproc.THRESH_BINARY, "Red");
-//            colNum = subScan(input, BLUEA);
-        }
-//        log.show("col", colNum);
-    }
-
-    int subScan(Mat input, Modes.TeleStatus teamColor) {
-        double frameWidth = frameSize.width;
-        double frameHeight = frameSize.height;
-        Map<Integer, Integer> columnPixelsRed = new HashMap<>();
-        Map<Integer, Integer> columnPixelsBlue = new HashMap<>();
-        int colNum = 0;
-        double[] pixelColor;
-
-        for (int n = 0; n < 3; n++) {
-            int red = 0;
-            int blue = 0;
-
-            int x = (int) (frameWidth / 3) * n;
-            log.show("x:", x);
-            int y = 0;
-            int width = (int) frameWidth / 3;
-            int height = (int) frameHeight;
-
-            for (int i = x; i < x + width; i++) {
-                for (int j = y; j < y + height; j++) {
-                    pixelColor = input.get(i, j);
-                    log.show("pixel colors: ", pixelColor[0]);
-                    if (pixelColor[0] > pixelColor[2]) {red++;} else {blue++;} // if more red or blue in pixel
-                }
-            }
-            columnPixelsRed.put(n, red);
-            columnPixelsBlue.put(n, blue);
-        }
-
-        int bigCol = 0;
-        if (teamColor == BLUEA) {
-            Map.Entry<Integer, Integer> maxEntry = null;
-            for (Map.Entry<Integer, Integer> entry : columnPixelsBlue.entrySet()) {
-                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
-                    maxEntry = entry;
-                    bigCol = maxEntry.getKey();
-                }
-            }
-            log.show("bigCol: ", bigCol);
-            return bigCol;
-        } else {
-            Map.Entry<Integer, Integer> maxEntry = null;
-            for (Map.Entry<Integer, Integer> entry : columnPixelsRed.entrySet()) {
-                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
-                    maxEntry = entry;
-                    bigCol = maxEntry.getKey();
-                }
-            }
-            log.show("bigCol: ", bigCol);
-            return bigCol;
         }
     }
 
@@ -159,18 +104,21 @@ public class SampleScanner extends OpenCvPipeline {
         for (MatOfPoint contour : contoursList) {
             RotatedRect rotatedRectFitToContour = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
 
-            Imgproc.circle(input, new Point(win_half_x, win_bottom_y), 1, RED, 5);
+            Imgproc.circle(input, new Point(focus_x, focus_y), 1, RED, 10);
 
             rect_center_x = rotatedRectFitToContour.center.x;
             rect_center_y = rotatedRectFitToContour.center.y;
 
-            dist_x = win_half_x - rect_center_x;
-            dist_y = win_bottom_y - rect_center_y;
+            dist_x = focus_x - rect_center_x;
+            dist_y = focus_y - rect_center_y;
+
+//            lift.liftAdjust(dist_y / 30);
+//            drive.move(0, dist_x / 30, 0);
 
             double area = rotatedRectFitToContour.size.height * rotatedRectFitToContour.size.width;
             dist = Math.pow((Math.pow(dist_x, 2) + Math.pow(dist_y, 2)), 0.5);
 
-            if (rect_center_x > win_half_x) {
+            if (rect_center_x > focus_x) {
                 isCenter = 1;
             } else {
                 isCenter = -1;
@@ -183,27 +131,25 @@ public class SampleScanner extends OpenCvPipeline {
                 }
             }
 
-            if (++cnt == size) {
-                if (smallDistBox != null) {
-                    double rotRectAngle = smallDistBox.angle;
-                    if (smallDistBox.size.width < smallDistBox.size.height) {
-                        rotRectAngle += 90;
-                    }
-                    double angle = -(rotRectAngle - 180);
-                    String degrees = (int) Math.round(angle) + " deg";
-
-                    drawItems(input, smallDistBox, degrees, teamColor);
-                    Imgproc.line(input, smallDistBox.center, new Point(win_half_x, win_bottom_y), YELLOW);
-
-                    AnalyzedStone analyzedStone = new AnalyzedStone();
-                    analyzedStone.angle = Math.round(angle);
-                    analyzedStone.color = teamColor;
-                    analyzedStone.center = smallDistBox.center;
-                    internalStoneList.add(analyzedStone);
-
-                    servoPos = (angle * 0.5) / 180;
-                    log.show("servo position ", servoPos);
+            if (++cnt == size && smallDistBox != null) {
+                double rotRectAngle = smallDistBox.angle;
+                if (smallDistBox.size.width < smallDistBox.size.height) {
+                    rotRectAngle += 90;
                 }
+
+                double angle = -(rotRectAngle - 180);
+                String degrees = (int) Math.round(angle) + " deg";
+                drawItems(input, smallDistBox, degrees, teamColor);
+                Imgproc.line(input, smallDistBox.center, new Point(focus_x, focus_y), YELLOW);
+
+                AnalyzedStone analyzedStone = new AnalyzedStone();
+                analyzedStone.angle = Math.round(angle);
+                analyzedStone.color = teamColor;
+                analyzedStone.center = smallDistBox.center;
+                internalStoneList.add(analyzedStone);
+
+                servoPos = (angle * 0.5) / 180;
+                log.show("servo position ", servoPos);
             }
         }
     }
@@ -271,9 +217,9 @@ public class SampleScanner extends OpenCvPipeline {
         Imgproc.dilate(output, output, dilateElement);
     }
 
-    public boolean notLeft() {return isCenter >= 0;}
-    public boolean notRight() {return isCenter <= 0;}
-
-    public Exit centerLeft(){return new Exit(this::notLeft);}
-    public Exit centerRight(){return new Exit(this::notRight);}
+//    public boolean notLeft() {return isCenter >= 0;}
+//    public boolean notRight() {return isCenter <= 0;}
+//
+//    public Exit centerLeft(){return new Exit(this::notLeft);}
+//    public Exit centerRight(){return new Exit(this::notRight);}
 }

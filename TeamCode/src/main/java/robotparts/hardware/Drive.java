@@ -61,22 +61,18 @@ public class Drive extends RobotPart {
 
     @Override
     public void move(double f, double s, double t) {
-        Vector power = new Vector(Precision.clip(s, 1), Precision.clip(f, 1));
-        power.scaleX(1.2);
-        power.limitLength(1);
-        f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
-        fr.setPower(f + s - t);
-        br.setPower(f - s - t);
-        fl.setPower(f - s + t);
-        bl.setPower(f + s + t);
+        fl.setPower(f + s - t);
+        bl.setPower(f - s + t);
+        fr.setPower(f - s - t);
+        br.setPower(f + s + t);
     }
 
     public void newMove(double f, double s, double t) {
         if (robotStatus.get() == DRIVING) {
-            fl.setPower(f - .75 * s + t); //fr
+            fl.setPower(f - .75 * s + t);
             bl.setPower(f + .75 * s - t);
-            fr.setPower(f - .75 * s - t); //br
-            br.setPower(f + .75 * s + t); //fl
+            fr.setPower(f - .75 * s - t);
+            br.setPower(f + .75 * s + t);
         } else {
             fl.setPower(.3 * f - .3 * s + .3 * t);
             bl.setPower(.3 * f + .3 * s - .3 * t);
@@ -85,13 +81,14 @@ public class Drive extends RobotPart {
         }
 
     }
-        public Stage alignSampleRight(double f, double s, double t) {
-        return super.moveCustomExit(f, s, t, intake.sampleScanner.centerRight());
-    }
 
-    public Stage alignSampleLeft(double f, double s, double t) {
-        return super.moveCustomExit(f, s, t, intake.sampleScanner.centerLeft());
-    }
+//    public Stage alignSampleRight(double f, double s, double t) {
+//        return super.moveCustomExit(f, s, t, intake.sampleScanner.centerRight());
+//    }
+//
+//    public Stage alignSampleLeft(double f, double s, double t) {
+//        return super.moveCustomExit(f, s, t, intake.sampleScanner.centerLeft());
+//    }
 
     @Override
     public Stage moveTime(double fp, double sp, double tp, double t) {

@@ -59,7 +59,7 @@ public class TerraRed extends Tele {
         extendo.move(gph2.ry);
         log.show("x encoder", odometry.odo.getPosX());
         log.show("y encoder", odometry.odo.getPosY());
-        log.show("heading", odometry.odo.getHeading());
+        log.show("heading", odometry.odo.getHeading() * 57.2958);
         log.show("extendo position", extendo.motorLeft.getPosition());
         log.show("lift position", lift.motorRight.getPosition());
     }
