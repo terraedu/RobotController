@@ -1,5 +1,7 @@
 package autoutil;
 
+import static global.General.log;
+import static robot.RobotUser.drive;
 import static robot.RobotUser.odometry;
 
 import automodules.stage.Stage;
@@ -22,7 +24,10 @@ public class Executor implements Iterator {
         reactor.setTarget(generator.getTarget());
         Stage stage = generator.getStage(reactor);
         stage.start();
-        whileActive(() -> !stage.shouldStop(), ()-> {stage.loop(); odometry.update();});
+         whileActive(() -> !stage.shouldStop(), ()-> {
+            stage.loop(); odometry.update(); log.show(odometry.getPose());
+        }
+        );
         stage.runOnStop();
     }
 

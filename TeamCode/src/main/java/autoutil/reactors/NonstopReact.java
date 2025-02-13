@@ -6,8 +6,8 @@ import autoutil.generators.PoseGen;
 
 public class NonstopReact extends MecanumReactor {
 
-    public NoStop nostop = new NoStop(0.15, 0.1, 100.0);
-    public RP hRP = new RP(0.012, 0.08);
+    public NoStop nostop = new NoStop(0.2, 0.1, 100.0);
+    public RP hRP = new RP(0.006    , 0.08);
 //    public PID hPID = new PID(PID.PIDParameterType.STANDARD_FORM_ALL, 0.01, 6.0, 0.2, 50.0, 20.0);
 
     public NonstopReact(){
@@ -30,6 +30,7 @@ public class NonstopReact extends MecanumReactor {
     @Override
     public void moveToTarget(PoseGen generator) {
         movementController.update(getPose(), generator); headingController.update(getPose(), generator);
+//        drive.move(0,0,0);
         drive.move(movementController.getOutputY(), 1.2*movementController.getOutputX(), -1.05*headingController.getOutput());
     }
 

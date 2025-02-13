@@ -14,6 +14,8 @@ import util.template.Precision;
 import static global.General.hardwareMap;
 import static robot.RobotFramework.odometryThread;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver;
 
@@ -28,7 +30,7 @@ public class NewOdometry extends RobotPart {
     @Override
     public void init() {
         odo = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
-        odo.setOffsets(-131.5, 55);
+        odo.setOffsets(-32, 55);
         odo.setEncoderResolution(234.057143);
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
         odo.resetPosAndIMU();
@@ -38,10 +40,13 @@ public class NewOdometry extends RobotPart {
     }
 
     public void update(){
+
         odo.update();
-        h = nanAngle(odo.getHeading() * 57.2958);
-        x = nanX(odo.getPosY());
-        y = nanY(odo.getPosX());
+        Pose2D pos = odo.getPosition();
+
+        h = nanAngle(Math.toDegrees(odo.getHeading()));
+        x = nanX((pos.getY(DistanceUnit.MM)/10));
+        y = nanY((pos.getX(DistanceUnit.MM)/10));
     }
 
     private double lastAngle = 0;
@@ -97,4 +102,6 @@ public class NewOdometry extends RobotPart {
 
 
     }
+
+
 }
