@@ -34,8 +34,14 @@ public class fivespec extends AutoFramework {
 
     @Override
     public void define() {
-//        addSetpoint(1, 1, );
-        addSegment(.5,100,NonstopSP,0,20,0);
-        addSegment(.5,100,NonstopSP,0,20,90);
+        addConcurrentAutoModule(upSpecimen);
+        addSegment(0.5,0.3,NonstopSP,0,-20,0);
+        addSegment(0.5,1,NonstopSP,0,-29,0);
+        addSegment(0.5,0.2,NonstopSP,0,-32,0);
+        addConcurrentAutoModule(down);
+
+        addSegment(0.5,1,NonstopWP,0,-6,0);
+        addSegment(0.5,1,NonstopWP,-30,-14,0);
+        addSegment(0.5,1,NonstopSP,-40,-14,-45);
     }
-    }
+}

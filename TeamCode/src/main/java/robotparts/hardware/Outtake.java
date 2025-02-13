@@ -30,15 +30,12 @@ public class Outtake extends RobotPart {
         arml.changePosition("switcharoo", 0.055);
         armr.changePosition("basket", 0.5);
         arml.changePosition("basket", 0.5);
-        armr.changePosition("zesty", 0.6);
-        arml.changePosition("zesty", 0.6);
 
         pivot.changePosition("init", 0);
-        pivot.changePosition("specimenready", 0.81);
-        pivot.changePosition("place", 0.26);
-        pivot.changePosition("switcharoo", 0.5);
-        pivot.changePosition("basket", 0.31);
-        pivot.changePosition("zesty", 0.1);
+        pivot.changePosition("specimenready", 0.84);
+        pivot.changePosition("place", 0.29);
+        pivot.changePosition("switcharoo", 0.57);
+        pivot.changePosition("basket", 0.3);
 
         claw.changePosition("start", 1);
         claw.changePosition("open", 0.6);
@@ -79,12 +76,6 @@ public class Outtake extends RobotPart {
         pivot.setPosition("basket");
     }
 
-    void zestyFlick() {
-        armr.setPosition("zesty");
-        arml.setPosition("zesty");
-        pivot.setPosition("zesty");
-    }
-
     public void upForIntake() {armr.setPosition("specimenready"); arml.setPosition("specimenready");}
 
     public void clawGrab() {claw.setPosition("start");}
@@ -97,7 +88,6 @@ public class Outtake extends RobotPart {
     public Stage upSpecimen(double t) {return super.customTime(this::upSpecimen, t);}
     public Stage switcharooReady(double t) {return super.customTime(this::switcharooReady, t);}
     public Stage placeHigh(double t) {return super.customTime(this::placeHigh, t);}
-    public Stage zestyFlick(double t) {return super.customTime(this::zestyFlick, t);}
 
     public Stage upForIntake(double t) {return super.customTime(this::upForIntake, t);}
 

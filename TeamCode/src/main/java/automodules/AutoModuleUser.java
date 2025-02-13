@@ -3,6 +3,7 @@ package automodules;
 import static global.Modes.RobotStatus.DRIVING;
 import static global.Modes.RobotStatus.INTAKING;
 import static global.Modes.robotStatus;
+import static global.Modes.teleStatus;
 
 import robot.RobotUser;
 import robotparts.RobotPart;
@@ -21,17 +22,21 @@ public interface AutoModuleUser extends RobotUser {
 
     AutoModule intakeIn = new AutoModule(
             intake.intake(0.1),
-            intake.clawAdjust(0.1),
-            RobotPart.pause(0.1),
-            outtake.upForIntake(0.1).attach(intake.stageTransfer(0.1)),
-            RobotPart.pause(0.6),
             intake.clawGrab(0.1),
+            RobotPart.pause(0.1),
+            intake.clawAdjust(0.1).attach(intake.electricSlide(0.1)),
+            RobotPart.pause(0.5),
+            intake.clawGrab(0.1),
+            outtake.upForIntake(0.1).attach(intake.stageTransfer(0.1)),
             RobotPart.pause(0.3),
             intake.linkStart(0.1),
             RobotPart.pause(0.1),
-            extendo.stageLift(1, -1),
+            extendo.stageLift(1, 8),
+            intake.init(0.1),
             RobotPart.pause(0.2),
-            intake.init(0.1)
+            extendo.stageLift(1, 0),
+            RobotPart.pause(0.2),
+            outtake.switcharooReady(0.1).attach(intake.turretSwitcharoo(0.1))
     ).setStartCode(()->
             robotStatus.set(DRIVING));
 
@@ -39,14 +44,26 @@ public interface AutoModuleUser extends RobotUser {
             intake.specimenReady(0.1),
             outtake.specimenReady(0.1),
                 // clingy claw :) - comment out
-                outtake.clawRelease(0.01),
-                outtake.clawGrab(0.01),
-                outtake.clawRelease(0.01),
-                outtake.clawGrab(0.01),
-                outtake.clawRelease(0.01),
-                outtake.clawGrab(0.01),
-                outtake.clawRelease(0.01),
-                outtake.clawGrab(0.01)
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1),
+                outtake.clawGrab(0.1),
+                outtake.clawRelease(0.1)
     ).setStartCode(()->
             robotStatus.set(INTAKING));
 
@@ -63,20 +80,19 @@ public interface AutoModuleUser extends RobotUser {
             robotStatus.set(DRIVING));
 
     AutoModule upSpecimen = new AutoModule(
-            lift.stageLift(1, 26).attach(outtake.upSpecimen(0.1))
+            lift.stageLift(1, 24).attach(outtake.upSpecimen(0.1))
     );
 
     AutoModule switcharoo = new AutoModule(
             outtake.switcharooReady(0.1).attach(intake.turretSwitcharoo(0.1)),
-            RobotPart.pause(0.1),
-            intake.switcharooReady(0.1),
+            RobotPart.pause(0.2),
+            intake.switcharoo(0.1),
             outtake.clawGrab(0.1),
             intake.clawRelease(0.1)
     );
 
     AutoModule high = new AutoModule(
             lift.stageLift(1, 41).attach(outtake.placeHigh(0.1)),
-            outtake.zestyFlick(0.05),
             outtake.placeHigh(0.1)
     );
 
@@ -87,8 +103,8 @@ public interface AutoModuleUser extends RobotUser {
             intake.init(0.1)
     );
 
-    AutoModule drop = new AutoModule(
-            intake.drop(0.1).attach(intake.clawRelease(0.1)),
+    AutoModule zestyFlick = new AutoModule(
+            intake.zestyFlick(0.1).attach(intake.clawRelease(0.1)),
             intake.init(0.1)
     );
 

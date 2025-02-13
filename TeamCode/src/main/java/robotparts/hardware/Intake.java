@@ -31,21 +31,23 @@ public class Intake extends RobotPart {
         iarml.changePosition("specimenready", 0.81);
         iarmr.changePosition("specimen", 0.95);
         iarml.changePosition("specimen", 0.95);
-        iarmr.changePosition("transferspecimen", 0.88);
-        iarml.changePosition("transferspecimen", 0.88);
-        iarmr.changePosition("stagetransfer", 0.91);
-        iarml.changePosition("stagetransfer", 0.91);
+        iarmr.changePosition("transferspecimen", 0.87);
+        iarml.changePosition("transferspecimen", 0.87);
+        iarmr.changePosition("stagetransfer", 0.93);
+        iarml.changePosition("stagetransfer", 0.93);
         iarmr.changePosition("seek", 0.54);
         iarml.changePosition("seek", 0.54);
         iarmr.changePosition("grab", 0.41);
         iarml.changePosition("grab", 0.41);
+        iarmr.changePosition("slide", 0.7);
+        iarml.changePosition("slide", 0.7);
 
         ipivot.changePosition("init", 0.8);
         ipivot.changePosition("specimenready", 0);
         ipivot.changePosition("transferspecimen", 0.3);
         ipivot.changePosition("seek", 0.68);
         ipivot.changePosition("grab", 0.79);
-        ipivot.changePosition("drop", 0.15);
+        ipivot.changePosition("drop", 0.25);
 
         iturret.changePosition("start", 0.97);
         iturret.changePosition("horizontal", 0.6);
@@ -55,7 +57,7 @@ public class Intake extends RobotPart {
 
         iclaw.changePosition("close", 0.45);
         iclaw.changePosition("start", 0.45);
-        iclaw.changePosition("adjust", 0.43);
+        iclaw.changePosition("adjust", 0.41);
         iclaw.changePosition("open", 0.28);
 
         linkager.changePosition("start", 0.31);
@@ -66,12 +68,14 @@ public class Intake extends RobotPart {
         linkagel.changePosition("end", 0.06);
         linkager.changePosition("specimen", 0.21);
         linkagel.changePosition("specimen", 0.21);
-        linkager.changePosition("transferspecimen", 0.15);
-        linkagel.changePosition("transferspecimen", 0.15);
+        linkager.changePosition("transferspecimen", 0.13);
+        linkagel.changePosition("transferspecimen", 0.13);
         linkager.changePosition("seek", 0.18);
         linkagel.changePosition("seek", 0.18);
         linkager.changePosition("switcharoo", 0.14);
         linkagel.changePosition("switcharoo", 0.14);
+        linkager.changePosition("tight", 0.25);
+        linkagel.changePosition("tight", 0.25);
 
         camera.checkAccess(User.ROFU);
     }
@@ -115,6 +119,13 @@ public class Intake extends RobotPart {
         iarmr.setPosition("stagetransfer");
         iarml.setPosition("stagetransfer");
         ipivot.setPosition("specimenready");
+        iclaw.setPosition("close");
+    }
+
+    void electricSlide() {
+        iarmr.setPosition("slide");
+        iarml.setPosition("slide");
+        ipivot.setPosition("specimenready");
         iclaw.setPosition("adjust");
     }
 
@@ -136,11 +147,11 @@ public class Intake extends RobotPart {
         iarml.setPosition("grab");
     }
 
-    void drop() {
+    void zestyFlick() {
         ipivot.setPosition("drop");
     }
 
-    void switcharooReady() {
+    void switcharoo() {
         linkager.setPosition("start");
         linkagel.setPosition("start");
         iarmr.setPosition("specimen");
@@ -156,7 +167,7 @@ public class Intake extends RobotPart {
     public void turretHorizontal () {iturret.setPosition("horizontal");}
     public void turretLeft() {iturret.setPosition("left");}
     public void turretRight() {iturret.setPosition("right");}
-    public void turretSwitcharoo() {iturret.setPosition("switcharoo");}
+    public void turretSwitcharoo() {iturret.setPosition("switcharoo"); linkager.setPosition("tight"); linkagel.setPosition("tight");}
 
     public void linkEnd() {linkager.setPosition("end"); linkagel.setPosition("end");}
     public void linkStart() {linkager.setPosition("start"); linkagel.setPosition("start");}
@@ -168,10 +179,11 @@ public class Intake extends RobotPart {
     public Stage yoinkSpecimen(double t) {return super.customTime(this::yoinkSpecimen, t);}
     public Stage transferSpecimen(double t) {return super.customTime(this::transferSpecimen, t);}
     public Stage stageTransfer(double t) {return super.customTime(this::stageTransfer, t);}
+    public Stage electricSlide(double t) {return super.customTime(this::electricSlide, t);}
     public Stage intakeSeek(double t) {return super.customTime(this::intakeSeek, t);}
     public Stage intake(double t) {return super.customTime(this::intake, t);}
-    public Stage drop(double t) {return super.customTime(this::drop, t);}
-    public Stage switcharooReady(double t) {return super.customTime(this::switcharooReady, t);}
+    public Stage zestyFlick(double t) {return super.customTime(this::zestyFlick, t);}
+    public Stage switcharoo(double t) {return super.customTime(this::switcharoo, t);}
 
     public Stage clawGrab(double t) {return super.customTime(this::clawGrab, t);}
     public Stage clawLightGrab(double t) {return super.customTime(this::clawLightGrab, t);}
