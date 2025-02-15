@@ -41,6 +41,8 @@ public class Intake extends RobotPart {
         iarml.changePosition("grab", 0.41);
         iarmr.changePosition("slide", 0.7);
         iarml.changePosition("slide", 0.7);
+        iarmr.changePosition("low", 0.22);
+        iarml.changePosition("low", 0.22);
 
         ipivot.changePosition("init", 0.8);
         ipivot.changePosition("specimenready", 0);
@@ -48,6 +50,8 @@ public class Intake extends RobotPart {
         ipivot.changePosition("seek", 0.68);
         ipivot.changePosition("grab", 0.79);
         ipivot.changePosition("drop", 0.25);
+        ipivot.changePosition("smallinit", 0.4);
+        ipivot.changePosition("low", 0.15);
 
         iturret.changePosition("start", 0.97);
         iturret.changePosition("horizontal", 0.6);
@@ -158,6 +162,24 @@ public class Intake extends RobotPart {
         iarml.setPosition("specimen");
     }
 
+    void smallInit() {
+        iarmr.setPosition("init"); iarml.setPosition("init"); ipivot.setPosition("smallinit");
+    }
+
+    void clawDown() {
+        linkager.setPosition("start");
+        linkagel.setPosition("start");
+        iarmr.setPosition("low");
+        iarml.setPosition("low");
+        ipivot.setPosition("low");
+    }
+
+    void clawUp() {
+        iclaw.setPosition("close");
+        iarmr.setPosition("seek");
+        iarml.setPosition("seek");
+    }
+
     public void clawGrab() {iclaw.setPosition("close");}
     public void clawLightGrab() {iclaw.setPosition("start");}
     public void clawAdjust() {iclaw.setPosition("adjust");}
@@ -184,16 +206,19 @@ public class Intake extends RobotPart {
     public Stage intake(double t) {return super.customTime(this::intake, t);}
     public Stage zestyFlick(double t) {return super.customTime(this::zestyFlick, t);}
     public Stage switcharoo(double t) {return super.customTime(this::switcharoo, t);}
+    public Stage smallInit(double t) {return super.customTime(this::smallInit, t);}
+    public Stage clawDown(double t) {return super.customTime(this::clawDown, t);}
+    public Stage clawUp(double t) {return super.customTime(this::clawUp, t);}
 
     public Stage clawGrab(double t) {return super.customTime(this::clawGrab, t);}
     public Stage clawLightGrab(double t) {return super.customTime(this::clawLightGrab, t);}
     public Stage clawAdjust(double t) {return super.customTime(this::clawAdjust, t);}
     public Stage clawRelease(double t) {return super.customTime(this::clawRelease, t);}
 
-    public Stage sTurretReset(double t) {return super.customTime(this::turretReset, t);}
-    public Stage sTurretHorizontal(double t) {return super.customTime(this::turretReset, t);}
-    public Stage sTurretLeft(double t) {return super.customTime(this::turretLeft, t);}
-    public Stage sTurretRight(double t) {return super.customTime(this::turretRight, t);}
+    public Stage turretReset(double t) {return super.customTime(this::turretReset, t);}
+    public Stage turretHorizontal(double t) {return super.customTime(this::turretHorizontal, t);}
+    public Stage turretLeft(double t) {return super.customTime(this::turretLeft, t);}
+    public Stage turretRight(double t) {return super.customTime(this::turretRight, t);}
     public Stage turretSwitcharoo(double t) {return super.customTime(this::turretSwitcharoo, t);}
 
     public Stage linkEnd(double t) {return super.customTime(this::linkEnd, t);}

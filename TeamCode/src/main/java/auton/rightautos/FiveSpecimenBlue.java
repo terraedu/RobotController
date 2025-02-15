@@ -1,19 +1,14 @@
 package auton.rightautos;
 
 import static global.General.bot;
-import static global.General.log;
 import static global.General.voltageScale;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
-import automodules.AutoModule;
 import autoutil.AutoFramework;
-import robotparts.RobotPart;
 
-@Autonomous(name= "FiveSpecimen", group = "auto")
-public class fivespec extends AutoFramework {
+@Autonomous(name= "FiveSpecimenBlue", group = "auto")
+public class FiveSpecimenBlue extends AutoFramework {
 
     @Override
     public void initialize() {
@@ -35,13 +30,21 @@ public class fivespec extends AutoFramework {
     @Override
     public void define() {
         addConcurrentAutoModule(upSpecimen);
-        addSegment(0.5,0.3,NonstopSP,0,-20,0);
-        addSegment(0.5,1,NonstopSP,0,-29,0);
-        addSegment(0.5,0.2,NonstopSP,0,-32,0);
+        addSegment(0.5,1, NonstopSP,-5,-26,0);
+        addSegment(0.5,0.75, NonstopSP,-5,-30,0);
+        addPause(0.1);
         addConcurrentAutoModule(down);
 
-        addSegment(0.5,1,NonstopWP,0,-6,0);
-        addSegment(0.5,1,NonstopWP,-30,-14,0);
-        addSegment(0.5,1,NonstopSP,-40,-14,-45);
+        addConcurrentAutoModule(intakeOut);
+        addSegment(0.5,1, NonstopWP,0,-10,0);
+        addSegment(0.5,1, NonstopWP,-20,-11,0);
+        addSegment(0.5,1, NonstopSP,-26,-15,-47);
+        addPause(0.1);
+        addAutoModule(clawDown);
+        addPause(0.1);
+        addAutoModule(clawUp);
+
+        addConcurrentAutoModule(clawRelease);
+        addSegment(0.5,0.5, NonstopWP,60,40,-160);
     }
 }

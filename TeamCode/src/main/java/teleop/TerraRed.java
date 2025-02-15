@@ -11,6 +11,9 @@ import static global.Modes.TeleStatus.REDA;
 import static teleutil.button.Button.A;
 import static teleutil.button.Button.B;
 import static teleutil.button.Button.DPAD_DOWN;
+import static teleutil.button.Button.DPAD_LEFT;
+import static teleutil.button.Button.DPAD_RIGHT;
+import static teleutil.button.Button.DPAD_UP;
 import static teleutil.button.Button.LEFT_BUMPER;
 import static teleutil.button.Button.LEFT_TRIGGER;
 import static teleutil.button.Button.RIGHT_BUMPER;
@@ -45,6 +48,9 @@ public class TerraRed extends Tele {
         gph2.link(B, high);
         gph2.link(A, specimenReady);
         gph2.link(X, grabSpecimen);
+        gph2.link(DPAD_UP, intake::turretHorizontal);
+        gph2.link(DPAD_LEFT, clawDown);
+        gph2.link(DPAD_RIGHT, clawUp);
 //
         robotStatus.set(DRIVING);
     }
@@ -57,9 +63,9 @@ public class TerraRed extends Tele {
         drive.newMove(gph1.ly,gph1.rx,gph1.lx);
         lift.move(gph2.ly);
         extendo.move(gph2.ry);
-        log.show("x encoder", odometry.odo.getPosX());
-        log.show("y encoder", odometry.odo.getPosY());
-        log.show("heading", odometry.odo.getHeading() * 57.2958);
+        log.show("x encoder", odometry.getX());
+        log.show("y encoder", odometry.getY());
+        log.show("heading", odometry.getHeading());
         log.show("extendo position", extendo.motorLeft.getPosition());
         log.show("lift position", lift.motorRight.getPosition());
     }

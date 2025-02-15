@@ -44,7 +44,7 @@ public class NewOdometry extends RobotPart {
         odo.update();
         Pose2D pos = odo.getPosition();
 
-        h = nanAngle(Math.toDegrees(odo.getHeading()));
+        h = nanAngle(pos.getHeading(AngleUnit.DEGREES));
         x = nanX((pos.getY(DistanceUnit.MM)/10));
         y = nanY((pos.getX(DistanceUnit.MM)/10));
     }
@@ -57,18 +57,30 @@ public class NewOdometry extends RobotPart {
     public double getEncX(){ return odo.getEncoderX();}
     public double getEncY(){ return odo.getEncoderY();}
 
+    int counterH;
+    int counterX;
+    int counterY;
+
     //cookery
-    private double nanAngle(double angle) {
-        if (Double.isNaN(angle)) {
+    private double nanAngle(double h) {
+        if (Double.isNaN(h)) {
+            counterH++;
             return lastAngle;
+        } else if (counterH == 50) {
+            h = 0;
+            return h;
         } else {
-            lastAngle = angle;
-            return angle;
+            lastAngle = h;
+            return h;
         }
     }
     private double nanX(double x) {
         if (Double.isNaN(x)) {
+            counterX++;
             return lastX;
+        } else if (counterX == 50) {
+            h = 0;
+            return h;
         } else {
             lastX = x;
             return x;
@@ -76,7 +88,11 @@ public class NewOdometry extends RobotPart {
     }
     private double nanY(double y) {
         if (Double.isNaN(y)) {
+            counterY++;
             return lastY;
+        } else if (counterY == 50) {
+            h = 0;
+            return h;
         } else {
             lastY = y;
             return y;
