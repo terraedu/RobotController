@@ -27,8 +27,8 @@ public class NewOdometry extends RobotPart {
 
     @Override
     public void init() {
-        xOdo = hardwareMap.get(DcMotor.class, "bl");
-        yOdo = hardwareMap.get(DcMotor.class, "fl");
+        xOdo = hardwareMap.get(DcMotor.class, "fl");
+        yOdo = hardwareMap.get(DcMotor.class, "fr");
         y2Odo = hardwareMap.get(DcMotor.class, "br");
         reset();
         odometryThread.setExecutionCode(odometryUpdateCode);

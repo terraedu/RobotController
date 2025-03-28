@@ -23,7 +23,7 @@ public class PositionHolderTest extends TeleUnitTest {
 
     @Override
     protected void loop() {
-        part.move(gph1.ry);
+//        part.move(gph1.ry);
         log.show("Endoder");
         log.show("pos", motor.getMotorEncoder().getPos());
         log.show("Speed (deg/s)", motor.getMotorEncoder().getAngularVelocity());

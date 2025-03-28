@@ -27,7 +27,11 @@ import static global.General.bot;
 import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.SAMPLE;
+import static global.Modes.RobotStatus.SPECIMEN;
 import static global.Modes.driveMode;
+import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
 
 public class Drive extends RobotPart {
@@ -61,10 +65,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        fr = create("fr", ElectronicType.CMOTOR_REVERSE_FLOAT);
-        br = create("br", ElectronicType.CMOTOR_REVERSE_FLOAT);
-        fl = create("fl", ElectronicType.CMOTOR_FORWARD_FLOAT);
-        bl = create("bl", ElectronicType.CMOTOR_FORWARD_FLOAT);
+        fr = create("fr", ElectronicType.CMOTOR_FORWARD);//
+        br = create("br", ElectronicType.CMOTOR_REVERSE);
+        fl = create("fl", ElectronicType.CMOTOR_FORWARD);//
+        bl = create("bl", ElectronicType.CMOTOR_REVERSE);
 
 //
 //        retract = create("ret", ElectronicType.PSERVO_FORWARD);
@@ -106,10 +110,10 @@ public class Drive extends RobotPart {
         power.scaleX(1.2);
         power.limitLength(1);
         f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
-        fr.setPower(f - s - t);
+        fl.setPower(f - s - t);
+        bl.setPower(f + s + t);
+        fr.setPower(f - s + t);
         br.setPower(f + s - t);
-        fl.setPower(f + s + t);
-        bl.setPower(f - s + t);
     }
 
     public void moveWithoutVS(double f, double s, double t) {
@@ -117,10 +121,10 @@ public class Drive extends RobotPart {
         power.scaleX(1.2);
         power.limitLength(1);
         f = power.getY(); s = power.getX(); t = Precision.clip(t, 1);
-        fr.setPowerRaw(f - s - t);
-        br.setPowerRaw(f + s - t);
-        fl.setPowerRaw(f + s + t);
-        bl.setPowerRaw(f - s + t);
+        fl.setPower(f - s - t);
+        bl.setPower(f + s + t);
+        fr.setPower(f - s + t);
+        br.setPower(f + s - t);
     }
 
     public void help(double[] power, int i, double cutoff, double accel, double decel){
@@ -134,6 +138,21 @@ public class Drive extends RobotPart {
         }
     }
 
+
+    public void newMove(double f, double s, double t) {
+        if (robotStatus.get() == DRIVING || robotStatus.get() == SPECIMEN || robotStatus.get() == SAMPLE) {
+            fl.setPower(f - .65 * s - .3*t);
+            bl.setPower(f + .65 * s + .3*t);
+            fr.setPower(f - .65 * s + .3*t);
+            br.setPower(f + .65 * s - .3*t);
+        } else {
+            fl.setPower(.6 * f - .5 * s - .8 * t);
+            bl.setPower(.6 * f + .5 * s + .8 * t);
+            fr.setPower(.6 * f - .5 * s + .8 * t);
+            br.setPower(.6 * f + .5 * s - .8 * t);
+        }
+
+    }
     public void moveSmooth(double f, double s, double t) {
 
 
