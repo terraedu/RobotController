@@ -7,7 +7,7 @@ import static java.lang.Math.abs;
 import automodules.AutoModule;
 import automodules.stage.Stage;
 import automodules.stage.Stop;
-import autoutil.reactors.MecanumJunctionReactor2;
+//import autoutil.reactors.MecanumJunctionReactor2;
 import geometry.position.Pose;
 import geometry.position.Vector;
 import global.Modes;
