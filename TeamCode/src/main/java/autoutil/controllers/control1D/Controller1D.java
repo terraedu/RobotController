@@ -1,7 +1,7 @@
 package autoutil.controllers.control1D;
 
 import autoutil.generators.Generator;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import autoutil.Profiler;
 import geometry.framework.Point;
 import geometry.position.Pose;
@@ -57,7 +57,7 @@ public abstract class Controller1D {
         isAtTarget = precision.isInputTrueForTime(hasReachedTarget(), minimumTime);
         output = (scale*Precision.clip(setOutput(), 1)) + getRestOutput();
     }
-    public final void update(){ update(new Pose(new Point(0,0),0), new PoseGenerator()); }
+    public final void update(){ update(new Pose(new Point(0,0),0), new PoseGen()); }
     protected double getCurrentValue(){ return currentValue; }
     public double getOutput(){
         return output;

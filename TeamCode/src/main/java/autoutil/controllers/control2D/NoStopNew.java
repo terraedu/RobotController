@@ -1,16 +1,13 @@
 package autoutil.controllers.control2D;
 
-import autoutil.controllers.control1D.RP;
 import autoutil.controllers.control1D.RV;
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
+import autoutil.generators.LineGen;
 import geometry.framework.Point;
 import geometry.position.Line;
 import geometry.position.Pose;
 import geometry.position.Vector;
 import util.Timer;
-import util.codeseg.ReturnCodeSeg;
-import util.template.Precision;
 
 public class NoStopNew extends Controller2DNew {
 
@@ -39,7 +36,7 @@ public class NoStopNew extends Controller2DNew {
 
     @Override
     public void updateController(Pose pose, Generator generator) {
-        checkGenerator(generator, LineGenerator.class, g -> currentLine = g.getLine());
+        checkGenerator(generator, LineGen.class, g -> currentLine = g.getLine());
 
         rvController.scale(scale);
 

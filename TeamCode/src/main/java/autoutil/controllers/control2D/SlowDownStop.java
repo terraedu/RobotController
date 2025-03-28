@@ -1,13 +1,8 @@
 package autoutil.controllers.control2D;
 
-import android.telecom.StatusHints;
-
-import autoutil.controllers.control2D.Controller2DNew;
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
-import debugging.Fault;
+import autoutil.generators.LineGen;
 import geometry.framework.Point;
-import geometry.framework.Tracer;
 import geometry.position.Line;
 import geometry.position.Pose;
 import geometry.position.Vector;
@@ -36,7 +31,7 @@ public class SlowDownStop extends Controller2DNew {
 
     @Override
     public void updateController(Pose pose, Generator generator) {
-        checkGenerator(generator, LineGenerator.class, g -> currentLine = g.getLine());
+        checkGenerator(generator, LineGen.class, g -> currentLine = g.getLine());
 
         scale(scale);
 

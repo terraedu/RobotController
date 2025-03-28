@@ -1,6 +1,6 @@
 package autoutil.reactors;
 
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import autoutil.vision.JunctionScannerAll;
 import geometry.framework.CoordinatePlane;
 import geometry.position.Pose;
@@ -11,7 +11,7 @@ import util.template.Precision;
 
 import static global.General.gph1;
 
-public class MecanumJunctionReactor2 extends MecanumNonstopReactor{
+public class JunctionReact2 extends NonstopReact {
 
     public static final JunctionScannerAll junctionScanner = new JunctionScannerAll();
     private final Precision precision = new Precision();
@@ -44,7 +44,7 @@ public class MecanumJunctionReactor2 extends MecanumNonstopReactor{
     public void nextTarget() {super.nextTarget(); JunctionScannerAll.pause(); startPow = initialStartPow; }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         move(true, new Pose(startPow,0,0));
     }
 

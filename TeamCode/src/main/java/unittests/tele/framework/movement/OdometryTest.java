@@ -1,21 +1,8 @@
 package unittests.tele.framework.movement;
 
-import automodules.AutoModule;
-import automodules.stage.Exit;
-import automodules.stage.Initial;
-import automodules.stage.Main;
-import automodules.stage.Stage;
-import automodules.stage.Stop;
-import geometry.framework.Point;
-import geometry.position.Pose;
-import geometry.position.Vector;
-import math.trigonmetry.Trig;
 import teleutil.button.Button;
-import teleutil.button.OnTurnOffEventHandler;
-import teleutil.button.OnTurnOnEventHandler;
 import unittests.tele.TeleUnitTest;
 
-import static global.General.bot;
 import static global.General.gph1;
 import static global.General.log;
 

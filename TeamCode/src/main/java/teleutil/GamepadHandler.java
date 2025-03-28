@@ -9,16 +9,14 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import javax.crypto.Mac;
-
 import automodules.AutoModule;
 import global.Modes;
 import teleutil.button.Button;
-import teleutil.button.ButtonEventHandler;
+import teleutil.button.main.ButtonEventHandler;
 import teleutil.button.ButtonHandler;
-import teleutil.button.OnPressEventHandler;
-import teleutil.button.OnTurnOffEventHandler;
-import teleutil.button.OnTurnOnEventHandler;
+import teleutil.button.main.OnPressEventHandler;
+import teleutil.button.toggle.OnTurnOffEventHandler;
+import teleutil.button.toggle.OnTurnOnEventHandler;
 import teleutil.independent.Independent;
 import teleutil.independent.Machine;
 import util.codeseg.CodeSeg;

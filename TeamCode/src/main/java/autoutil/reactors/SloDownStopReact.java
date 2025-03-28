@@ -2,15 +2,15 @@ package autoutil.reactors;
 
 import autoutil.controllers.control1D.RP;
 import autoutil.controllers.control2D.SlowDownStop;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import geometry.position.Pose;
 
-public class SlowDownStopReactor extends Reactor{
+public class SloDownStopReact extends Reactor{
 
     public SlowDownStop stop = new SlowDownStop(0.07, 15, 5);
     public RP hRP = new RP(0.01, 0.07);
 
-    public SlowDownStopReactor(){
+    public SloDownStopReact(){
         hRP.setMinimumTime(0.0);
         hRP.setAccuracy(2.0);
         hRP.setProcessVariable(odometry::getHeading);
@@ -46,7 +46,7 @@ public class SlowDownStopReactor extends Reactor{
     }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         stop.updateController(getPose(), generator); hRP.update(getPose(), generator);
         drive.move(stop.getOutputY(), 1.2*stop.getOutputX(), -hRP.getOutput());
     }

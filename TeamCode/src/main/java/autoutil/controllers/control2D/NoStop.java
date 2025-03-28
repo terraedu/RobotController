@@ -2,7 +2,7 @@ package autoutil.controllers.control2D;
 
 import autoutil.controllers.control1D.RP;
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
+import autoutil.generators.LineGen;
 import geometry.framework.Point;
 import geometry.position.Line;
 import geometry.position.Pose;
@@ -50,7 +50,7 @@ public class NoStop extends Controller2D{
 
     @Override
     protected void updateController(Pose pose, Generator generator) {
-        checkGenerator(generator, LineGenerator.class, g -> currentLine = g.getLine());
+        checkGenerator(generator, LineGen.class, g -> currentLine = g.getLine());
 
         setProcessError(() -> currentLine.getEndPoint().getDistanceTo(pose.getPoint()));
 

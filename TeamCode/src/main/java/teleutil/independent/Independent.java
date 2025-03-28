@@ -2,7 +2,6 @@ package teleutil.independent;
 
 import autoutil.AutoFramework;
 import geometry.position.Pose;
-import util.codeseg.ParameterCodeSeg;
 
 public abstract class Independent extends AutoFramework {
     /**
@@ -27,7 +26,7 @@ public abstract class Independent extends AutoFramework {
      * Set to default config, can be overriden, reset should exit
      */
     @Override
-    public final void initialize() { setConfig(mecanumDefaultConfig); shouldExit = false; }
+    public final void initialize() { setConfig(DefaultConfig); shouldExit = false; }
 
     /**
      * Add should exit to the exit condition

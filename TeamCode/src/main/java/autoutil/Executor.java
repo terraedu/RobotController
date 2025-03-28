@@ -1,18 +1,9 @@
 package autoutil;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import automodules.stage.Stage;
-import autoutil.generators.AutoModuleGenerator;
 import autoutil.generators.Generator;
-import autoutil.generators.PauseGenerator;
-import autoutil.generators.PoseGenerator;
 import autoutil.reactors.Reactor;
-import util.codeseg.ParameterCodeSeg;
-import util.codeseg.ReturnCodeSeg;
 import util.template.Iterator;
-
-import static global.General.bot;
 
 public class Executor implements Iterator {
 

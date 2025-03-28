@@ -3,7 +3,7 @@ package autoutil.generators;
 import geometry.position.Line;
 import geometry.position.Pose;
 
-public class LineGenerator extends PoseGenerator{
+public class LineGen extends PoseGen {
     private Line line;
 
     @Override
