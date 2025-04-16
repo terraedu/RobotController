@@ -1,5 +1,6 @@
 package robot;
 
+import robotparts.hardware.Extendo;
 import robotparts.sensors.odometry.NewOdometry;
 import unittests.tele.framework.movement.AutoModuleTest;
 import robotparts.hardware.Drive;
@@ -29,6 +30,8 @@ public interface RobotUser {
 //    Leds leds = new Leds();
     DistanceSensors distanceSensors = new DistanceSensors();
     GyroSensors gyro = new GyroSensors();
+    Extendo extendo = new Extendo();
+
     Cameras camera = new Cameras();
 
 //    Odometry odometry = new TwoOdometry();

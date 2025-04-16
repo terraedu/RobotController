@@ -18,7 +18,11 @@ import static global.General.bot;
 import static global.Modes.Drive.FAST;
 import static global.Modes.Drive.MEDIUM;
 import static global.Modes.Drive.SLOW;
+import static global.Modes.RobotStatus.DRIVING;
+import static global.Modes.RobotStatus.SAMPLE;
+import static global.Modes.RobotStatus.SPECIMEN;
 import static global.Modes.driveMode;
+import static global.Modes.robotStatus;
 //import static global.Modes.driveMode;
 
 public class Drive extends RobotPart {
@@ -52,11 +56,10 @@ public class Drive extends RobotPart {
 //        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
 
 
-        fr = create("fr", ElectronicType.CMOTOR_REVERSE);
+        fr = create("fr", ElectronicType.CMOTOR_FORWARD);//
         br = create("br", ElectronicType.CMOTOR_REVERSE);
-        fl = create("fl", ElectronicType.CMOTOR_FORWARD);
-        bl = create("bl", ElectronicType.CMOTOR_FORWARD);
-
+        fl = create("fl", ElectronicType.CMOTOR_FORWARD);//
+        bl = create("bl", ElectronicType.CMOTOR_REVERSE);
 //
 //        retract = create("ret", ElectronicType.PSERVO_FORWARD);
 //
@@ -125,18 +128,19 @@ public class Drive extends RobotPart {
         }
     }
     public void newMove(double f, double s, double t) {
-        if(driveMode.modeIs(SLOW)){
-            fr.setPower(.5*f + .5*s - .25*t);
-            br.setPower(.5*f - .5*s - .25*t);
-            fl.setPower(.5*f - .5*s + .25*t);
-            bl.setPower(.5*f + .5*s + .25*t);
-    }else{
-            fr.setPower(f + s - t);
-            br.setPower(f - s - t);
-            fl.setPower(f - s + t);
-            bl.setPower(f + s + t);
+        if (robotStatus.get() == DRIVING || robotStatus.get() == SPECIMEN || robotStatus.get() == SAMPLE) {
+            fl.setPower(f - .65 * s - .3*t);
+            bl.setPower(f + .65 * s + .3*t);
+            fr.setPower(f - .65 * s + .3*t);
+            br.setPower(f + .65 * s - .3*t);
+        } else {
+            fl.setPower(.6 * f - .5 * s - .8 * t);
+            bl.setPower(.6 * f + .5 * s + .8 * t);
+            fr.setPower(.6 * f - .5 * s + .8 * t);
+            br.setPower(.6 * f + .5 * s - .8 * t);
         }
-        }
+
+    }
     public void moveSmooth(double f, double s, double t) {
 
 

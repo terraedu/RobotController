@@ -21,14 +21,14 @@ public class NewOdometry extends RobotPart {
     public DcMotor yOdo;
     public DcMotor xOdo;
     public DcMotor y2Odo;
-    public final Vector leftOdometryCenterToRobotCenter = new Vector(10.5, 13.0);
+    public final Vector leftOdometryCenterToRobotCenter = new Vector(-6, -6);
     public final double wheelDiameter = 3.55; // cm
     public final Precision precision = new Precision();
 
     @Override
     public void init() {
         xOdo = hardwareMap.get(DcMotor.class, "fl");
-        yOdo = hardwareMap.get(DcMotor.class, "bl");
+        yOdo = hardwareMap.get(DcMotor.class, "fr");
         y2Odo = hardwareMap.get(DcMotor.class, "br");
         reset();
         odometryThread.setExecutionCode(odometryUpdateCode);
@@ -36,7 +36,7 @@ public class NewOdometry extends RobotPart {
 
     public void update(){
         double currentX = getEncX();
-        double currentY = getEncY();
+        double currentY = -getEncY();
 //        double currentY2 = getEncY2();
         double deltaX = currentX - lastX;
         double deltaY = currentY - lastY;

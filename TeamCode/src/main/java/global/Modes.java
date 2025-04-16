@@ -20,6 +20,12 @@ public interface Modes {
     enum OuttakeStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING}
     Mode outtakeStatus = new Mode(OuttakeStatus.class);
 
+    enum RobotStatus implements Mode.ModeType { DRIVING, PLACING, INTAKING, PLACING2, SPECIMEN, SAMPLE, GRAB}
+    Mode robotStatus = new Mode(RobotStatus.class);
+
+    enum TeleStatus implements Mode.ModeType {REDA, BLUEA}
+    Mode teleStatus = new Mode(TeleStatus.class);
+
     enum Height implements Mode.ModeType {HIGH, MIDDLE, LOW, GROUND}
     Mode heightMode = new Mode(Height.class)
             .set(Height.HIGH, 10)

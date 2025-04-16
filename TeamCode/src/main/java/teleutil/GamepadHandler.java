@@ -118,6 +118,7 @@ public class GamepadHandler {
      */
     public void link(Button b, CodeSeg onOn, CodeSeg onOff, Modes.GamepadMode mode){ link(b, OnTurnOnEventHandler.class, onOn, mode); link(b, OnTurnOffEventHandler.class, onOff, mode); }
     public void link(Button b, CodeSeg onOn, CodeSeg onOff){ link(b, onOn, onOff, Modes.GamepadMode.NORMAL); }
+    public void linkWithCancel(Button b, ReturnCodeSeg<Boolean> conditionOne, AutoModule one, ReturnCodeSeg<Boolean> conditionTwo, AutoModule two, AutoModule three){ link(b, conditionOne, () -> bot.addAutoModuleWithCancel(one), conditionTwo, () -> bot.addAutoModuleWithCancel(two),() -> bot.addAutoModuleWithCancel(three));}
 
     public void linkWithCancel(Button b, ReturnCodeSeg<Boolean> condition, AutoModule one, AutoModule two){ link(b, () -> {if(condition.run()){bot.addAutoModuleWithCancel(one);}else{bot.addAutoModuleWithCancel(two);}}); }
 
