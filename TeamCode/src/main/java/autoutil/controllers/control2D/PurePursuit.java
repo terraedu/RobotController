@@ -2,7 +2,7 @@ package autoutil.controllers.control2D;
 
 import autoutil.controllers.control1D.PID;
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
+import autoutil.generators.LineGen;
 import geometry.position.Line;
 import geometry.framework.Point;
 import geometry.position.Pose;
@@ -10,12 +10,8 @@ import geometry.position.Vector;
 import math.misc.Exponential;
 import math.polynomial.Quadratic;
 import math.trigonmetry.Trig;
-import util.condition.Expectation;
-import util.condition.Magnitude;
 import util.template.ParameterConstructor;
 import util.template.Precision;
-
-import static global.General.fault;
 
 public class PurePursuit extends Controller2D implements ParameterConstructor<Double> {
     public double maxRadius = 15;
@@ -56,7 +52,7 @@ public class PurePursuit extends Controller2D implements ParameterConstructor<Do
 
     @Override
     public void updateController(Pose pose, Generator generator) {
-        checkGenerator(generator, LineGenerator.class, g -> currentLine = g.getLine());
+        checkGenerator(generator, LineGen.class, g -> currentLine = g.getLine());
         Point targetPos = getTargetPos(pose.getPoint(), currentLine);
         xController.setTarget(targetPos.getX());
         yController.setTarget(targetPos.getY());

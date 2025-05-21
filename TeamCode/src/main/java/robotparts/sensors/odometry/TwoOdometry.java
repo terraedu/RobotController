@@ -44,9 +44,9 @@ public class TwoOdometry extends Odometry {
 
     @Override
     protected void update(){
-        double deltaHeading = Math.toRadians(gyro.getDeltaHeading());
-        Vector localEncDelta = new Vector(enc1.getDeltaPosition(), enc2.getDeltaPosition()).getSubtracted(dThetaVector.getScaled(deltaHeading));
-        Vector localDelta = dYdXMatrixInverted.multiply(localEncDelta);
-        updateCurrentPose(toGlobalFrame(localDelta), Math.toDegrees(deltaHeading));
+//        double deltaHeading = Math.toRadians(gyro.getDeltaHeading());
+//        Vector localEncDelta = new Vector(enc1.getDeltaPosition(), enc2.getDeltaPosition()).getSubtracted(dThetaVector.getScaled(deltaHeading));
+//        Vector localDelta = dYdXMatrixInverted.multiply(localEncDelta);
+//        updateCurrentPose(toGlobalFrame(localDelta), Math.toDegrees(deltaHeading));
     }
 }

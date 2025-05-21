@@ -1,9 +1,6 @@
 package autoutil.reactors;
 
-import autoutil.Profiler;
-import autoutil.controllers.control1D.PID;
-import autoutil.controllers.control2D.Default2D;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import autoutil.vision.JunctionScanner;
 import geometry.circles.Circle;
 import geometry.framework.Point;
@@ -13,13 +10,10 @@ import geometry.position.Vector;
 import util.Timer;
 import util.condition.Expectation;
 import util.condition.Magnitude;
-import util.template.Precision;
 
-import static global.General.bot;
 import static global.General.fault;
-import static global.General.log;
 
-public class MecanumJunctionReactor extends MecanumPIDReactor{
+public class JunctionReact extends PIDReact {
 
     public static final JunctionScanner junctionScanner = new JunctionScanner();
     private static final Pose junctionTargetPose = new Pose(0, 23, 0);
@@ -34,7 +28,7 @@ public class MecanumJunctionReactor extends MecanumPIDReactor{
     private static boolean exit = false;
     private static final Timer timer = new Timer();
 
-    public static void setFlipped(boolean flipped){ auto = true; junctionLocation = new Point(flipped ? -30.0 : 30.0, -158); MecanumJunctionReactor.flipped = flipped; }
+    public static void setFlipped(boolean flipped){ auto = true; junctionLocation = new Point(flipped ? -30.0 : 30.0, -158); JunctionReact.flipped = flipped; }
 
     @Override
     public void init() {
@@ -119,7 +113,7 @@ public class MecanumJunctionReactor extends MecanumPIDReactor{
     public void nextTarget() { super.nextTarget(); JunctionScanner.pause(); }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         getPose();
         drive.halt();
     }

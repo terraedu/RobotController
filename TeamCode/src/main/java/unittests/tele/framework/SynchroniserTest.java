@@ -3,7 +3,7 @@ import static global.General.*;
 
 import debugging.Synchroniser;
 import teleutil.button.Button;
-import teleutil.button.ButtonEventHandler;
+import teleutil.button.main.ButtonEventHandler;
 import unittests.tele.TeleUnitTest;
 
 public class SynchroniserTest extends TeleUnitTest {

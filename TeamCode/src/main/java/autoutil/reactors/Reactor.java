@@ -7,8 +7,7 @@ import automodules.stage.Stage;
 import automodules.stage.Stop;
 import autoutil.controllers.control1D.Controller1D;
 import autoutil.controllers.control2D.Controller2D;
-import autoutil.generators.Generator;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import geometry.position.Pose;
 import robot.RobotUser;
 import robotparts.RobotPart;
@@ -25,7 +24,7 @@ public abstract class Reactor implements RobotUser {
     public abstract void setTarget(Pose target);
     public abstract void nextTarget();
     public abstract boolean isAtTarget();
-    public abstract void moveToTarget(PoseGenerator generator);
+    public abstract void moveToTarget(PoseGen generator);
 
     public void firstTarget(){}
 
@@ -46,7 +45,7 @@ public abstract class Reactor implements RobotUser {
     }
 
     public final Initial initialTarget(){ return new Initial(this::firstTarget);}
-    public final Main mainTarget(PoseGenerator generator){return new Main(() -> moveToTarget(generator)); }
+    public final Main mainTarget(PoseGen generator){return new Main(() -> moveToTarget(generator)); }
     public final Exit exitTarget(){ return new Exit(() -> isAtTarget() || forceExit); }
     public final Stop stopTarget(){ return new Stop(() -> {nextTarget(); forceExit = false; }); }
 

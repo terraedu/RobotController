@@ -15,7 +15,6 @@ import math.polynomial.Linear;
 import robotparts.electronics.output.OLed;
 import teleutil.TeleTrack;
 import teleutil.button.Button;
-import teleutil.button.OnNotHeldEventHandler;
 import util.Timer;
 import util.codeseg.CodeSeg;
 import util.template.Precision;
@@ -36,8 +35,8 @@ import static global.Modes.Height.*;
 import static teleutil.button.Button.*;
 import static teleutil.TeleTrack.*;
 
-@TeleOp(name = "TerraOp", group = "TeleOp")
-public class TerraOp extends Tele {
+@TeleOp(name = "NithinOp", group = "TeleOp")
+public class NithinOp extends Tele {
 
     @Override
     public void initTele() {
@@ -57,7 +56,7 @@ public class TerraOp extends Tele {
         gph1.linkWithCancel(Button.Y, heightMode.isMode(HIGH).and(outtakeStatus.isMode(PLACING)), ForwardTeleHigh, BackwardGrabHighTele);
         gph1.linkWithCancel(Button.X, heightMode.isMode(MIDDLE).and(outtakeStatus.isMode(PLACING)), ForwardTeleMiddle, BackwardGrabMiddleTele);
         gph1.linkWithCancel(Button.B, heightMode.isMode(LOW).and(outtakeStatus.isMode(PLACING)), ForwardTeleLow, BackwardGrabLowTele);
-        gph1.link(Button.A, heightMode.isMode(GROUND), () -> {if(lift.ground){ driveMode.set(SLOW); bot.addAutoModuleWithCancel(BackwardPlaceGroundTele);}else{if(outtakeStatus.modeIs(DRIVING)){ driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(BackwardGrabGroundTele);}else{ driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(ForwardTeleGround);}}}, () -> {driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(BackwardGrabGroundTele2);});
+//        gph1.link(Button.A, heightMode.isMode(GROUND), () -> {if(lift.ground){ driveMode.set(SLOW); bot.addAutoModuleWithCancel(BackwardPlaceGroundTele);}else{if(outtakeStatus.modeIs(DRIVING)){ driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(BackwardGrabGroundTele);}else{ driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(ForwardTeleGround);}}}, () -> {driveMode.set(MEDIUM); bot.addAutoModuleWithCancel(BackwardGrabGroundTele2);});
 
 //        gph1.link(A, new AutoModule(drive.stageEndSignal(0.2), drive.stageStartReadySignal(0.0)));
 
@@ -97,9 +96,9 @@ public class TerraOp extends Tele {
         /**
          * Gamepad 1 Automated
          */
-        gph1.link(Button.X, bot::cancelMovements, AUTOMATED);
-        gph1.link(Button.B, MachineCycle, AUTOMATED);
-        gph1.link(Button.Y, MachineCycleExtra, AUTOMATED);
+        //gph1.link(Button.X, bot::cancelMovements, AUTOMATED);
+//        gph1.link(Button.B, MachineCycle, AUTOMATED);
+//        gph1.link(Button.Y, MachineCycleExtra, AUTOMATED);
 
 
         gph1.link(DPAD_DOWN, ResetLift, AUTOMATED);
@@ -131,7 +130,7 @@ public class TerraOp extends Tele {
     @Override
     public void loopTele() {
 
-        drive.moveSmooth(gph1.ry, gph1.rx, gph1.lx);
+        drive.newMove(gph1.ly, gph1.lx);
         lift.move(gph2.ry);
 
         log.show("DriveMode", driveMode.get());

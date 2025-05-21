@@ -1,8 +1,9 @@
-package teleutil.button;
+package teleutil.button.main;
 
 import java.util.Objects;
 
 import teleutil.GamepadHandler;
+import teleutil.button.Button;
 import util.codeseg.CodeSeg;
 import util.codeseg.ReturnCodeSeg;
 

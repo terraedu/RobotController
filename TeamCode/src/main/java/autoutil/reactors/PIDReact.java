@@ -1,16 +1,10 @@
 package autoutil.reactors;
 
-import autoutil.AutoFramework;
 import autoutil.controllers.control2D.Default2D;
 import autoutil.controllers.control1D.PID;
-import autoutil.generators.PoseGenerator;
-import elements.FieldPlacement;
-import elements.FieldSide;
+import autoutil.generators.PoseGen;
 
-import static global.General.fieldPlacement;
-import static global.General.fieldSide;
-
-public class MecanumPIDReactor extends MecanumReactor{
+public class PIDReact extends MecanumReactor{
 
 
 //    public PID xPID = new PID(PID.PIDParameterType.STANDARD_FORM_ALL, 0.023, 1000.0, 0.2, 60.0, 5.0);
@@ -18,7 +12,7 @@ public class MecanumPIDReactor extends MecanumReactor{
 //    public PID hPID = new PID(PID.PIDParameterType.STANDARD_FORM_ALL, 0.009, 1000.0, 0.1, 60.0, 5.0);
 
 
-    public MecanumPIDReactor(){
+    public PIDReact(){
 
         PID yPID = new PID(PID.PIDParameterType.STANDARD_FORM_ALL, 0.016, 10000.0, 0.05, 60.0, 5.0);
         PID xPID = new PID(PID.PIDParameterType.STANDARD_FORM_ALL, 0.021, 10000.0, 0.05, 60.0, 5.0);
@@ -42,7 +36,7 @@ public class MecanumPIDReactor extends MecanumReactor{
     }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         movementController.update(getPose(), generator);
         headingController.update(getPose(), generator);
         drive.move(movementController.getOutputY() + drive.getAntiTippingPower(), movementController.getOutputX(), -headingController.getOutput());

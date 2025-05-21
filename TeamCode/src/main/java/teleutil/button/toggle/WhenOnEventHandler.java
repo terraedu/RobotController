@@ -1,11 +1,13 @@
-package teleutil.button;
+package teleutil.button.toggle;
 
 import teleutil.GamepadHandler;
+import teleutil.button.Button;
+import teleutil.button.main.OnPressEventHandler;
 import util.codeseg.CodeSeg;
 
-public class WhenOffEventHandler extends OnPressEventHandler {
+public class WhenOnEventHandler extends OnPressEventHandler {
     /**
-     * Occurs (multiple times) when the toggler is off
+     * Occurs (multiple times) when the toggler is on
      */
 
 
@@ -15,17 +17,17 @@ public class WhenOffEventHandler extends OnPressEventHandler {
     public boolean on = false;
 
     /**
-     * Code to run when on
+     * Run the code when on
      */
     private final CodeSeg runWhenOn;
 
     /**
-     * Call the super constructor and and set the codeseg
+     * Run the code button
      * @param button
      * @param cs
      * @param gph
      */
-    public WhenOffEventHandler(Button button, CodeSeg cs, GamepadHandler gph) {
+    public WhenOnEventHandler(Button button, CodeSeg cs, GamepadHandler gph) {
         super(button, cs, gph);
         runWhenOn = cs;
         this.codeToRun = () -> on = !on;
@@ -37,6 +39,6 @@ public class WhenOffEventHandler extends OnPressEventHandler {
     @Override
     protected void run() {
         super.run();
-        if (!on) runWhenOn.run();
+        if (on) runWhenOn.run();
     }
 }

@@ -12,7 +12,7 @@ import elements.FieldPlacement;
 import elements.FieldSide;
 import unittests.UnitTester;
 import unittests.auto.framework.VuforiaTest;
-import unittests.auto.framework.calibration.ArmRestPowerCalib;
+//import unittests.auto.framework.calibration.ArmRestPowerCalib;
 import unittests.auto.framework.calibration.OdometryCalib;
 import unittests.auto.framework.calibration.OdometryCalib2;
 import unittests.auto.framework.calibration.RestPowerCalib;

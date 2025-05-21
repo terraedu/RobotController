@@ -1,12 +1,7 @@
 package autoutil.reactors;
 
-import autoutil.generators.Generator;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import geometry.position.Pose;
-import robotparts.sensors.GyroSensors;
-
-import static global.General.bot;
-import static global.General.log;
 
 public abstract class MecanumReactor extends Reactor {
 
@@ -37,7 +32,7 @@ public abstract class MecanumReactor extends Reactor {
     public boolean isAtTarget() { return movementController.isAtTarget() && headingController.isAtTarget(); }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         movementController.update(getPose(), generator);
         headingController.update(getPose(), generator);
         drive.move(movementController.getOutputY(), movementController.getOutputX(), -headingController.getOutput());

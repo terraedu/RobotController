@@ -1,57 +1,56 @@
 package autoutil;
 
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
-import autoutil.generators.PoseGenerator;
-import autoutil.reactors.MecanumJunctionReactor;
-import autoutil.reactors.MecanumJunctionReactor2;
-import autoutil.reactors.MecanumNonstopReactor;
-import autoutil.reactors.MecanumPIDReactor;
-import autoutil.reactors.MecanumPurePursuitReactor;
-import autoutil.reactors.NoStopNewReactor;
+import autoutil.generators.LineGen;
+import autoutil.generators.PoseGen;
+import autoutil.reactors.JunctionReact;
+import autoutil.reactors.JunctionReact2;
+import autoutil.reactors.NonstopReact;
+import autoutil.reactors.NStopNewReact;
 import autoutil.reactors.Reactor;
-import autoutil.reactors.SlowDownStopReactor;
-import autoutil.vision.Scanner;
+import autoutil.reactors.SloDownStopReact;
 import util.codeseg.ReturnCodeSeg;
 import util.template.ParameterConstructor;
 
 public interface AutoUser {
 
 
-    // TOD5 Fix naming conventions (drop mecanum, setpoint -> SP)
+    // TOD5done Fix naming conventions (drop mecanum, setpoint -> SP)
+    // SETPOINT -> SP, PURE PURSUIT -> PP, REACTOR -> REACT, SOME CASES OF MECANUM ->, NO -> N, SLOW -> SLO, WAYPOINT -> WP
 
-    ReturnCodeSeg<LineGenerator> lineGenerator = generator(LineGenerator.class);
-    ReturnCodeSeg<PoseGenerator> poseGenerator = generator(PoseGenerator.class);
 
-    ReturnCodeSeg<MecanumPIDReactor> mecanumPIDReactor = reactor(MecanumPIDReactor.class);
-    ReturnCodeSeg<MecanumPurePursuitReactor> mecanumPurePursuitReactor = reactor(MecanumPurePursuitReactor.class);
-    ReturnCodeSeg<MecanumJunctionReactor> mecanumJunctionReactor = reactor(MecanumJunctionReactor.class);
-    ReturnCodeSeg<MecanumJunctionReactor2> mecanumJunctionReactor2 = reactor(MecanumJunctionReactor2.class);
-    ReturnCodeSeg<MecanumNonstopReactor> mecanumNonstopReactor = reactor(MecanumNonstopReactor.class);
-    ReturnCodeSeg<MecanumNonstopReactor.MecanumNonstopReactorSetpoint> mecanumNonstopReactorSetpoint = reactor(MecanumNonstopReactor.MecanumNonstopReactorSetpoint.class);
-    ReturnCodeSeg<MecanumNonstopReactor.MecanumNonstopReactorTurnSetpoint> turnReactorSetpoint = reactor(MecanumNonstopReactor.MecanumNonstopReactorTurnSetpoint.class);
-    ReturnCodeSeg<NoStopNewReactor> noStopNewReactor = reactor(NoStopNewReactor.class);
-    ReturnCodeSeg<NoStopNewReactor.NoStopNewReactorHalt> noStopNewReactorHalt = reactor(NoStopNewReactor.NoStopNewReactorHalt.class);
-    ReturnCodeSeg<NoStopNewReactor.NoStopNewReactorNoHeading> noStopNewReactorNoHeading = reactor(NoStopNewReactor.NoStopNewReactorNoHeading.class);
-    ReturnCodeSeg<SlowDownStopReactor> slowDownStopReactor = reactor(SlowDownStopReactor.class);
-    ReturnCodeSeg<MecanumNonstopReactor.MecanumNonstopReactorSetpointSLOW> slow = reactor(MecanumNonstopReactor.MecanumNonstopReactorSetpointSLOW.class);
+    ReturnCodeSeg<LineGen> lineGen = generator(LineGen.class);
+    ReturnCodeSeg<PoseGen> poseGen = generator(PoseGen.class);
 
-    AutoSegment<?, ?> mecanumDefaultSetpoint = new AutoSegment<>(mecanumPIDReactor, poseGenerator);
-    AutoSegment<?, ?> mecanumJunctionSetpoint = new AutoSegment<>(mecanumJunctionReactor, poseGenerator);
-    AutoSegment<?, ?> mecanumJunctionSetpoint2 = new AutoSegment<>(mecanumJunctionReactor2, poseGenerator);
-    AutoSegment<?, ?> mecanumDefaultWayPoint = new AutoSegment<>(mecanumPurePursuitReactor, lineGenerator);
-    AutoSegment<?, ?> mecanumNonstopWayPoint = new AutoSegment<>(mecanumNonstopReactor, lineGenerator);
-    AutoSegment<?, ?> mecanumNonstopSetPoint = new AutoSegment<>(mecanumNonstopReactorSetpoint, lineGenerator);
-    AutoSegment<?, ?> turnSetpoint = new AutoSegment<>(turnReactorSetpoint, lineGenerator);
-    AutoSegment<?, ?> noStopNewSetPoint = new AutoSegment<>(noStopNewReactor, lineGenerator);
-    AutoSegment<?, ?> noStopNewHaltSetPoint = new AutoSegment<>(noStopNewReactorHalt, lineGenerator);
-    AutoSegment<?, ?> noStopNewNoHeadingSetPoint = new AutoSegment<>(noStopNewReactorNoHeading, lineGenerator);
-    AutoSegment<?, ?> slowDownStopSetPoint = new AutoSegment<>(slowDownStopReactor, lineGenerator);
-    AutoSegment<?, ?> slowSetPoint = new AutoSegment<>(slow, lineGenerator);
+    ReturnCodeSeg<autoutil.reactors.PIDReact> PIDReact = reactor(autoutil.reactors.PIDReact.class);
+    ReturnCodeSeg<autoutil.reactors.PPReact> PPReact = reactor(autoutil.reactors.PPReact.class);
+    ReturnCodeSeg<JunctionReact> mecJunctionReact = reactor(JunctionReact.class);
+    ReturnCodeSeg<JunctionReact2> mecJunctionReact2 = reactor(JunctionReact2.class);
+    ReturnCodeSeg<NonstopReact> mecNonstopReact = reactor(NonstopReact.class);
+    ReturnCodeSeg<NonstopReact.NonstopReactSP> mecNonstopReactSP = reactor(NonstopReact.NonstopReactSP.class);
+    ReturnCodeSeg<NonstopReact.NonstopReactTurnSP> turnReactSP = reactor(NonstopReact.NonstopReactTurnSP.class);
+    ReturnCodeSeg<NStopNewReact> nStopNewReact = reactor(NStopNewReact.class);
+    ReturnCodeSeg<NStopNewReact.NStopNewReactHalt> nStopNewReactHalt = reactor(NStopNewReact.NStopNewReactHalt.class);
+    ReturnCodeSeg<NStopNewReact.NStopNewReactNHeading> nStopNewReactNHeading = reactor(NStopNewReact.NStopNewReactNHeading.class);
+    ReturnCodeSeg<SloDownStopReact> sloDownStopReact = reactor(SloDownStopReact.class);
+    ReturnCodeSeg<NonstopReact.NonstopReactSPslow> slow = reactor(NonstopReact.NonstopReactSPslow.class);
 
-    AutoConfig mecanumDefaultConfig = new AutoConfig(mecanumDefaultSetpoint, mecanumDefaultWayPoint);
-    AutoConfig mecanumNonstopConfig = new AutoConfig(mecanumNonstopSetPoint, mecanumNonstopWayPoint);
-    AutoConfig noStopNewConfig = new AutoConfig(noStopNewSetPoint, mecanumDefaultWayPoint);
+    AutoSegment<?, ?> DefaultSP = new AutoSegment<>(PIDReact, poseGen);
+    AutoSegment<?, ?> JunctionSP = new AutoSegment<>(mecJunctionReact, poseGen);
+    AutoSegment<?, ?> JunctionSP2 = new AutoSegment<>(mecJunctionReact2, poseGen);
+    AutoSegment<?, ?> DefaultWP = new AutoSegment<>(PPReact, lineGen);
+    AutoSegment<?, ?> NonstopWP = new AutoSegment<>(mecNonstopReact, lineGen);
+    AutoSegment<?, ?> NonstopSP = new AutoSegment<>(mecNonstopReactSP, lineGen);
+    AutoSegment<?, ?> turnSP = new AutoSegment<>(turnReactSP, lineGen);
+    AutoSegment<?, ?> nStopNewSP = new AutoSegment<>(nStopNewReact, lineGen);
+    AutoSegment<?, ?> nStopNewHaltSP = new AutoSegment<>(nStopNewReactHalt, lineGen);
+    AutoSegment<?, ?> nStopNewNHeadingSP = new AutoSegment<>(nStopNewReactNHeading, lineGen);
+    AutoSegment<?, ?> sloDownStopSP = new AutoSegment<>(sloDownStopReact, lineGen);
+    AutoSegment<?, ?> sloSP = new AutoSegment<>(slow, lineGen);
+
+    AutoConfig DefaultConfig = new AutoConfig(DefaultSP, DefaultWP);
+    AutoConfig NonstopConfig = new AutoConfig(NonstopSP, NonstopWP);
+    AutoConfig nStopNewConfig = new AutoConfig(nStopNewSP, DefaultWP);
 
 
 

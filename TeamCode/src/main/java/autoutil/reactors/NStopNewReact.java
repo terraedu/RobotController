@@ -1,19 +1,17 @@
 package autoutil.reactors;
 
 import autoutil.controllers.control1D.RP;
-import autoutil.controllers.control1D.RV;
-import autoutil.controllers.control2D.NoStop;
 import autoutil.controllers.control2D.NoStopNew;
-import autoutil.generators.PoseGenerator;
+import autoutil.generators.PoseGen;
 import geometry.position.Pose;
 
-public class NoStopNewReactor extends Reactor{
+public class NStopNewReact extends Reactor{
 
     public NoStopNew noStopNew = new NoStopNew(0.01, 0.08,20, 1.0,2);
     public RP hRP = new RP(0.01, 0.07);
 //    public RV rvHeading = new RV(0.008, 0.05, 40, 0);
 
-    public NoStopNewReactor(){
+    public NStopNewReact(){
         noStopNew.rvController.setMinimumTime(0.2);
         noStopNew.rvController.setStopConstant(60);
 
@@ -56,7 +54,7 @@ public class NoStopNewReactor extends Reactor{
     public boolean isAtTarget() { return noStopNew.hasReachedTarget() && hRP.isAtTarget(); }
 
     @Override
-    public void moveToTarget(PoseGenerator generator) {
+    public void moveToTarget(PoseGen generator) {
         noStopNew.updateController(getPose(), generator); hRP.update(getPose(), generator);
         drive.move(noStopNew.getOutputY(), 1.2*noStopNew.getOutputX(), -hRP.getOutput());
     }
@@ -71,8 +69,8 @@ public class NoStopNewReactor extends Reactor{
         noStopNew.scaleAccuracy(scale);
     }
 
-    public static class NoStopNewReactorHalt extends NoStopNewReactor{
-        public NoStopNewReactorHalt(){
+    public static class NStopNewReactHalt extends NStopNewReact {
+        public NStopNewReactHalt(){
             super();
             noStopNew.rvController.setStopConstant(1);
             noStopNew.rvController.setAccuracy(5);
@@ -86,8 +84,8 @@ public class NoStopNewReactor extends Reactor{
         }
     }
 
-    public static class NoStopNewReactorNoHeading extends NoStopNewReactor{
-        public NoStopNewReactorNoHeading(){
+    public static class NStopNewReactNHeading extends NStopNewReact {
+        public NStopNewReactNHeading(){
             super();
             noStopNew.rvController.setStopConstant(30);
             noStopNew.rvController.setAccuracy(4);

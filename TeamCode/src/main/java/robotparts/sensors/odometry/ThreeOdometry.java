@@ -113,7 +113,7 @@ public class ThreeOdometry extends TwoOdometry {
     }
 
     public void setHeadingUsingOffset(double heading) {
-        gyro.setHeading(heading);
+//        gyro.setHeading(heading);
     }
 
     @Override

@@ -1,6 +1,8 @@
-package teleutil.button;
+package teleutil.button.toggle;
 
 import teleutil.GamepadHandler;
+import teleutil.button.Button;
+import teleutil.button.main.OnPressEventHandler;
 import util.codeseg.CodeSeg;
 
 public class OnTurnOffEventHandler extends OnPressEventHandler {

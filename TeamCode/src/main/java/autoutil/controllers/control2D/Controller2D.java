@@ -2,9 +2,7 @@ package autoutil.controllers.control2D;
 
 import autoutil.controllers.control1D.Controller1D;
 import autoutil.generators.Generator;
-import autoutil.generators.LineGenerator;
 import geometry.framework.Point;
-import util.codeseg.CodeSeg;
 import util.codeseg.ParameterCodeSeg;
 import util.codeseg.ReturnCodeSeg;
 import util.condition.Expectation;

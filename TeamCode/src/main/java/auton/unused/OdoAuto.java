@@ -3,19 +3,11 @@ package auton.unused;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import java.util.ArrayList;
-
 import auton.Auto;
-import autoutil.controllers.control1D.Controller1D;
 import autoutil.controllers.control1D.RV;
 import autoutil.controllers.control2D.NoStopNew;
-import autoutil.generators.LineGenerator;
-import autoutil.generators.PoseGenerator;
-import geometry.framework.Point;
+import autoutil.generators.LineGen;
 import geometry.position.Pose;
-import util.template.Iterator;
-
-import static global.General.log;
 
 @Disabled
 @Autonomous(name = "OdoAuto")
@@ -91,14 +83,14 @@ public class OdoAuto extends Auto {
 
         noStopNew.scale(1.0);
         noStopNew.reset();
-        LineGenerator lineGenerator = new LineGenerator();
-        lineGenerator.add(new Pose(), new Pose(30,-20, 0));
+        LineGen lineGen = new LineGen();
+        lineGen.add(new Pose(), new Pose(30,-20, 0));
 
         rvHeading.reset();
         rvHeading.scale(1.0);
         rvHeading.setTarget(90);
         whileActive(() -> noStopNew.notAtTarget() || rvHeading.notAtTarget(),() -> {
-            noStopNew.updateController(odometry.getPose(), lineGenerator);
+            noStopNew.updateController(odometry.getPose(), lineGen);
             rvHeading.update();
 //            drive.move(noStopNew.getOutputY(), 1.2*noStopNew.getOutputX(), 0);
             drive.move(noStopNew.getOutputY(), 1.2*noStopNew.getOutputX(),-rvHeading.getOutput());

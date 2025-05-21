@@ -1,6 +1,8 @@
-package teleutil.button;
+package teleutil.button.toggle;
 
 import teleutil.GamepadHandler;
+import teleutil.button.Button;
+import teleutil.button.main.ChangeHoldEventHandler;
 import util.codeseg.CodeSeg;
 
 public class OnNotHeldEventHandler extends ChangeHoldEventHandler {
