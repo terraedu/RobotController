@@ -65,7 +65,7 @@ public class TerraOp extends Tele {
         gph1.link(DPAD_UP, () -> {lift.upright = true; bot.addAutoModuleWithCancel(UprightCone);});
 
         gph1.link(DPAD_LEFT, () -> bot.addAutoModuleWithCancel(TakeOffCone));
-
+//
         gph1.link(DPAD_RIGHT, () -> {lift.cap = true; bot.addAutoModuleWithCancel(CapGrab); });
 //        gph1.link(DPAD_RIGHT, () -> {
 //            if(!lift.cap){
